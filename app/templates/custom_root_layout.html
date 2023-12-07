@@ -1,0 +1,21 @@
+{% extends "custom_layout.html" %}
+
+{# To customize the root (/) page of the system provide a different file (replacing this one) #}
+{# using Docker Compose volume mount. With this, you may e.g. describe on the root page what are #}
+{# the benefits of using SPF/DKIM/DMARC or link to your tutorials that describe setting up these #}
+{# mechanisms. #}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg mb-4">
+                {% block check_by_sending_email %}
+                {% endblock %}
+            </div>
+            <div class="col-lg mb-4">
+                {% block check_domain %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

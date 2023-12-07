@@ -1,0 +1,37 @@
+#!/bin/bash
+
+LOCALES="pl_PL en_US"
+
+cd $(dirname $0)/..
+
+if [ ! -d .venv.translations ]
+then
+    python3 -m venv .venv.translations
+fi
+
+. .venv.translations/bin/activate
+
+pip install -r app/translations/requirements.txt
+
+PYTHONPATH=app pybabel extract \
+    --omit-header \
+    --strip-comments \
+    -F babel.cfg \
+    -o app/translations/messages.pot \
+    app
+
+for locale in $LOCALES
+do
+    mkdir -p app/translations/$locale/LC_MESSAGES
+    pybabel update \
+        --omit-header \
+         --init-missing \
+        -l $locale \
+        -i app/translations/messages.pot \
+        -d app/translations/
+
+    # Remove the last newline so that we don't conflict with linters
+    sed -i -z '$ s/\n$//' app/translations/$locale/LC_MESSAGES/messages.po
+done
+
+sed -i -z '$ s/\n$//' app/translations/messages.pot

@@ -1,0 +1,25 @@
+{% extends "custom_layout.html" %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{% trans %}Check a domain{% endtrans %}</h5>
+                        <form action="{{ url_for('check_domain_scan_post') }}" method="POST" class="card-text">
+                            <div class="form-group">
+                                <label for="domain-input">{% trans %}Domain{% endtrans %}</label>
+                                <input name="domain" type="text" autocomplete="off" class="form-control" id="domain-input" aria-describedby="domain-info" required="true">
+                                <small id="domain-info" class="form-text text-muted">
+                                    {% trans %}Don't put an e-mail address here, only the part after "@"{% endtrans %}
+                                </small>
+                            </div>
+                            <button type="submit" class="btn btn-primary mt-2">{% trans %}Check{% endtrans %}</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

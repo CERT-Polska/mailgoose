@@ -1,0 +1,312 @@
+{% extends "custom_layout.html" %}
+
+{% macro render_problem(problem) -%}
+    {% set lines = problem.split('\n') %}
+    {% for line in lines %}
+        {{ line|mailgoose_urlize(target="_blank") }}
+        {% if not loop.last %}
+            <br/>
+        {% endif %}
+    {% endfor %}
+{%- endmacro %}
+
+{% macro render_problems(problems) -%}
+    {% if problems|length > 1 %}
+        <ul>
+            {% for problem in problems|sort %}
+                <li>{{ render_problem(problem) }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        {# 1 or 0 #}
+        {% for problem in problems %}{{ render_problem(problem) }}{% endfor %}
+    {% endif %}
+{%- endmacro %}
+
+{% macro card_header(title, data) -%}
+    <div class="card-header
+            {% if not data.valid %}
+                text-danger
+            {% elif data.record_could_not_be_fully_validated %}
+                text-disabled
+            {% elif data.warnings %}
+                text-warning-dark
+            {% else %}
+                text-success
+            {% endif %}">
+
+        {% if not data.valid %}
+            ❌
+        {% elif data.record_could_not_be_fully_validated %}
+            ➖
+        {% elif data.warnings %}
+            ⚠️
+        {% else %}
+            ✓
+        {% endif %}
+        {{ title }}:
+        {% if not data.valid %}
+            {% trans %}incorrect configuration{% endtrans %}
+        {% elif data.record_could_not_be_fully_validated %}
+            {% trans %}record couldn't be fully verified{% endtrans %}
+        {% elif data.warnings %}
+            {% trans %}configuration warnings{% endtrans %}
+        {% else %}
+            {% trans %}correct configuration{% endtrans %}
+        {% endif %}
+    </div>
+{%- endmacro %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg">
+            {% if error %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        {{ error }}
+                    </div>
+                </div>
+            {% elif result.domain or result.dkim %}
+                <h3>
+                    {% if not envelope_domain or not from_domain or from_domain == envelope_domain %}
+                        {% if not envelope_domain %}
+                            {% trans %}Domain{% endtrans %} {{ from_domain }}
+                        {% elif not from_domain %}
+                            {% trans %}Domain{% endtrans %} {{ envelope_domain }}
+                        {% elif from_domain == envelope_domain %}
+                            {% trans %}Domain{% endtrans %} {{ envelope_domain }}
+                        {% endif %}
+                        -
+                        {% trans %}e-mail sender verification mechanisms check results:{% endtrans %}
+                    {% else %}
+                        {% trans %}E-mail sender verification mechanisms check results:{% endtrans %}
+                    {% endif %}
+
+                    {% if result.domain and not result.dkim %}{% trans %}SPF and DMARC{% endtrans %}
+                    {% elif not result.domain and result.dkim %}{% trans %}DKIM{% endtrans %}
+                    {% else %}{% trans %}SPF, DMARC and DKIM{% endtrans %}{% endif %}
+                </h3>
+
+                <div class="card border rounded-3 mb-3">
+                    <div class="card-body">
+                        {% if is_old %}
+                            <span class="text-danger">
+                                {{ gettext(
+                                    "You are viewing results that are older than %(age_threshold_minutes)s minutes.",
+                                    age_threshold_minutes=age_threshold_minutes
+                                   )
+                                }}
+                                {{ gettext(
+                                    "If you want to view up-to-date results, please <a href='%(rescan_url)s'>run a new check.</a>",
+                                    rescan_url=rescan_url
+                                   )
+                                }}
+                            </span>
+                        {% endif %}
+
+                        <span class="{% if is_old %}text-danger{% endif %}">
+                            {% trans %}Check date: {% endtrans %}{{ result.timestamp.strftime("%Y-%m-%d %H:%M:%S") }}{% if result.message_timestamp %}
+                                {{ gettext("(e-mail message from %(date_str)s)", date_str=result.message_timestamp.strftime("%Y-%m-%d %H:%M:%S")) }}{% endif %}.<br/><br/>
+                        </span>
+
+                        {% trans %}If you want to share the check results, please copy the following link:{% endtrans %}
+                        <div class="input-group with-margin">
+                            <input type="text" readonly value="{{ url }}" class="form-control" />
+                            {{ copy_button(url) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="card mb-3">
+                    <div class="card-body">
+                        {% if result.num_correct_mechanisms == result.num_checked_mechanisms %}
+                            <span class="text-success">✓
+                        {% elif result.has_not_valid_mechanisms %}
+                            <span class="text-danger">❌
+                        {% else %}
+                            <span class="text-warning-dark">⚠️
+                        {% endif %}
+                            {% trans %}Check summary{% endtrans %}:
+
+                            {{ result.num_correct_mechanisms }}
+                            {% if result.num_correct_mechanisms == 0 %}
+                                {{ pgettext("zero", "mechanisms") }}
+                            {% elif result.num_correct_mechanisms == 1 %}
+                                {% trans %}mechanism{% endtrans %}
+                            {% else %}
+                                {% trans %}mechanisms{% endtrans %}
+                            {% endif %}
+                            {% trans %}of{% endtrans %}
+                            {{ result.num_checked_mechanisms }}
+                            {% if result.num_correct_mechanisms == 0 %}
+                                {{ pgettext("zero", "configured") }}
+                            {% elif result.num_correct_mechanisms == 1 %}
+                                {{ pgettext("singular", "configured") }}
+                            {% else %}
+                                {{ pgettext("plural", "configured") }}
+                            {% endif %}
+                            {% trans %}without issues.{% endtrans %}
+                        </span>
+                    </div>
+                </div>
+
+                {% if result.domain %}
+                    {% for warning in result.domain.warnings %}
+                        <div class="card mb-3">
+                            <div class="card-body text-warning-dark">
+                                ⚠️ {{ warning }}
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                    <div class="card p-1 bg-light border rounded-3 mb-3">
+                        {% if result.domain.spf_not_required_because_of_correct_dmarc %}
+                            <div class="card-header text-disabled">
+                                {% trans %}SPF: the record is optional{% endtrans %}
+                            </div>
+                            <div class="card-body">
+                                <p>
+                                    {% trans trimmed %}
+                                        Because the DMARC record is configured correctly, the SPF record is not required. Sending e-mail
+                                        messages from this domain without using the SPF mechanism is still possible - in that case, the messages
+                                        need to have correct DKIM signatures.
+                                    {% endtrans %}
+                                </p>
+                                <p>
+                                    {% trans trimmed %}
+                                        However, we recommend configuring an SPF record if possible (even if the domain is not used
+                                        to send e-mails), because older mail servers may not support DMARC and use SPF for verification.
+                                        The combination of all protection mechanisms - SPF, DKIM and DMARC will allow other servers to properly
+                                        verify e-mail message authenticity in all cases.
+                                    {% endtrans %}
+                                </p>
+                            </div>
+                        {% else %}
+                            {{ card_header("SPF", result.domain.spf) }}
+                            <div class="card-body">
+                                <table class="table">
+                                    <tbody>
+                                        {% if envelope_domain %}
+                                            <tr>
+                                                <td class="label">{% trans %}Domain{% endtrans %}</td>
+                                                <td><code>{{ envelope_domain }}</code></td>
+                                            </tr>
+                                        {% endif %}
+                                        {% if result.domain.spf.record %}
+                                            <tr>
+                                                <td class="label">{% trans %}Record{% endtrans %}</td>
+                                                <td><code>{{ result.domain.spf.record }}</code></td>
+                                            </tr>
+                                        {% elif result.domain.spf.record_candidates %}
+                                            <tr>
+                                                <td class="label">{% if result.domain.spf.record_candidates|length > 1 %}{% trans %}Records{% endtrans %}{% else %}{% trans %}Record{% endtrans %}{% endif %}</td>
+                                                <td class="text-danger">
+                                                    {% for record in result.domain.spf.record_candidates %}
+                                                        <code class="text-danger">{{ record }}</code></br>
+                                                    {% endfor %}
+                                                </td>
+                                            </tr>
+                                        {% endif %}
+                                        <tr>
+                                            <td class="label">{% trans %}Warnings{% endtrans %}</td>
+                                            <td>{% if result.domain.spf.warnings %}{{ render_problems(result.domain.spf.warnings) }}{% else %}{% trans %}none{% endtrans %}{% endif %}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="label">{% trans %}Errors{% endtrans %}</td>
+                                            <td>{% if result.domain.spf.errors %}{{ render_problems(result.domain.spf.errors) }}{% else %}{% trans %}none{% endtrans %}{% endif %}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="card p-1 bg-light border rounded-3 mb-3">
+                        {{ card_header("DMARC", result.domain.dmarc) }}
+                        <div class="card-body">
+                            <table class="table">
+                                <tbody>
+                                    {% if from_domain %}
+                                        <tr>
+                                            <td class="label">{% trans %}Domain{% endtrans %}</td>
+                                            <td><code>{{ from_domain }}</code></td>
+                                        </tr>
+                                    {% endif %}
+                                    {% if result.domain.dmarc.record %}
+                                        <tr>
+                                            <td class="label">{% trans %}Record{% endtrans %}</td>
+                                            <td><code>{{ result.domain.dmarc.record }}</code></td>
+                                        </tr>
+                                    {% elif result.domain.dmarc.record_candidates %}
+                                        <tr>
+                                            <td class="label">{% if result.domain.dmarc.record_candidates|length > 1 %}{% trans %}Records{% endtrans %}{% else %}{% trans %}Record{% endtrans %}{% endif %}</td>
+                                            <td class="text-danger">
+                                                {% for record in result.domain.dmarc.record_candidates %}
+                                                    <code class="text-danger">{{ record }}</code></br>
+                                                {% endfor %}
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                    <tr>
+                                        <td class="label">{% trans %}Warnings{% endtrans %}</td>
+                                        <td>{% if result.domain.dmarc.warnings %}{{ render_problems(result.domain.dmarc.warnings) }}{% else %}{% trans %}none{% endtrans %}{% endif %}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label">{% trans %}Errors{% endtrans %}</td>
+                                        <td>{% if result.domain.dmarc.errors %}{{ render_problems(result.domain.dmarc.errors) }}{% else %}{% trans %}none{% endtrans %}{% endif %}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if result.dkim %}
+                    <div class="card p-1 bg-light border rounded-3 mb-3">
+                        {{ card_header("DKIM", result.dkim) }}
+                        <div class="card-body">
+                            <table class="table">
+                                <tbody>
+                                    {% if dkim_domain %}
+                                        <tr>
+                                            <td class="label">{% trans %}Domain{% endtrans %}</td>
+                                            <td><code>{{ dkim_domain }}</code></td>
+                                        </tr>
+                                    {% endif %}
+                                    <tr>
+                                        <td class="label">{% trans %}Warnings{% endtrans %}</td>
+                                        <td>{% if result.dkim.warnings %}{{ render_problems(result.dkim.warnings) }}{% else %}{% trans %}none{% endtrans %}{% endif %}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label">{% trans %}Errors{% endtrans %}</td>
+                                        <td>{% if result.dkim.errors %}{{ render_problems(result.dkim.errors) }}{% else %}{% trans %}none{% endtrans %}{% endif %}</td>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if result.domain.spf.warnings or result.domain.spf.errors or result.domain.dmarc.warnings or result.domain.dmarc.errors or result.dkim.warnings or result.dkim.errors %}
+                    <div class="card border rounded-3 mb-3">
+                        <div class="card-body">
+                            {% if result.domain.spf.warnings or result.domain.dmarc.warnings or result.dkim.warnings %}
+                                <p>
+                                    {% trans trimmed %}
+                                        To increase the chance that your configuration is interpreted by all e-mail servers correctly,
+                                        we recommend fixing all errors and warnings.
+                                    {% endtrans %}
+                                </p>
+                            {% endif %}
+
+                            <p class="mb-0">
+                                {% trans %}After fixing the issues, please rerun the scan - some problems can be detected only if earlier checks complete successfully.{% endtrans %}
+                            </p>
+                            {% include "custom_failed_check_results_hints.html" %}
+                        </div>
+                    </div>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

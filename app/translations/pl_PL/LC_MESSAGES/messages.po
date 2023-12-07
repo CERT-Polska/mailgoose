@@ -1,0 +1,306 @@
+#: app/templates/404.html:7
+msgid "Error 404"
+msgstr "Błąd 404"
+
+#: app/templates/404.html:9
+msgid "Resource not found. Make sure the address is correct or "
+msgstr "Nie odnaleziono zasobu. Upewnij się, czy adres jest poprawny lub "
+
+#: app/templates/404.html:10
+msgid "go back to the homepage."
+msgstr "przejdź do strony głównej."
+
+#: app/templates/base.html:6
+msgid "Copied"
+msgstr "Skopiowano"
+
+#: app/templates/check_domain.html:9 app/templates/root.html:31
+#: app/templates/root.html:40
+msgid "Check a domain"
+msgstr "Sprawdź domenę"
+
+#: app/templates/check_domain.html:12 app/templates/check_results.html:74
+#: app/templates/check_results.html:76 app/templates/check_results.html:78
+#: app/templates/check_results.html:191 app/templates/check_results.html:231
+#: app/templates/check_results.html:272
+msgid "Domain"
+msgstr "Domena"
+
+#: app/templates/check_domain.html:15
+msgid "Don't put an e-mail address here, only the part after \"@\""
+msgstr "Nie podawaj całego adresu email, jedynie część po znaku \"@\""
+
+#: app/templates/check_domain.html:18
+msgid "Check"
+msgstr "Sprawdź"
+
+#: app/templates/check_email.html:44
+msgid "Check by sending e-mail"
+msgstr "Sprawdź wysyłając e-mail"
+
+#: app/templates/check_email.html:47
+msgid ""
+"To verify e-mail configuration, send any e-mail message to the address "
+"<b>shown below</b>:"
+msgstr ""
+"Aby zweryfikować konfigurację poczty, wyślij dowolną wiadomość e-mail na "
+"adres <b>podany poniżej</b>:"
+
+#: app/templates/check_email.html:57
+msgid "Waiting for the message to be received"
+msgstr "Oczekiwanie na odbiór wiadomości"
+
+#: app/templates/check_email.html:60
+msgid ""
+"As soon as the message is received, the page will automatically refresh -"
+" you will then see the check results."
+msgstr ""
+"Jeśli wiadomość zostanie odebrana, strona odświeży się automatycznie - "
+"zobaczysz wtedy wyniki sprawdzenia mechanizmów zabezpieczeń."
+
+#: app/templates/check_email.html:63
+msgid ""
+"If after a while you still don't see the results, that means that we "
+"didn't receive your message. In that case:"
+msgstr ""
+"Jeśli po dłuższym czasie nie widzisz wyników, to znaczy, że nie "
+"otrzymaliśmy wiadomości. W takiej sytuacji:"
+
+#: app/templates/check_email.html:66
+msgid "make sure you sent the message to the correct e-mail address"
+msgstr "upewnij się, że wysyłasz wiadomość na poprawny adres"
+
+#: app/templates/check_email.html:67
+msgid ""
+"if you manage your own e-mail server, make sure that the server sent the "
+"message correctly"
+msgstr ""
+"jeśli administrujesz serwerem pocztowym, sprawdź czy Twój serwer pocztowy"
+" poprawnie wysłał wiadomość"
+
+#: app/templates/check_email.html:70
+msgctxt "verb imperative"
+msgid "contact"
+msgstr "skontaktuj się z"
+
+#: app/templates/check_email.html:70
+msgid "if the above didn't solve the problem."
+msgstr "w przypadku, jeśli powyższe nie rozwiązało problemu."
+
+#: app/templates/check_results.html:49
+msgid "incorrect configuration"
+msgstr "konfiguracja nieprawidłowa"
+
+#: app/templates/check_results.html:51
+msgid "record couldn't be fully verified"
+msgstr "rekord nie mógł być w pełni sprawdzony"
+
+#: app/templates/check_results.html:53
+msgid "configuration warnings"
+msgstr "uwagi dotyczące konfiguracji"
+
+#: app/templates/check_results.html:55
+msgid "correct configuration"
+msgstr "konfiguracja prawidłowa"
+
+#: app/templates/check_results.html:81
+msgid "e-mail sender verification mechanisms check results:"
+msgstr "wyniki testów mechanizmów zabezpieczeń poczty e-mail:"
+
+#: app/templates/check_results.html:83
+msgid "E-mail sender verification mechanisms check results:"
+msgstr "Wyniki testów mechanizmów zabezpieczeń poczty e-mail:"
+
+#: app/templates/check_results.html:86
+msgid "SPF and DMARC"
+msgstr "SPF i DMARC"
+
+#: app/templates/check_results.html:87
+msgid "DKIM"
+msgstr "DKIM"
+
+#: app/templates/check_results.html:88
+msgid "SPF, DMARC and DKIM"
+msgstr "SPF, DMARC i DKIM"
+
+#: app/templates/check_results.html:95
+#, python-format
+msgid ""
+"You are viewing results that are older than %(age_threshold_minutes)s "
+"minutes."
+msgstr "Oglądają Państwo wyniki starsze niż %(age_threshold_minutes)s minut."
+
+#: app/templates/check_results.html:100
+#, python-format
+msgid ""
+"If you want to view up-to-date results, please <a "
+"href='%(rescan_url)s'>run a new check.</a>"
+msgstr ""
+"Jeśli chcą Państwo uzyskać najnowsze wyniki, prosimy <a "
+"href='%(rescan_url)s'>wykonać ponowne sprawdzenie.</a>"
+
+#: app/templates/check_results.html:109
+msgid "Check date: "
+msgstr "Data sprawdzenia: "
+
+#: app/templates/check_results.html:110
+#, python-format
+msgid "(e-mail message from %(date_str)s)"
+msgstr "(wiadomość e-mail z %(date_str)s)"
+
+#: app/templates/check_results.html:113
+msgid "If you want to share the check results, please copy the following link:"
+msgstr ""
+"Jeśli chcą Państwo udostępnić wyniki sprawdzenia, prosimy skopiować ten "
+"link:"
+
+#: app/templates/check_results.html:129
+msgid "Check summary"
+msgstr "Podsumowanie sprawdzenia"
+
+#: app/templates/check_results.html:133
+msgctxt "zero"
+msgid "mechanisms"
+msgstr "mechanizmów"
+
+#: app/templates/check_results.html:135
+msgid "mechanism"
+msgstr "mechanizm"
+
+#: app/templates/check_results.html:137
+msgid "mechanisms"
+msgstr "mechanizmy"
+
+#: app/templates/check_results.html:139
+msgid "of"
+msgstr "z"
+
+#: app/templates/check_results.html:142
+msgctxt "zero"
+msgid "configured"
+msgstr "skonfigurowanych"
+
+#: app/templates/check_results.html:144
+msgctxt "singular"
+msgid "configured"
+msgstr "skonfigurowany"
+
+#: app/templates/check_results.html:146
+msgctxt "plural"
+msgid "configured"
+msgstr "skonfigurowane"
+
+#: app/templates/check_results.html:148
+msgid "without issues."
+msgstr "bez zastrzeżeń."
+
+#: app/templates/check_results.html:165
+msgid "SPF: the record is optional"
+msgstr "SPF: rekord opcjonalny"
+
+#: app/templates/check_results.html:169
+msgid ""
+"Because the DMARC record is configured correctly, the SPF record is not "
+"required. Sending e-mail messages from this domain without using the SPF "
+"mechanism is still possible - in that case, the messages need to have "
+"correct DKIM signatures."
+msgstr ""
+"Ponieważ rekord DMARC jest skonfigurowany poprawnie, rekord SPF nie jest "
+"konieczny. Wysyłanie wiadomości z tej domeny bez wykorzystywania "
+"mechanizmu SPF nadal jest możliwe - w takiej sytuacji wiadomości muszą "
+"posiadać poprawny podpis DKIM."
+
+#: app/templates/check_results.html:176
+msgid ""
+"However, we recommend configuring an SPF record if possible (even if the "
+"domain is not used to send e-mails), because older mail servers may not "
+"support DMARC and use SPF for verification. The combination of all "
+"protection mechanisms - SPF, DKIM and DMARC will allow other servers to "
+"properly verify e-mail message authenticity in all cases."
+msgstr ""
+"Rekomendujemy jednak ustawienie rekordu SPF, jeśli mają Państwo taką "
+"możliwość (nawet, jeśli domena nie jest przeznaczona do wysyłki poczty), "
+"ponieważ starsze serwery pocztowe mogą nie wspierać mechanizmu DMARC i "
+"używają SPF. Połączenie wszystkich mechanizmów ochrony - SPF, DKIM oraz "
+"DMARC umożliwi innym serwerom na poprawne zweryfikowanie wiadomości we "
+"wszystkich przypadkach."
+
+#: app/templates/check_results.html:197 app/templates/check_results.html:202
+#: app/templates/check_results.html:237 app/templates/check_results.html:242
+msgid "Record"
+msgstr "Rekord"
+
+#: app/templates/check_results.html:202 app/templates/check_results.html:242
+msgid "Records"
+msgstr "Rekordy"
+
+#: app/templates/check_results.html:211 app/templates/check_results.html:251
+#: app/templates/check_results.html:277
+msgid "Warnings"
+msgstr "Ostrzeżenia"
+
+#: app/templates/check_results.html:212 app/templates/check_results.html:216
+#: app/templates/check_results.html:252 app/templates/check_results.html:256
+#: app/templates/check_results.html:278 app/templates/check_results.html:282
+msgid "none"
+msgstr "brak"
+
+#: app/templates/check_results.html:215 app/templates/check_results.html:255
+#: app/templates/check_results.html:281
+msgid "Errors"
+msgstr "Błędy"
+
+#: app/templates/check_results.html:294
+msgid ""
+"To increase the chance that your configuration is interpreted by all "
+"e-mail servers correctly, we recommend fixing all errors and warnings."
+msgstr ""
+"Aby zwiększyć szansę, że Państwa konfiguracja zostanie poprawnie "
+"zinterpretowana przez wszystkie serwery, rekomendujemy poprawę zarówno "
+"błędów, jak i ostrzeżeń."
+
+#: app/templates/check_results.html:302
+msgid ""
+"After fixing the issues, please rerun the scan - some problems can be "
+"detected only if earlier checks complete successfully."
+msgstr ""
+"Po poprawie błędów prosimy ponowić skanowanie - niektóre błędy mogą "
+"zostać znalezione dopiero po udanym wykonaniu wcześniejszych testów."
+
+#: app/templates/root.html:6
+msgid "Check your configuration by sending an e-mail"
+msgstr "Sprawdź konfigurację wysyłając wiadomość e-mail"
+
+#: app/templates/root.html:9
+msgid ""
+"If you send a test e-mail to a specific address, the system will verify "
+"whether the <b>SPF</b>, <b>DKIM</b> and&nbsp;<b>DMARC</b> mechanisms are "
+"set up correctly."
+msgstr ""
+"Gdy wyślesz testową wiadomość e-mail na specjalny adres, system "
+"zweryfikuje poprawność konfiguracji mechanizmów <b>SPF</b>, <b>DKIM</b> "
+"i&nbsp;<b>DMARC</b>."
+
+#: app/templates/root.html:16
+msgid ""
+"This path is recommended - when you send a test e-mail, we will be able "
+"to perform more accurate checks than using a domain."
+msgstr ""
+"Ta ścieżka jest przez nas rekomendowana – dzięki niej będziemy "
+"w&nbsp;stanie wykonać dokładniejsze sprawdzenie, niż korzystając "
+"z&nbsp;domeny."
+
+#: app/templates/root.html:23
+msgid "Send an e-mail"
+msgstr "Wyślij e-mail"
+
+#: app/templates/root.html:34
+msgid ""
+"You may also verify the configuration by providing a domain. In that "
+"case, only the <b>SPF</b> and <b>DMARC</b> mechanisms will be checked - "
+"to check DKIM, you need to send a test e-mail."
+msgstr ""
+"Możesz skorzystać także z&nbsp;opcji weryfikacji konfiguracji podając "
+"domenę. W tym wypadku zostaną sprawdzone tylko mechanizmy <b>SPF</b> "
+"i&nbsp;<b>DMARC</b> - dla sprawdzenia DKIM konieczne jest wysłanie "
+"testowego e-maila."

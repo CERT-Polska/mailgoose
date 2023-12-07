@@ -1,0 +1,15 @@
+{% extends "custom_layout.html" %}
+
+{% block body %}
+    <div class="container">
+        <div class="card h-100">
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title">{{ _("Error 404") }}</h5>
+                <div class="card-text">
+                    {{ _("Resource not found. Make sure the address is correct or ") }}
+                    <a href="/">{{ _("go back to the homepage.") }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

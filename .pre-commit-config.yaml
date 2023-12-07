@@ -1,0 +1,35 @@
+repos:
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v4.5.0
+  hooks:
+  - id: end-of-file-fixer
+  - id: trailing-whitespace
+- repo: https://github.com/psf/black
+  rev: 23.11.0
+  hooks:
+  - id: black
+- repo: https://github.com/pycqa/isort
+  rev: 5.12.0
+  hooks:
+  - id: isort
+    name: isort (python)
+- repo: https://github.com/pre-commit/mirrors-mypy
+  rev: v1.7.1
+  hooks:
+  - id: mypy
+    args: [--strict]
+    additional_dependencies:
+    - aiosmtpd==1.4.4.post2
+    - dacite==1.8.1
+    - dnspython==2.4.2
+    - email-validator==2.1.0.post1
+    - fastapi==0.104.1
+    - Jinja2==3.1.2
+    - sqlalchemy-stubs==0.4
+    - types-redis==4.6.0.11
+    - types-requests==2.31.0.10
+- repo: https://github.com/PyCQA/flake8
+  rev: 6.1.0
+  hooks:
+  - id: flake8
+    args: [.]

@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: app/docker/Dockerfile
+    environment:
+      APP_DOMAIN: "app"
+      DB_URL: postgresql+psycopg2://postgres:postgres@db-test:5432/mailgoose
+      FORWARDED_ALLOW_IPS: "*"
+      LANGUAGE: en_US
+      REDIS_MESSAGE_DATA_EXPIRY_SECONDS: 864000
+      REDIS_CONNECTION_STRING: redis://redis-test:6379/0
+    command: bash -c "/wait-for-it.sh db-test:5432 --  uvicorn src.app:app --host 0.0.0.0 --port 8000 --proxy-headers"
+  db-test:
+    image: postgres:15.2-alpine
+    environment:
+      - POSTGRES_DB=mailgoose
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+  redis-test:
+    image: redis
+  test:
+    profiles: ["test"]  # This will prevent the service from starting by default
+    build:
+      context: .
+      dockerfile: test/Dockerfile
+    command: bash -c "/wait-for-it.sh app:8000 -- python -m unittest discover"

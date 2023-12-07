@@ -1,0 +1,26 @@
+[tool.isort]
+profile = "black"
+
+[tool.black]
+line-length = 120
+
+[tool.liccheck]
+authorized_licenses = [
+    "bsd",
+    "apache 2.0",
+    "Apache License 2.0",
+    "apache software",
+    "isc",
+    "isc license (iscl)",
+    "gnu lesser general public license v2 or later (lgplv2+)",
+    "gnu library or lesser general public license (lgpl)",
+    "mozilla public license 2.0 (mpl 2.0)",
+    "mit",
+    "python software foundation",
+    "the unlicense (unlicense)",
+    "cc0 1.0 universal (cc0 1.0) public domain dedication",
+]
+
+[tool.liccheck.authorized_packages]
+# The license name in the package is too generic ("DFSG approved") to be whitelisted in `authorized_licenses`
+dkimpy = "1.1.5"

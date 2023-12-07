@@ -1,0 +1,18 @@
+version: 2
+updates:
+  - package-ecosystem: "pip"
+    directory: "/app/translations/"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "pip"
+    directory: "/app/"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "pip"
+    directory: "/mail_receiver/"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "pip"
+    directory: "/test/"
+    schedule:
+      interval: "weekly"

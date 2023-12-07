@@ -1,0 +1,79 @@
+{% extends "custom_layout.html" %}
+
+{% block header_additional %}
+    <script>
+        {# We cannot use meta refresh because every refresh would clear user selection #}
+        window.onload = function() {
+            let elapsedMillis = 0;
+            const displayWaitingAfterMillis = 5 * 1000;
+            const refreshIntervalMillis = 2500;
+
+            for (const elem of document.getElementsByClassName("waiting")) {
+                elem.style.display = "none";
+            }
+
+            setInterval(
+                function() {
+                    elapsedMillis += refreshIntervalMillis;
+
+                    if (elapsedMillis > displayWaitingAfterMillis) {
+                        for (const elem of document.getElementsByClassName("waiting")) {
+                            elem.style.display = "block";
+                        }
+                    }
+
+                    fetch("/api/v1/email-received?recipient_username=" + {{ recipient_username|tojson }})
+                        .then(response => response.json())
+                        .then(function(data) {
+                            if (data) {
+                                window.location.reload();
+                            }
+                        });
+                },
+                refreshIntervalMillis);
+        }
+    </script>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{% trans %}Check by sending e-mail{% endtrans %}</h5>
+                        <div class="card-text">
+                            <label for="email-input">
+                                {{ _("To verify e-mail configuration, send any e-mail message to the address <b>shown below</b>:")|safe }}
+                            </label>
+                            <div class="mailto-link-with-button">
+                                <a href="mailto:{{ recipient_address }}">{{ recipient_address }}</a>
+                                <div class="copy-button-wrapper">
+                                    {{ copy_button(recipient_address) }}
+                                </div>
+                            </div>
+
+                            <img class="spinner waiting" src="/static/images/spinner.svg" />
+                            <h5 class="waiting">{% trans %}Waiting for the message to be received{% endtrans %}</h5>
+
+                            <p>
+                                {% trans %}As soon as the message is received, the page will automatically refresh - you will then see the check results.{% endtrans %}
+                            </p>
+                            <p>
+                                {% trans %}If after a while you still don't see the results, that means that we didn't receive your message. In that case:{% endtrans %}
+                            </p>
+                            <ul>
+                                <li>{% trans %}make sure you sent the message to the correct e-mail address{% endtrans %},</li>
+                                <li>{% trans %}if you manage your own e-mail server, make sure that the server sent the message correctly{% endtrans %}{% if site_contact_email %},{% else %}.{% endif %}</li>
+                                {% if site_contact_email %}
+                                    {# This wording is on purpose - we want the e-mail to be followed by a space, not a dot/comma to facillitate copying #}
+                                    <li>{{ pgettext("verb imperative", "contact") }} <a href="mailto:{{ site_contact_email }}">{{ site_contact_email }}</a> {% trans %}if the above didn't solve the problem.{% endtrans %}</li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+       </div>
+   </div>
+{% endblock %}

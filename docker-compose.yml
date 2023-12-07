@@ -1,0 +1,58 @@
+version: "3"
+
+x-common-configuration:
+  &common-configuration
+  restart: always
+  dns:
+     - 8.8.8.8
+     - 8.8.4.4
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: app/docker/Dockerfile
+    environment:
+      DB_URL: postgresql+psycopg2://postgres:postgres@db:5432/mailgoose
+      FORWARDED_ALLOW_IPS: "*"
+      REDIS_CONNECTION_STRING: redis://redis:6379/0
+    env_file:
+      - .env
+    command: bash -c "/wait-for-it.sh db:5432 --  uvicorn src.app:app --host 0.0.0.0 --port 8000 --proxy-headers --workers 8"
+    ports:
+      - 8000:8000
+    <<: *common-configuration
+  mail_receiver:
+    build:
+      context: .
+      dockerfile: mail_receiver/Dockerfile
+    command: python3 /opt/server.py
+    environment:
+      REDIS_CONNECTION_STRING: redis://redis:6379/0
+    env_file:
+      - .env
+    volumes:
+      # Mounting the whole /etc/letsencrypt as the key may be a link to ../../archive/
+      - /etc/letsencrypt/:/etc/letsencrypt:ro
+    ports:
+      - 25:25
+      - 587:587
+    <<: *common-configuration
+  db:
+    image: postgres:15.2-alpine
+    environment:
+      - POSTGRES_DB=mailgoose
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - data-db:/var/lib/postgresql/data
+    <<: *common-configuration
+  redis:
+    image: redis
+    volumes:
+      - data-redis:/data
+    <<: *common-configuration
+
+volumes:
+  data-db:
+  data-redis:
