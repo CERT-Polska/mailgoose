@@ -5,7 +5,7 @@ from jinja2_simple_tags import StandaloneTag
 try:
     from common.config import Config
 
-    LANGUAGE = Config.UI.Language
+    LANGUAGE = Config.UI.LANGUAGE
 except ImportError:
     # This may happen e.g. when pybabel is processing the templates and loading the tempalate tags
     LANGUAGE = ""
