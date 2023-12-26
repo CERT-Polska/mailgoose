@@ -22,7 +22,7 @@ class Config:
             "production instance uses PostgreSQL - this is the database the system has been most "
             "thoroughly tested on.\n\n"
             "If you start the system using the default ``docker-compose.yml`` file in the Github repository, this "
-            "variable (and a database) will be set up for you."
+            "variable (and a database) will be set up for you.",
         ] = get_config("DB_URL")
         REDIS_MESSAGE_DATA_EXPIRY_SECONDS: Annotated[
             int,
@@ -36,7 +36,7 @@ class Config:
             "documented on `https://redis-py.readthedocs.io/en/stable/connections.html#redis.Redis.from_url "
             "<https://redis-py.readthedocs.io/en/stable/connections.html#redis.Redis.from_url>`_).\n\n"
             "If you start the system using the default ``docker-compose.yml`` file in the Github repository, this "
-            "variable (and a Redis instance) will be set up for you."
+            "variable (and a Redis instance) will be set up for you.",
         ] = get_config("REDIS_URL")
 
     class Network:
