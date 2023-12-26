@@ -13,7 +13,7 @@ fi
 
 pip install -r app/translations/requirements.txt
 
-PYTHONPATH=app pybabel extract \
+REDIS_URL= PYTHONPATH=app:. pybabel extract \
     --omit-header \
     --strip-comments \
     -F babel.cfg \
