@@ -7,7 +7,7 @@ try:
 
     LANGUAGE = Config.UI.LANGUAGE
 except ImportError:
-    # This may happen e.g. when pybabel is processing the templates to find translations
+    # This may happen e.g. when pybabel is processing the templates to find messages to be translated
     LANGUAGE = ""
 
 
