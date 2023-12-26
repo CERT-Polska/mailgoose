@@ -27,6 +27,6 @@ Adding a new language
 If you want to support a new language:
 
 - add it in ``./scripts/update_translation_files`` in the language list,
-- add it in ``common/language.py`` in the language enum,
+- add it in ``common/language.py`` in the ``Language`` enum,
 - run ``./scripts/update_translation_files`` and fill ``.po`` files for your language in ``./app/translations``,
 - add the error message translations for your language in ``app/src/translate.py``.
