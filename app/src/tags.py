@@ -1,7 +1,8 @@
 from functools import cache
 
-import decouple
 from jinja2_simple_tags import StandaloneTag
+
+from common.config import Config
 
 
 class BuildIDTag(StandaloneTag):  # type: ignore
@@ -15,8 +16,8 @@ class BuildIDTag(StandaloneTag):  # type: ignore
 
 class LanguageTag(StandaloneTag):  # type: ignore
     tags = {"language"}
-    language = decouple.config("LANGUAGE", default="en_US").replace("_", "-")
+    language = Config.UI.LANGUAGE.replace("_", "-")
 
     @cache
     def render(self) -> str:
-        return self.language  # type: ignore
+        return self.language

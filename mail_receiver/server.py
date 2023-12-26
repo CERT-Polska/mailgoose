@@ -7,12 +7,13 @@ import time
 from email.message import Message as EmailMessage
 from typing import Any, Dict, Optional, Sequence, Union
 
-import decouple
 from aiosmtpd.controller import Controller
 from aiosmtpd.handlers import Message as BaseMessageHandler
 from aiosmtpd.smtp import SMTP, Envelope, Session
-from mail_receiver_utils import get_key_from_username
 from redis import Redis
+
+from common.config import Config
+from common.mail_receiver_utils import get_key_from_username
 
 logging.basicConfig(
     format="%(asctime)s %(levelname)-8s %(message)s",
@@ -21,19 +22,15 @@ logging.basicConfig(
 )
 
 LOGGER = logging.getLogger(__name__)
-REDIS = Redis.from_url(decouple.config("REDIS_CONNECTION_STRING"))
-REDIS_MESSAGE_DATA_EXPIRY_SECONDS = decouple.config("REDIS_MESSAGE_DATA_EXPIRY_SECONDS")
+REDIS = Redis.from_url(Config.Data.REDIS_URL)
 
-SSL_PRIVATE_KEY_PATH = decouple.config("SSL_PRIVATE_KEY_PATH", default=None)
-SSL_CERTIFICATE_PATH = decouple.config("SSL_CERTIFICATE_PATH", default=None)
-
-if SSL_PRIVATE_KEY_PATH and SSL_CERTIFICATE_PATH:
-    assert os.path.exists(SSL_PRIVATE_KEY_PATH)
-    assert os.path.exists(SSL_CERTIFICATE_PATH)
+if Config.Network.SSL_PRIVATE_KEY_PATH and Config.Network.SSL_CERTIFICATE_PATH:
+    assert os.path.exists(Config.Network.SSL_PRIVATE_KEY_PATH)
+    assert os.path.exists(Config.Network.SSL_CERTIFICATE_PATH)
     LOGGER.info("SSL key and certificate exist, creating context")
     SSL_CONTEXT: Optional[ssl.SSLContext] = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
     assert SSL_CONTEXT
-    SSL_CONTEXT.load_cert_chain(SSL_CERTIFICATE_PATH, SSL_PRIVATE_KEY_PATH)
+    SSL_CONTEXT.load_cert_chain(Config.Network.SSL_CERTIFICATE_PATH, Config.Network.SSL_PRIVATE_KEY_PATH)
 else:
     LOGGER.info("SSL key and certificate don't exist, not creating context")
     SSL_CONTEXT = None
@@ -74,15 +71,15 @@ class RedisHandler(BaseMessageHandler):
                     len(content),
                     key,
                 )
-                REDIS.setex(key, REDIS_MESSAGE_DATA_EXPIRY_SECONDS, content)
+                REDIS.setex(key, Config.Data.REDIS_MESSAGE_DATA_EXPIRY_SECONDS, content)
                 REDIS.setex(
                     key + b"-timestamp",
-                    REDIS_MESSAGE_DATA_EXPIRY_SECONDS,
+                    Config.Data.REDIS_MESSAGE_DATA_EXPIRY_SECONDS,
                     datetime.datetime.now().isoformat(),
                 )
                 REDIS.setex(
                     key + b"-sender",
-                    REDIS_MESSAGE_DATA_EXPIRY_SECONDS,
+                    Config.Data.REDIS_MESSAGE_DATA_EXPIRY_SECONDS,
                     mail_from,
                 )
                 LOGGER.info("Saved")

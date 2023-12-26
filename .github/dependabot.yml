@@ -9,6 +9,10 @@ updates:
     schedule:
       interval: "weekly"
   - package-ecosystem: "pip"
+    directory: "/docs/"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "pip"
     directory: "/mail_receiver/"
     schedule:
       interval: "weekly"

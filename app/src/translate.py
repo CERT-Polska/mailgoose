@@ -1,15 +1,10 @@
 import copy
 import re
-from enum import Enum
 from typing import Callable, List, Optional, Tuple
 
+from common.language import Language
+
 from .scan import DKIMScanResult, DomainScanResult, ScanResult
-
-
-class Language(Enum):
-    en_US = "en_US"
-    pl_PL = "pl_PL"
-
 
 PLACEHOLDER = "__PLACEHOLDER__"
 SKIP_PLACEHOLDER = "__SKIP_PLACEHOLDER__"

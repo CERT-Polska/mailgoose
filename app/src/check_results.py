@@ -6,14 +6,14 @@ import os
 from typing import Any, Dict, Optional
 
 import dacite
-import decouple
 from redis import Redis
+
+from common.config import Config
 
 from .logging import build_logger
 from .scan import ScanResult
 
-OLD_CHECK_RESULTS_AGE_MINUTES = decouple.config("OLD_CHECK_RESULTS_AGE_MINUTES", default=60, cast=int)
-REDIS = Redis.from_url(decouple.config("REDIS_CONNECTION_STRING"))
+REDIS = Redis.from_url(Config.Data.REDIS_URL)
 
 LOGGER = build_logger(__name__)
 
@@ -90,8 +90,8 @@ def load_check_results(token: str) -> Optional[Dict[str, Any]]:
             config=dacite.Config(check_types=False),
         )
 
-    result["age_threshold_minutes"] = OLD_CHECK_RESULTS_AGE_MINUTES
+    result["age_threshold_minutes"] = Config.UI.OLD_CHECK_RESULTS_AGE_MINUTES
     result["is_old"] = (
         datetime.datetime.now() - result["created_at"]
-    ).total_seconds() > 60 * OLD_CHECK_RESULTS_AGE_MINUTES
+    ).total_seconds() > 60 * Config.UI.OLD_CHECK_RESULTS_AGE_MINUTES
     return result

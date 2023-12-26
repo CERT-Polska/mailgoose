@@ -7,13 +7,15 @@ import traceback
 from email.utils import parseaddr
 from typing import Any, Callable, Optional
 
-import decouple
 from fastapi import FastAPI, Form, HTTPException, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
-from mail_receiver_utils import get_key_from_username
 from redis import Redis
 from starlette.responses import Response
+
+from common.config import Config
+from common.language import Language
+from common.mail_receiver_utils import get_key_from_username
 
 from .app_utils import (
     get_from_and_dkim_domain,
@@ -26,23 +28,17 @@ from .logging import build_logger
 from .resolver import setup_resolver
 from .scan import DomainValidationException, ScanningException, ScanResult
 from .templates import setup_templates
-from .translate import Language, translate
+from .translate import translate
 
 app = FastAPI()
 LOGGER = build_logger(__name__)
+REDIS = Redis.from_url(Config.Data.REDIS_URL)
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 setup_resolver()
 
-APP_DOMAIN = decouple.config("APP_DOMAIN")
-LANGUAGE = decouple.config("LANGUAGE")
-REDIS_MESSAGE_DATA_EXPIRY_SECONDS = decouple.config("REDIS_MESSAGE_DATA_EXPIRY_SECONDS")
-NAMESERVERS = decouple.config("NAMESERVERS", default="8.8.8.8", cast=decouple.Csv(str))
-REDIS = Redis.from_url(decouple.config("REDIS_CONNECTION_STRING"))
-SITE_CONTACT_EMAIL = decouple.config("SITE_CONTACT_EMAIL", default=None)
-
-templates = setup_templates(LANGUAGE)
+templates = setup_templates(Config.UI.LANGUAGE)
 
 
 @dataclasses.dataclass
@@ -88,7 +84,7 @@ async def root(request: Request) -> Response:
 async def check_email_form(request: Request) -> Response:
     recipient_username = f"{binascii.hexlify(os.urandom(16)).decode('ascii')}"
     key = get_key_from_username(recipient_username)
-    REDIS.setex(b"requested-" + key, REDIS_MESSAGE_DATA_EXPIRY_SECONDS, 1)
+    REDIS.setex(b"requested-" + key, Config.Data.REDIS_MESSAGE_DATA_EXPIRY_SECONDS, 1)
 
     return RedirectResponse("/check-email/" + recipient_username)
 
@@ -118,7 +114,7 @@ async def check_email_results(request: Request, recipient_username: str) -> Resp
                 "request": request,
                 "recipient_username": recipient_username,
                 "recipient_address": recipient_address,
-                "site_contact_email": SITE_CONTACT_EMAIL,
+                "site_contact_email": Config.UI.SITE_CONTACT_EMAIL,
             },
         )
 
@@ -130,7 +126,7 @@ async def check_email_results(request: Request, recipient_username: str) -> Resp
     from_domain, dkim_domain = get_from_and_dkim_domain(message_data)
     if not from_domain:
         result = None
-        error = translate("Invalid or no e-mail domain in the message From header", Language.pl_PL)
+        error = translate("Invalid or no e-mail domain in the message From header", Language(Config.UI.LANGUAGE))
     else:
         try:
             result = scan_and_log(
@@ -141,13 +137,13 @@ async def check_email_results(request: Request, recipient_username: str) -> Resp
                 dkim_domain=dkim_domain,
                 message=message_data,
                 message_timestamp=message_timestamp,
-                nameservers=NAMESERVERS,
-                language=Language(LANGUAGE),
+                nameservers=Config.Network.NAMESERVERS,
+                language=Language(Config.UI.LANGUAGE),
             )
             error = None
         except (DomainValidationException, ScanningException) as e:
             result = None
-            error = translate(e.message, Language.pl_PL)
+            error = translate(e.message, Language(Config.UI.LANGUAGE))
 
     token = save_check_results(
         envelope_domain=envelope_domain,
@@ -182,13 +178,13 @@ async def check_domain_scan_post(request: Request, domain: str = Form()) -> Resp
             dkim_domain=None,
             message=None,
             message_timestamp=None,
-            nameservers=NAMESERVERS,
-            language=Language(LANGUAGE),
+            nameservers=Config.Network.NAMESERVERS,
+            language=Language(Config.UI.LANGUAGE),
         )
         error = None
     except (DomainValidationException, ScanningException) as e:
         result = None
-        error = translate(e.message, Language.pl_PL)
+        error = translate(e.message, Language(Config.UI.LANGUAGE))
 
     token = save_check_results(
         envelope_domain=domain,
@@ -240,8 +236,8 @@ async def check_domain_api(request: Request, domain: str) -> ScanAPICallResult:
             dkim_domain=None,
             message=None,
             message_timestamp=None,
-            nameservers=NAMESERVERS,
-            language=Language(LANGUAGE),
+            nameservers=Config.Network.NAMESERVERS,
+            language=Language(Config.UI.LANGUAGE),
         )
         return ScanAPICallResult(result=result)
     except (DomainValidationException, ScanningException):

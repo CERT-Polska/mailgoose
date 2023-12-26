@@ -15,7 +15,7 @@ services:
     environment:
       DB_URL: postgresql+psycopg2://postgres:postgres@db:5432/mailgoose
       FORWARDED_ALLOW_IPS: "*"
-      REDIS_CONNECTION_STRING: redis://redis:6379/0
+      REDIS_URL: redis://redis:6379/0
     env_file:
       - .env
     command: bash -c "/wait-for-it.sh db:5432 --  uvicorn src.app:app --host 0.0.0.0 --port 8000 --proxy-headers --workers 8"
@@ -28,7 +28,7 @@ services:
       dockerfile: mail_receiver/Dockerfile
     command: python3 /opt/server.py
     environment:
-      REDIS_CONNECTION_STRING: redis://redis:6379/0
+      REDIS_URL: redis://redis:6379/0
     env_file:
       - .env
     volumes:

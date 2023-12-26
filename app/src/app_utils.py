@@ -7,10 +7,12 @@ from email import message_from_file
 from email.utils import parseaddr
 from typing import List, Optional, Tuple
 
-import decouple
 import dkim.util
 from email_validator import EmailNotValidError, validate_email
 from fastapi import Request
+
+from common.config import Config
+from common.language import Language
 
 from .db import (
     DKIMImplementationMismatchLogEntry,
@@ -21,9 +23,8 @@ from .db import (
 )
 from .logging import build_logger
 from .scan import ScanResult, scan
-from .translate import Language, translate_scan_result
+from .translate import translate_scan_result
 
-APP_DOMAIN = decouple.config("APP_DOMAIN")
 LOGGER = build_logger(__name__)
 
 
@@ -129,7 +130,7 @@ def scan_and_log(
 def recipient_username_to_address(username: str) -> str:
     # We do not use the request hostname as due to proxy configuration we sometimes got the
     # Host header wrong, thus breaking the check-by-email feature.
-    return f"{username}@{APP_DOMAIN}"
+    return f"{username}@{Config.Network.APP_DOMAIN}"
 
 
 def _nonexistent_translation_handler(message: str) -> str:
