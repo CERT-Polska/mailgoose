@@ -44,9 +44,13 @@ def print_docs_for_class(cls: type, output_file: IO[str], depth: int = 0) -> Non
 
         (hint,) = hints[variable_name].__metadata__
         indent = 4 * " "
-        doc = "\n".join(textwrap.wrap(hint.strip(), width=100, initial_indent=indent, subsequent_indent=indent))
+
+        doc = ""
+        for line in hint.strip().split("\n"):
+            doc += indent + line + "\n"
+
         if variable_name in DEFAULTS:
-            default_str = f"{indent}Default: {DEFAULTS[variable_name]}\n\n"
+            default_str = f"{indent}Default: ``{DEFAULTS[variable_name]}``\n\n"
         else:
             default_str = ""
 
