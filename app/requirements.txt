@@ -2,7 +2,7 @@ git+https://github.com/CERT-Polska/checkdmarc@allowing-whitespace
 dacite==1.8.1
 dkimpy==1.1.5
 email-validator==2.1.0.post1
-fastapi==0.104.1
+fastapi==0.105.0
 Jinja2==3.1.2
 jinja2-simple-tags==0.5.0
 psycopg2-binary==2.9.9
