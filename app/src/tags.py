@@ -2,7 +2,13 @@ from functools import cache
 
 from jinja2_simple_tags import StandaloneTag
 
-from common.config import Config
+try:
+    from common.config import Config
+
+    LANGUAGE = Config.UI.Language
+except ImportError:
+    # This may happen e.g. when pybabel is processing the templates and loading the tempalate tags
+    LANGUAGE = ""
 
 
 class BuildIDTag(StandaloneTag):  # type: ignore
@@ -16,7 +22,7 @@ class BuildIDTag(StandaloneTag):  # type: ignore
 
 class LanguageTag(StandaloneTag):  # type: ignore
     tags = {"language"}
-    language = Config.UI.LANGUAGE.replace("_", "-")
+    language = LANGUAGE.replace("_", "-")
 
     @cache
     def render(self) -> str:
