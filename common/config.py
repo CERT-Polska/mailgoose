@@ -21,7 +21,7 @@ class Config:
             "https://docs.sqlalchemy.org/en/20/core/engines.html#database-urls). The CERT PL "
             "production instance uses PostgreSQL - this is the database the system has been most "
             "thoroughly tested on.",
-        ] = get_config("DB_URL", default=None)
+        ] = get_config("DB_URL")
         REDIS_MESSAGE_DATA_EXPIRY_SECONDS: Annotated[
             int,
             "The data in Redis expires in order to make sure Redis never takes too much "
