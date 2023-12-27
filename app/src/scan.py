@@ -7,7 +7,7 @@ from email import message_from_file
 from email.message import Message as EmailMessage
 from typing import Any, Callable, Dict, List, Optional
 
-import checkdmarc  # type: ignore
+import checkdmarc
 import dkim
 import dkim.util
 import dns.exception

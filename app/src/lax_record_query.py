@@ -6,7 +6,6 @@
 from typing import List
 
 import dns.resolver
-
 from checkdmarc import get_base_domain
 from checkdmarc.utils import query_dns
 
