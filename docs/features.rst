@@ -2,9 +2,9 @@ Features
 ========
 
 - checking **SPF** and **DMARC** configuration by providing a domain,
-- checking **SPF**, **DMARC** and **DKIM** by sending a test e-mail,
-- SMTP SSL support for incoming e-mails (please refer to ``SSL_CERTIFICATE_PATH`` and
-  ``SSL_PRIVATE_KEY_PATH`` settings in :doc:`user-guide/configuration` to learn how to set it up),
+- checking **SPF**, **DMARC** and **DKIM** configuration by sending a test e-mail,
+- SSL support for incoming e-mails (please refer to ``SSL_CERTIFICATE_PATH`` and
+  ``SSL_PRIVATE_KEY_PATH`` settings documentation in :doc:`user-guide/configuration` to learn how to set it up),
 - easy translation to a different language,
 - easy layout customization,
 - REST API.

@@ -7,9 +7,7 @@ To run the service locally, use:
 
 .. code-block:: console
 
-    cp env.example .env
-
-    # Customize the settings in .env
+    cp env.example .env  # After doing that, customize the settings in .env if needed
 
     docker compose up --build
 
@@ -21,16 +19,16 @@ please refer to :doc:`user-guide/configuration`.
 
 Production deployment
 ---------------------
-Before deploying the system using the configuration in ``docker-compose.yml`` remember:
+Before deploying the system to production, remember:
 
 - that the ``mail_receiver`` container is responsible for saving incoming mails to
   Redis - make sure ports 25 and 587 are exposed publicly so that mailgoose will be able
   to receive a test e-mail. Make sure the domain configured in the ``APP_DOMAIN`` setting has ``MX`` DNS
   records pointing to the server ``mail_receiver`` is running on,
 - that SMTP SSL is supported - please refer to ``SSL_CERTIFICATE_PATH`` and ``SSL_PRIVATE_KEY_PATH``
-  settings description in :doc:`user-guide/configuration` to learn how to set it up,
+  settings documentation in :doc:`user-guide/configuration` to learn how to set it up,
 - to change the database password to a more secure one and to use Redis password (or make sure
-  the database and Redis are isolated on the network,
+  the database and Redis are isolated on the network),
 - to decide whether you want to launch a database/Redis instance inside a container or
   e.g. attaching to your own PostgreSQL/Redis cluster,
 - to check whether you want to use Google nameservers or other ones.
@@ -48,7 +46,8 @@ You can also customize the root page (/) of the system by providing your own fil
 replace ``/app/templates/custom_root_layout.html``.
 
 By replacing ``/app/templates/custom_failed_check_result_hints.html`` you may provide your own
-text that will be displayed if the e-mail sender verification mechanisms checks fail.
+text that will be displayed if the e-mail sender verification mechanisms checks fail (for example
+to provide links to tutorials).
 
 At CERT PL we use a separate ``docker-compose.yml`` file with additional configuration
 specific to our instance (https://bezpiecznapoczta.cert.pl/). Instead of copying

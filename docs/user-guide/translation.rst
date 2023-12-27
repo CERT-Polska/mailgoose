@@ -1,7 +1,7 @@
 Translation
 ===========
 The UI translations reside in ``./app/translations``. If the original messages changed, e.g. because
-you changed the UI messages, update the ``.po`` files by running:
+you changed the UI, update the ``.po`` files by running:
 
 ``./scripts/update_translation_files``
 

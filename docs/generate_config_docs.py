@@ -8,8 +8,8 @@ from typing import IO, Any, get_type_hints
 os.environ["APP_DOMAIN"] = ""
 os.environ["DB_URL"] = ""
 os.environ["REDIS_URL"] = ""
-from config import DEFAULTS, Config  # type: ignore # noqa
-from sphinx.application import Sphinx  # type: ignore # noqa
+from config import DEFAULTS, Config  # type: ignore  # noqa
+from sphinx.application import Sphinx  # type: ignore  # noqa
 
 
 def setup(app: Sphinx) -> None:
