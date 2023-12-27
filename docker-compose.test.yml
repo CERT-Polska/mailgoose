@@ -11,7 +11,7 @@ services:
       FORWARDED_ALLOW_IPS: "*"
       LANGUAGE: en_US
       REDIS_MESSAGE_DATA_EXPIRY_SECONDS: 864000
-      REDIS_CONNECTION_STRING: redis://redis-test:6379/0
+      REDIS_URL: redis://redis-test:6379/0
     command: bash -c "/wait-for-it.sh db-test:5432 --  uvicorn src.app:app --host 0.0.0.0 --port 8000 --proxy-headers"
   db-test:
     image: postgres:15.2-alpine

@@ -1,12 +1,13 @@
 import datetime
-import os
 from enum import Enum
 
 from sqlalchemy import JSON, Boolean, Column, DateTime, Integer, String, create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker  # type: ignore
 
+from common.config import Config
+
 Base = declarative_base()
-engine = create_engine(os.environ["DB_URL"])
+engine = create_engine(Config.Data.DB_URL)
 Session = sessionmaker(bind=engine)
 
 

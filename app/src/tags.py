@@ -1,7 +1,14 @@
 from functools import cache
 
-import decouple
 from jinja2_simple_tags import StandaloneTag
+
+try:
+    from common.config import Config
+
+    LANGUAGE = Config.UI.LANGUAGE
+except ImportError:
+    # This may happen e.g. when pybabel is processing the templates to find messages to be translated
+    LANGUAGE = ""
 
 
 class BuildIDTag(StandaloneTag):  # type: ignore
@@ -15,8 +22,8 @@ class BuildIDTag(StandaloneTag):  # type: ignore
 
 class LanguageTag(StandaloneTag):  # type: ignore
     tags = {"language"}
-    language = decouple.config("LANGUAGE", default="en_US").replace("_", "-")
+    language = LANGUAGE.replace("_", "-")
 
     @cache
     def render(self) -> str:
-        return self.language  # type: ignore
+        return self.language
