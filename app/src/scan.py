@@ -7,7 +7,8 @@ from email import message_from_file
 from email.message import Message as EmailMessage
 from typing import Any, Callable, Dict, List, Optional
 
-import checkdmarc
+import checkdmarc.smtp
+import checkdmarc.utils
 import dkim
 import dkim.util
 import dns.exception
@@ -18,9 +19,9 @@ import validators
 from . import lax_record_query
 from .logging import build_logger
 
-checkdmarc.DNS_CACHE.max_age = 1
-checkdmarc.TLS_CACHE.max_age = 1
-checkdmarc.STARTTLS_CACHE.max_age = 1
+checkdmarc.utils.DNS_CACHE.max_age = 1
+checkdmarc.smtp.TLS_CACHE.max_age = 1
+checkdmarc.smtp.STARTTLS_CACHE.max_age = 1
 
 psl = publicsuffixlist.PublicSuffixList()
 
