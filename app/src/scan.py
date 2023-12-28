@@ -7,7 +7,8 @@ from email import message_from_file
 from email.message import Message as EmailMessage
 from typing import Any, Callable, Dict, List, Optional
 
-import checkdmarc  # type: ignore
+import checkdmarc.smtp
+import checkdmarc.utils
 import dkim
 import dkim.util
 import dns.exception
@@ -18,9 +19,9 @@ import validators
 from . import lax_record_query
 from .logging import build_logger
 
-checkdmarc.DNS_CACHE.max_age = 1
-checkdmarc.TLS_CACHE.max_age = 1
-checkdmarc.STARTTLS_CACHE.max_age = 1
+checkdmarc.utils.DNS_CACHE.max_age = 1
+checkdmarc.smtp.TLS_CACHE.max_age = 1
+checkdmarc.smtp.STARTTLS_CACHE.max_age = 1
 
 psl = publicsuffixlist.PublicSuffixList()
 
@@ -247,19 +248,19 @@ def scan_domain(
     )
 
     try:
-        spf_query = checkdmarc.query_spf_record(envelope_domain, nameservers=nameservers, timeout=timeout)
+        spf_query = checkdmarc.spf.query_spf_record(envelope_domain, nameservers=nameservers, timeout=timeout)
 
         domain_result.spf.record = spf_query["record"]
         if domain_result.spf.record and "%" in domain_result.spf.record:
             domain_result.spf.warnings = ["SPF records containing macros aren't supported by the system yet."]
             domain_result.spf.record_could_not_be_fully_validated = True
         elif not domain_result.spf.record:
-            raise checkdmarc.SPFRecordNotFound(None)
+            raise checkdmarc.spf.SPFRecordNotFound(None)
         else:
             domain_result.spf.warnings = spf_query["warnings"]
 
             try:
-                parsed_spf = checkdmarc.parse_spf_record(
+                parsed_spf = checkdmarc.spf.parse_spf_record(
                     domain_result.spf.record,
                     domain_result.domain,
                     parked=parked,
@@ -274,7 +275,7 @@ def scan_domain(
                         "what should happen with messages that fail SPF verification. For example, "
                         "'-all' will tell the recipient server to drop such messages."
                     ]
-            except checkdmarc.SPFRecordNotFound as e:
+            except checkdmarc.spf.SPFRecordNotFound as e:
                 # This is a different type from standard SPFRecordNotFound - it occurs
                 # during *parsing*, so it is not caused by lack of SPF record, but
                 # a malformed one (e.g. including a domain that doesn't have an SPF record).
@@ -283,12 +284,12 @@ def scan_domain(
                     "have an SPF record. When using directives such as 'include' or 'redirect' remember "
                     "that the destination domain must have a correct SPF record.",
                 ]
-    except checkdmarc.SPFRecordNotFound as e:
+    except checkdmarc.spf.SPFRecordNotFound as e:
         # https://github.com/domainaware/checkdmarc/issues/90
         if isinstance(e.args[0], dns.exception.DNSException):
             raise ScanningException(e.args[0].msg if e.args[0].msg else repr(e.args[0]))
 
-        if isinstance(e.args[0], checkdmarc.MultipleSPFRTXTRecords):
+        if isinstance(e.args[0], checkdmarc.spf.MultipleSPFRTXTRecords):
             domain_result.spf.errors = [
                 "Multiple SPF records found. We recommend leaving only one, as multiple SPF records "
                 "can cause problems with some SPF implementations.",
@@ -302,28 +303,28 @@ def scan_domain(
                 "to decrease the possibility of successful e-mail message spoofing.",
             ]
             domain_result.spf.record_not_found = True
-    except checkdmarc.SPFTooManyVoidDNSLookups:
+    except checkdmarc.spf.SPFTooManyVoidDNSLookups:
         if not ignore_void_dns_lookups:
             domain_result.spf.errors = [
                 "SPF record causes too many void DNS lookups. Some implementations may require the number of "
                 "failed DNS lookups (e.g. ones that reference a nonexistent domain) to be low. The DNS lookups "
                 "are caused by directives such as 'mx' or 'include'.",
             ]
-    except checkdmarc.SPFIncludeLoop:
+    except checkdmarc.spf.SPFIncludeLoop:
         domain_result.spf.errors = [
             "SPF record includes an endless loop. Please check whether 'include' or 'redirect' directives don't "
             "create a loop where a domain redirects back to itself or earlier domain."
         ]
-    except checkdmarc.SPFRedirectLoop:
+    except checkdmarc.spf.SPFRedirectLoop:
         domain_result.spf.errors = [
             "SPF record includes an endless loop. Please check whether 'include' or 'redirect' directives don't "
             "create a loop where a domain redirects back to itself or earlier domain."
         ]
-    except checkdmarc.SPFSyntaxError as e:
+    except checkdmarc.spf.SPFSyntaxError as e:
         # We put here the original exception message from checkdmarc (e.g. "example.com: Expected mechanism
         # at position 42 (marked with ➞) in: (...)") as it contains information that is helpful to debug the syntax error.
         domain_result.spf.errors = [e.args[0]]
-    except checkdmarc.SPFTooManyDNSLookups:
+    except checkdmarc.spf.SPFTooManyDNSLookups:
         domain_result.spf.errors = [
             "SPF record causes too many DNS lookups. The DNS lookups are caused by directives such as 'mx' or 'include'. "
             "The specification requires the number of DNS lookups to be lower or equal to 10 to decrease load on DNS servers.",
@@ -336,14 +337,14 @@ def scan_domain(
         dmarc_warnings = []
 
         try:
-            dmarc_query = checkdmarc.query_dmarc_record(from_domain, nameservers=nameservers, timeout=timeout)
-        except checkdmarc.DMARCRecordNotFound as e:
-            if isinstance(e.args[0], checkdmarc.UnrelatedTXTRecordFoundAtDMARC):
+            dmarc_query = checkdmarc.dmarc.query_dmarc_record(from_domain, nameservers=nameservers, timeout=timeout)
+        except checkdmarc.dmarc.DMARCRecordNotFound as e:
+            if isinstance(e.args[0], checkdmarc.dmarc.UnrelatedTXTRecordFoundAtDMARC):
                 dmarc_warnings.append(
                     "Unrelated TXT record found in the '_dmarc' subdomain. We recommend removing it, as such unrelated "
                     "records may cause problems with some DMARC implementations.",
                 )
-                dmarc_query = checkdmarc.query_dmarc_record(
+                dmarc_query = checkdmarc.dmarc.query_dmarc_record(
                     domain,
                     nameservers=nameservers,
                     timeout=timeout,
@@ -353,10 +354,10 @@ def scan_domain(
                 raise e
         domain_result.dmarc.record = dmarc_query["record"]
         if not domain_result.dmarc.record:
-            raise checkdmarc.DMARCRecordNotFound(None)
+            raise checkdmarc.dmarc.DMARCRecordNotFound(None)
 
         domain_result.dmarc.location = dmarc_query["location"]
-        parsed_dmarc_record = checkdmarc.parse_dmarc_record(
+        parsed_dmarc_record = checkdmarc.dmarc.parse_dmarc_record(
             dmarc_query["record"],
             dmarc_query["location"],
             parked=parked,
@@ -400,7 +401,7 @@ def scan_domain(
         domain_result.dmarc.warnings = list(
             set(dmarc_query["warnings"]) | set(parsed_dmarc_record["warnings"]) | set(dmarc_warnings)
         )
-    except checkdmarc.DMARCRecordNotFound as e:
+    except checkdmarc.dmarc.DMARCRecordNotFound as e:
         # https://github.com/domainaware/checkdmarc/issues/90
         if isinstance(e.args[0], dns.exception.DNSException):
             raise ScanningException(e.args[0].msg if e.args[0].msg else repr(e.args[0]))
@@ -413,43 +414,43 @@ def scan_domain(
             "to decrease the possibility of successful e-mail message spoofing.",
         ]
         domain_result.dmarc.record_not_found = True
-    except checkdmarc.DMARCRecordInWrongLocation as e:
+    except checkdmarc.dmarc.DMARCRecordInWrongLocation as e:
         # We put here the original exception message from checkdmarc ("The DMARC record must be located at {0},
         # not {1}") as it contains the domain names describing the expected and actual location.
         domain_result.dmarc.errors = [e.args[0]]
-    except checkdmarc.MultipleDMARCRecords:
+    except checkdmarc.dmarc.MultipleDMARCRecords:
         domain_result.dmarc.errors = [
             "There are multiple DMARC records. We recommend leaving only one, as multiple "
             "DMARC records can cause problems with some DMARC implementations.",
         ]
-    except checkdmarc.SPFRecordFoundWhereDMARCRecordShouldBe:
+    except checkdmarc.dmarc.SPFRecordFoundWhereDMARCRecordShouldBe:
         domain_result.dmarc.errors = [
             "There is an SPF record instead of DMARC one on the '_dmarc' subdomain.",
         ]
-    except checkdmarc.DMARCRecordStartsWithWhitespace:
+    except checkdmarc.dmarc.DMARCRecordStartsWithWhitespace:
         domain_result.dmarc.errors = [
             "Found a DMARC record that starts with whitespace. "
             "Please remove the whitespace, as some implementations may not "
             "process it correctly."
         ]
-    except checkdmarc.DMARCSyntaxError as e:
+    except checkdmarc.dmarc.DMARCSyntaxError as e:
         # We put here the original exception message from checkdmarc (e.g. "the p tag must immediately follow
         # the v tag") as it contains information that is helpful to debug the syntax error.
         domain_result.dmarc.errors = [e.args[0]]
-    except checkdmarc.InvalidDMARCTag:
+    except checkdmarc.dmarc.InvalidDMARCTag:
         domain_result.dmarc.errors = [
             "DMARC record uses an invalid tag. Please refer to https://datatracker.ietf.org/doc/html/rfc7489#section-6.3 "
             "for the list of available tags."
         ]
-    except checkdmarc.InvalidDMARCReportURI:
+    except checkdmarc.dmarc.InvalidDMARCReportURI:
         domain_result.dmarc.errors = [
             "DMARC report URI is invalid. The report URI should be an e-mail address prefixed with mailto:.",
         ]
-    except checkdmarc.UnverifiedDMARCURIDestination:
+    except checkdmarc.dmarc.UnverifiedDMARCURIDestination:
         domain_result.dmarc.errors = [
             "The destination of a DMARC report URI does not indicate that it accepts reports for the domain."
         ]
-    except checkdmarc.DMARCReportEmailAddressMissingMXRecords:
+    except checkdmarc.dmarc.DMARCReportEmailAddressMissingMXRecords:
         domain_result.dmarc.errors = [
             "The domain of the email address in a DMARC report URI is missing MX records. That means, that this domain "
             "may not receive DMARC reports."

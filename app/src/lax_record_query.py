@@ -6,11 +6,8 @@
 from typing import List
 
 import dns.resolver
-
-# We import private _query_dns from checkdmarc to avoid code duplication, as we
-# consider importing a private function to be a lesser evil than duplicating it.
-from checkdmarc import _query_dns as query_dns  # type: ignore
 from checkdmarc import get_base_domain
+from checkdmarc.utils import query_dns
 
 SIGNATURE_LOOKUP_LENGTH = 20
 

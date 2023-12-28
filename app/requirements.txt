@@ -1,4 +1,4 @@
-git+https://github.com/CERT-Polska/checkdmarc@allowing-whitespace
+checkdmarc==5.0.2
 dacite==1.8.1
 dkimpy==1.1.5
 email-validator==2.1.0.post1
