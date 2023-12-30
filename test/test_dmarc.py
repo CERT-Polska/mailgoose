@@ -12,7 +12,7 @@ CORRECT_CONFIG_REGEX = r"DMARC:\s*correct configuration"
 
 class DMARCTestCase(BaseTestCase):
     def test_correct(self) -> None:
-        result = self.check_domain("cert.pl")
+        result = self.check_domain("correct.dmarc." + TEST_DOMAIN)
         assert re.search(CORRECT_CONFIG_REGEX, result)
         assert not re.search(INCORRECT_CONFIG_REGEX, result)
 
