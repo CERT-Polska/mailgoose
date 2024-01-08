@@ -32,9 +32,6 @@ services:
       REDIS_URL: redis://redis:6379/0
     env_file:
       - .env
-    volumes:
-      # Mounting the whole /etc/letsencrypt as the key may be a link to ../../archive/
-      - /etc/letsencrypt/:/etc/letsencrypt:ro
     ports:
       - 25:25
       - 587:587
