@@ -537,11 +537,20 @@ def scan_dkim(
         if opendkim_valid and dkim_implementation_mismatch_callback:
             dkim_implementation_mismatch_callback(message, False, opendkim_valid)
 
-        return DKIMScanResult(
-            valid=False,
-            errors=[e.args[0]],
-            warnings=[],
-        )
+        if e.args[0]:
+            return DKIMScanResult(
+                valid=False,
+                errors=[e.args[0]],
+                warnings=[],
+            )
+        else:
+            LOGGER.exception("Error during DKIM signature validation")
+
+            return DKIMScanResult(
+                valid=False,
+                errors=["An unknown error occured during DKIM signature validation."],
+                warnings=[],
+            )
 
 
 def scan(
