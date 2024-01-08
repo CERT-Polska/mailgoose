@@ -1,4 +1,4 @@
-checkdmarc==5.1.0
+checkdmarc==5.2.7
 dacite==1.8.1
 dkimpy==1.1.5
 email-validator==2.1.0.post1
