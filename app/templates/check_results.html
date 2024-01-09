@@ -71,11 +71,11 @@
                 <h3>
                     {% if not envelope_domain or not from_domain or from_domain == envelope_domain %}
                         {% if not envelope_domain %}
-                            {% trans %}Domain{% endtrans %} {{ from_domain }}
+                            {% trans %}Domain{% endtrans %}: {{ from_domain }}
                         {% elif not from_domain %}
-                            {% trans %}Domain{% endtrans %} {{ envelope_domain }}
+                            {% trans %}Domain{% endtrans %}: {{ envelope_domain }}
                         {% elif from_domain == envelope_domain %}
-                            {% trans %}Domain{% endtrans %} {{ envelope_domain }}
+                            {% trans %}Domain{% endtrans %}: {{ envelope_domain }}
                         {% endif %}
                         -
                         {% trans %}e-mail sender verification mechanisms check results:{% endtrans %}
