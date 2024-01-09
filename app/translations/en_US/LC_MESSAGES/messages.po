@@ -15,6 +15,7 @@ msgid "Copied"
 msgstr ""
 
 #: app/templates/check_domain.html:9 app/templates/root.html:29
+#: app/templates/root.html:38
 msgid "Check domain"
 msgstr ""
 
@@ -261,16 +262,3 @@ msgid ""
 "<b>SPF</b> and <b>DMARC</b> mechanisms will be checked. To check DKIM, "
 "you need to send a test e-mail."
 msgstr ""
-
-#: app/templates/root.html:38
-msgid "Check a domain"
-msgstr ""
-
-#~ msgid ""
-#~ "Verify your SPF and DMARC settings "
-#~ "by providing a domain. Note: only "
-#~ "the <b>SPF</b> and <b>DMARC</b> mechanisms "
-#~ "will be checked - to check DKIM,"
-#~ " you need to send a test "
-#~ "e-mail."
-#~ msgstr ""

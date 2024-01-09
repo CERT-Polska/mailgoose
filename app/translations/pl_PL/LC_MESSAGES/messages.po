@@ -15,6 +15,7 @@ msgid "Copied"
 msgstr "Skopiowano"
 
 #: app/templates/check_domain.html:9 app/templates/root.html:29
+#: app/templates/root.html:38
 msgid "Check domain"
 msgstr "Sprawdź domenę"
 
@@ -298,7 +299,3 @@ msgstr ""
 "domenę. W tym wypadku zostaną sprawdzone tylko mechanizmy <b>SPF</b> "
 "i&nbsp;<b>DMARC</b> - dla sprawdzenia DKIM konieczne jest wysłanie "
 "testowego e-maila."
-
-#: app/templates/root.html:38
-msgid "Check domain"
-msgstr "Sprawdź domenę"
