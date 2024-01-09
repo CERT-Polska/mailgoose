@@ -14,9 +14,8 @@ msgstr "przejdź do strony głównej."
 msgid "Copied"
 msgstr "Skopiowano"
 
-#: app/templates/check_domain.html:9 app/templates/root.html:31
-#: app/templates/root.html:40
-msgid "Check a domain"
+#: app/templates/check_domain.html:9 app/templates/root.html:29
+msgid "Check domain"
 msgstr "Sprawdź domenę"
 
 #: app/templates/check_domain.html:12 app/templates/check_results.html:74
@@ -34,8 +33,8 @@ msgstr "Nie podawaj całego adresu email, jedynie część po znaku \"@\""
 msgid "Check"
 msgstr "Sprawdź"
 
-#: app/templates/check_email.html:44
-msgid "Check by sending e-mail"
+#: app/templates/check_email.html:44 app/templates/root.html:6
+msgid "Check configuration by sending an e-mail"
 msgstr "Sprawdź wysyłając e-mail"
 
 #: app/templates/check_email.html:47
@@ -267,40 +266,39 @@ msgstr ""
 "Po poprawie błędów prosimy ponowić skanowanie - niektóre błędy mogą "
 "zostać znalezione dopiero po udanym wykonaniu wcześniejszych testów."
 
-#: app/templates/root.html:6
-msgid "Check your configuration by sending an e-mail"
-msgstr "Sprawdź konfigurację wysyłając wiadomość e-mail"
-
 #: app/templates/root.html:9
 msgid ""
-"If you send a test e-mail to a specific address, the system will verify "
-"whether the <b>SPF</b>, <b>DKIM</b> and&nbsp;<b>DMARC</b> mechanisms are "
-"set up correctly."
+"Verify your <b>DKIM</b>, <b>DMARC</b>, and <b>SPF</b> settings by sending"
+" a test e-mail."
 msgstr ""
 "Gdy wyślesz testową wiadomość e-mail na specjalny adres, system "
 "zweryfikuje poprawność konfiguracji mechanizmów <b>SPF</b>, <b>DKIM</b> "
 "i&nbsp;<b>DMARC</b>."
 
-#: app/templates/root.html:16
+#: app/templates/root.html:15
 msgid ""
-"This path is recommended - when you send a test e-mail, we will be able "
-"to perform more accurate checks than using a domain."
+"This is the recommended path. Sending a test e-mail allows us to perform "
+"more accurate analysis."
 msgstr ""
 "Ta ścieżka jest przez nas rekomendowana – dzięki niej będziemy "
 "w&nbsp;stanie wykonać dokładniejsze sprawdzenie, niż korzystając "
 "z&nbsp;domeny."
 
-#: app/templates/root.html:23
+#: app/templates/root.html:21
 msgid "Send an e-mail"
 msgstr "Wyślij e-mail"
 
-#: app/templates/root.html:34
+#: app/templates/root.html:32
 msgid ""
-"You may also verify the configuration by providing a domain. In that "
-"case, only the <b>SPF</b> and <b>DMARC</b> mechanisms will be checked - "
-"to check DKIM, you need to send a test e-mail."
+"Verify your SPF and DMARC settings by providing a domain. Note: only the "
+"<b>SPF</b> and <b>DMARC</b> mechanisms will be checked. To check DKIM, "
+"you need to send a test e-mail."
 msgstr ""
 "Możesz skorzystać także z&nbsp;opcji weryfikacji konfiguracji podając "
 "domenę. W tym wypadku zostaną sprawdzone tylko mechanizmy <b>SPF</b> "
 "i&nbsp;<b>DMARC</b> - dla sprawdzenia DKIM konieczne jest wysłanie "
 "testowego e-maila."
+
+#: app/templates/root.html:38
+msgid "Check domain"
+msgstr "Sprawdź domenę"
