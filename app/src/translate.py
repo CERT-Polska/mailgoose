@@ -475,6 +475,10 @@ TRANSLATIONS = {
             "h= tag not permitted in ARC-Seal header field",
             "Tag h= nie jest dozwolony w nagłówku ARC-Seal.",
         ),
+        (
+            "An unknown error occured during DKIM signature validation.",
+            "Wystąpił nieznany błąd podczas walidacji podpisu DKIM.",
+        ),
     ]
 }
 

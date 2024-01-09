@@ -59,7 +59,7 @@ class Config:
             "1. to mount it into your Docker container,\n"
             "2. to restart the containers if a new one is generated,\n"
             "3. that generated certificates may be symbolic links - their destination must also be mounted.\n\n",
-        ] = decouple.config("SSL_PRIVATE_KEY_PATH", default=None)
+        ] = decouple.config("SSL_CERTIFICATE_PATH", default=None)
 
     class UI:
         LANGUAGE: Annotated[
