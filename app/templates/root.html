@@ -3,19 +3,17 @@
 {% block check_by_sending_email %}
     <div class="card h-100 card-highlight">
         <div class="card-body d-flex flex-column">
-            <h5 class="card-title">{% trans %}Check your configuration by sending an e-mail{% endtrans %}</h5>
+            <h5 class="card-title">{% trans %}Check configuration by sending an e-mail{% endtrans %}</h5>
             <div class="card-text">
                 <p>
                     {% trans trimmed %}
-                        If you send a test e-mail to a specific address, the system will verify whether the
-                        <b>SPF</b>, <b>DKIM</b> and&nbsp;<b>DMARC</b> mechanisms are set up correctly.
+                        Verify your <b>DKIM</b>, <b>DMARC</b>, and <b>SPF</b> settings by sending a test e-mail.
                     {% endtrans %}
                 </p>
                 <p>
                     <b>
                         {% trans trimmed %}
-                            This path is recommended - when you send a test e-mail, we will be able to perform
-                            more accurate checks than using a domain.
+                            This is the recommended path. Sending a test e-mail allows us to perform more accurate analysis.
                         {% endtrans %}
                     </b>
                 </p>
@@ -28,16 +26,16 @@
 {% block check_domain %}
     <div class="card h-100 card-highlight">
         <div class="card-body d-flex flex-column">
-            <h5 class="card-title">{% trans %}Check a domain{% endtrans %}</h5>
+            <h5 class="card-title">{% trans %}Check domain{% endtrans %}</h5>
             <div class="card-text">
                 <p>
                     {% trans trimmed %}
-                        You may also verify the configuration by providing a domain. In that case, only the <b>SPF</b>
-                        and <b>DMARC</b> mechanisms will be checked - to check DKIM, you need to send a test e-mail.
+                        Verify your SPF and DMARC settings by providing a domain. Note: only the <b>SPF</b>
+                        and <b>DMARC</b> mechanisms will be checked. To check DKIM, you need to send a test e-mail.
                     {% endtrans %}
                 </p>
             </div>
-            <a href="{{ url_for('check_domain_form') }}" class="btn btn-primary mt-auto">{% trans %}Check a domain{% endtrans %}</a>
+            <a href="{{ url_for('check_domain_form') }}" class="btn btn-primary mt-auto">{% trans %}Check domain{% endtrans %}</a>
         </div>
     </div>
 {% endblock %}
