@@ -17,6 +17,21 @@ To start the application, you need to configure only the variables present in
 ``env.example`` - all others are optional. To learn what settings are available,
 please refer to :doc:`user-guide/configuration`.
 
+To send a test e-mail to a local instance of Mailgoose from the terminal, you may use Python
+``smtplib`` library:
+
+.. code-block:: python
+
+    import smtplib
+
+    server = smtplib.SMTP('localhost')
+    server.sendmail(
+        "example@example.com",
+        recipient_address, # put here the proper recipient address
+        "From: example@example.com\r\nhello"
+    )
+    server.quit()
+
 Production deployment
 ---------------------
 Before deploying the system to production, remember:
