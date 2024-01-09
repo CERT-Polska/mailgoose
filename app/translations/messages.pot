@@ -139,7 +139,7 @@ msgid "(e-mail message from %(date_str)s)"
 msgstr ""
 
 #: app/templates/check_results.html:113
-msgid "If you want to share the check results, please copy the following link:"
+msgid "If you want to share check results, copy the following link:"
 msgstr ""
 
 #: app/templates/check_results.html:129
@@ -160,7 +160,7 @@ msgid "mechanisms"
 msgstr ""
 
 #: app/templates/check_results.html:139
-msgid "of"
+msgid "out of"
 msgstr ""
 
 #: app/templates/check_results.html:142

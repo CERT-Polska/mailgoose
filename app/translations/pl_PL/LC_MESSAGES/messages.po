@@ -149,7 +149,7 @@ msgid "(e-mail message from %(date_str)s)"
 msgstr "(wiadomość e-mail z %(date_str)s)"
 
 #: app/templates/check_results.html:113
-msgid "If you want to share the check results, please copy the following link:"
+msgid "If you want to share check results, copy the following link:"
 msgstr ""
 "Jeśli chcą Państwo udostępnić wyniki sprawdzenia, prosimy skopiować ten "
 "link:"
@@ -172,7 +172,7 @@ msgid "mechanisms"
 msgstr "mechanizmy"
 
 #: app/templates/check_results.html:139
-msgid "of"
+msgid "out of"
 msgstr "z"
 
 #: app/templates/check_results.html:142

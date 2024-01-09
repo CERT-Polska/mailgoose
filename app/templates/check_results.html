@@ -110,7 +110,7 @@
                                 {{ gettext("(e-mail message from %(date_str)s)", date_str=result.message_timestamp.strftime("%Y-%m-%d %H:%M:%S")) }}{% endif %}.<br/><br/>
                         </span>
 
-                        {% trans %}If you want to share the check results, please copy the following link:{% endtrans %}
+                        {% trans %}If you want to share check results, copy the following link:{% endtrans %}
                         <div class="input-group with-margin">
                             <input type="text" readonly value="{{ url }}" class="form-control" />
                             {{ copy_button(url) }}
@@ -136,7 +136,7 @@
                             {% else %}
                                 {% trans %}mechanisms{% endtrans %}
                             {% endif %}
-                            {% trans %}of{% endtrans %}
+                            {% trans %}out of{% endtrans %}
                             {{ result.num_checked_mechanisms }}
                             {% if result.num_correct_mechanisms == 0 %}
                                 {{ pgettext("zero", "configured") }}
