@@ -1,4 +1,9 @@
-# mailgoose
+<h1>
+    <picture>
+        <source media="(prefers-color-scheme: dark)" srcset=".github/images/logo_dark.png">
+        <img alt="logo" width="400px" src=".github/images/logo.png">
+    </picture>
+</h1>
 
 Mailgoose is a web application that allows the users to check whether their SPF, DMARC and
 DKIM configuration is set up correctly. CERT PL uses it to run
@@ -53,7 +58,7 @@ make html
 
 ## Contributing
 Contributions are welcome! We will appreciate both ideas for improvements (added as
-[GitHub issues](https://github.com/CERT-Polska/mailgoose)) as well as pull requests
+[GitHub issues](https://github.com/CERT-Polska/mailgoose/issues)) as well as pull requests
 with new features or code improvements.
 
 However obvious it may seem we kindly remind you that by contributing to mailgoose
