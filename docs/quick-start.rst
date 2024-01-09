@@ -7,6 +7,10 @@ To run the service locally, use:
 
 .. code-block:: console
 
+    git clone https://github.com/CERT-Polska/mailgoose
+
+    cd mailgoose
+
     cp env.example .env  # After doing that, customize the settings in .env if needed
 
     docker compose up --build
