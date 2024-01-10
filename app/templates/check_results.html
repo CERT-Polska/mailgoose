@@ -93,7 +93,7 @@
                         {% if is_old %}
                             <span class="text-danger">
                                 {{ gettext(
-                                    "You are viewing results that are older than %(age_threshold_minutes)s minutes.",
+                                    "The results you are viewing are older than %(age_threshold_minutes)s minutes.",
                                     age_threshold_minutes=age_threshold_minutes
                                    )
                                 }}
@@ -106,11 +106,11 @@
                         {% endif %}
 
                         <span class="{% if is_old %}text-danger{% endif %}">
-                            {% trans %}Check date: {% endtrans %}{{ result.timestamp.strftime("%Y-%m-%d %H:%M:%S") }}{% if result.message_timestamp %}
+                            {% trans %}Test date: {% endtrans %}{{ result.timestamp.strftime("%Y-%m-%d %H:%M:%S") }}{% if result.message_timestamp %}
                                 {{ gettext("(e-mail message from %(date_str)s)", date_str=result.message_timestamp.strftime("%Y-%m-%d %H:%M:%S")) }}{% endif %}.<br/><br/>
                         </span>
 
-                        {% trans %}If you want to share check results, copy the following link:{% endtrans %}
+                        {% trans %}To share check results, copy the following link:{% endtrans %}
                         <div class="input-group with-margin">
                             <input type="text" readonly value="{{ url }}" class="form-control" />
                             {{ copy_button(url) }}
@@ -176,8 +176,8 @@
                                     {% trans trimmed %}
                                         However, we recommend configuring an SPF record if possible (even if the domain is not used
                                         to send e-mails), because older mail servers may not support DMARC and use SPF for verification.
-                                        The combination of all protection mechanisms - SPF, DKIM and DMARC will allow other servers to properly
-                                        verify e-mail message authenticity in all cases.
+                                        The combination of all protection mechanisms - SPF, DKIM and DMARC allows all servers to properly
+                                        verify e-mail message authenticity.
                                     {% endtrans %}
                                 </p>
                             </div>
