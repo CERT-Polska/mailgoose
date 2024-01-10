@@ -11,6 +11,9 @@ DKIM configuration is set up correctly. CERT PL uses it to run
 that helps Polish institutions to configure their domains to decrease the probability of successful
 e-mail spoofing.
 
+Under the hood, Mailgoose uses <a href="https://github.com/domainaware/checkdmarc">checkdmarc</a>
+and <a href="https://launchpad.net/dkimpy/">dkimpy</a>, among others.
+
 ## [Quick Start 🔨](https://mailgoose.readthedocs.io/en/latest/quick-start.html) | [Docs 📚](https://mailgoose.readthedocs.io/en/latest/)
 
 ## Features
