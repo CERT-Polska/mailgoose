@@ -7,7 +7,7 @@ msgid "Resource not found. Make sure the address is correct or "
 msgstr ""
 
 #: app/templates/404.html:10
-msgid "go back to the homepage."
+msgid "go back to homepage."
 msgstr ""
 
 #: app/templates/base.html:6
@@ -27,7 +27,7 @@ msgid "Domain"
 msgstr ""
 
 #: app/templates/check_domain.html:15
-msgid "Don't put an e-mail address here, only the part after \"@\""
+msgid "Don't put the entire e-mail address here, only the part after \"@\""
 msgstr ""
 
 #: app/templates/check_domain.html:18
@@ -118,7 +118,7 @@ msgstr ""
 #: app/templates/check_results.html:95
 #, python-format
 msgid ""
-"You are viewing results that are older than %(age_threshold_minutes)s "
+"The results you are viewing are older than %(age_threshold_minutes)s "
 "minutes."
 msgstr ""
 
@@ -130,7 +130,7 @@ msgid ""
 msgstr ""
 
 #: app/templates/check_results.html:109
-msgid "Check date: "
+msgid "Test date: "
 msgstr ""
 
 #: app/templates/check_results.html:110
@@ -139,7 +139,7 @@ msgid "(e-mail message from %(date_str)s)"
 msgstr ""
 
 #: app/templates/check_results.html:113
-msgid "If you want to share check results, copy the following link:"
+msgid "To share check results, copy the following link:"
 msgstr ""
 
 #: app/templates/check_results.html:129
@@ -199,8 +199,8 @@ msgid ""
 "However, we recommend configuring an SPF record if possible (even if the "
 "domain is not used to send e-mails), because older mail servers may not "
 "support DMARC and use SPF for verification. The combination of all "
-"protection mechanisms - SPF, DKIM and DMARC will allow other servers to "
-"properly verify e-mail message authenticity in all cases."
+"protection mechanisms - SPF, DKIM and DMARC allows all servers to "
+"properly verify e-mail message authenticity."
 msgstr ""
 
 #: app/templates/check_results.html:197 app/templates/check_results.html:202
