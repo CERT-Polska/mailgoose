@@ -357,14 +357,31 @@ def scan_domain(
             raise checkdmarc.dmarc.DMARCRecordNotFound(None)
 
         domain_result.dmarc.location = dmarc_query["location"]
-        parsed_dmarc_record = checkdmarc.dmarc.parse_dmarc_record(
-            dmarc_query["record"],
-            dmarc_query["location"],
-            parked=parked,
-            include_tag_descriptions=include_dmarc_tag_descriptions,
-            nameservers=nameservers,
-            timeout=timeout,
-        )
+
+        try:
+            parsed_dmarc_record = checkdmarc.dmarc.parse_dmarc_record(
+                dmarc_query["record"],
+                dmarc_query["location"],
+                parked=parked,
+                include_tag_descriptions=include_dmarc_tag_descriptions,
+                nameservers=nameservers,
+                timeout=timeout,
+            )
+        except checkdmarc.dmarc.UnrelatedTXTRecordFoundAtDMARC:
+            dmarc_warnings.append(
+                "Unrelated TXT record found in the '_dmarc' subdomain of a domain the record refers to. "
+                "We recommend removing it, as such unrelated records may cause problems with some DMARC "
+                "implementations.",
+            )
+            parsed_dmarc_record = checkdmarc.dmarc.parse_dmarc_record(
+                dmarc_query["record"],
+                dmarc_query["location"],
+                parked=parked,
+                include_tag_descriptions=include_dmarc_tag_descriptions,
+                ignore_unrelated_records=True,
+                nameservers=nameservers,
+                timeout=timeout,
+            )
 
         if not check_spf_alignment(parsed_dmarc_record, envelope_domain, from_domain):
             domain_result.dmarc.errors.append(

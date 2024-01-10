@@ -128,6 +128,14 @@ TRANSLATIONS = {
             "niektóre serwery mogą w takiej sytuacji odrzucić konfigurację DMARC jako błędną.",
         ),
         (
+            "Unrelated TXT record found in the '_dmarc' subdomain of a domain the record refers to. "
+            "We recommend removing it, as such unrelated records may cause problems with some DMARC "
+            "implementations.",
+            "Znaleziono niepowiązane rekordy TXT w subdomenie '_dmarc' domeny, do której odwołuje się rekord. "
+            "Rekomendujemy ich usunięcie, ponieważ niektóre serwery mogą w takiej sytuacji odrzucić "
+            "konfigurację DMARC jako błędną.",
+        ),
+        (
             "The domain of the email address in a DMARC report URI is missing MX records. That means, that this domain "
             "may not receive DMARC reports.",
             "Domena adresu e-mail w adresie raportów DMARC nie zawiera rekordów MX. Oznacza to, że raporty DMARC mogą nie być "
