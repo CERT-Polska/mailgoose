@@ -22,7 +22,7 @@ msgstr ""
 #: app/templates/check_domain.html:12 app/templates/check_results.html:74
 #: app/templates/check_results.html:76 app/templates/check_results.html:78
 #: app/templates/check_results.html:191 app/templates/check_results.html:231
-#: app/templates/check_results.html:272
+#: app/templates/check_results.html:321
 msgid "Domain"
 msgstr ""
 
@@ -213,28 +213,57 @@ msgid "Records"
 msgstr ""
 
 #: app/templates/check_results.html:211 app/templates/check_results.html:251
-#: app/templates/check_results.html:277
+#: app/templates/check_results.html:301 app/templates/check_results.html:326
 msgid "Warnings"
 msgstr ""
 
 #: app/templates/check_results.html:212 app/templates/check_results.html:216
 #: app/templates/check_results.html:252 app/templates/check_results.html:256
-#: app/templates/check_results.html:278 app/templates/check_results.html:282
+#: app/templates/check_results.html:302 app/templates/check_results.html:306
+#: app/templates/check_results.html:327 app/templates/check_results.html:331
 msgid "none"
 msgstr ""
 
 #: app/templates/check_results.html:215 app/templates/check_results.html:255
-#: app/templates/check_results.html:281
+#: app/templates/check_results.html:305 app/templates/check_results.html:330
 msgid "Errors"
 msgstr ""
 
-#: app/templates/check_results.html:294
+#: app/templates/check_results.html:269
+msgid "Host"
+msgstr ""
+
+#: app/templates/check_results.html:273
+msgid "Port"
+msgstr ""
+
+#: app/templates/check_results.html:277
+msgid "Connected"
+msgstr ""
+
+#: app/templates/check_results.html:278 app/templates/check_results.html:283
+msgid "yes"
+msgstr ""
+
+#: app/templates/check_results.html:278 app/templates/check_results.html:283
+msgid "no"
+msgstr ""
+
+#: app/templates/check_results.html:282
+msgid "Certificate is valid"
+msgstr ""
+
+#: app/templates/check_results.html:288
+msgid "Supported TLS versions"
+msgstr ""
+
+#: app/templates/check_results.html:343
 msgid ""
 "To increase the chance that your configuration is interpreted by all "
 "e-mail servers correctly, we recommend fixing all errors and warnings."
 msgstr ""
 
-#: app/templates/check_results.html:302
+#: app/templates/check_results.html:351
 msgid ""
 "After fixing the issues, please rerun the scan - some problems can be "
 "detected only if earlier checks complete successfully."

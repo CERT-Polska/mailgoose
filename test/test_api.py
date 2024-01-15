@@ -32,6 +32,22 @@ class APITestCase(BaseTestCase):
                             "warnings": [],
                             "record_not_found": False,
                         },
+                        "tls": {
+                            "mail_transfer": {
+                                "mail_exchanges": [
+                                    {
+                                        "host": "starts-with-whitespace.dmarc.test.mailgoose.cert.pl",
+                                        "port": 25,
+                                        "connected": False,
+                                        "supported_protocols": [],
+                                    }
+                                ],
+                                "errors": [],
+                                "warnings": [
+                                    "Couldn't connect to host starts-with-whitespace.dmarc.test.mailgoose.cert.pl"
+                                ],
+                            }
+                        },
                         "spf_not_required_because_of_correct_dmarc": False,
                         "domain": "starts-with-whitespace.dmarc.test.mailgoose.cert.pl",
                         "base_domain": "cert.pl",

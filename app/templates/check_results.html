@@ -259,6 +259,55 @@
                             </table>
                         </div>
                     </div>
+
+                    <div class="card p-1 bg-light border rounded-3 mb-3">
+                        {{ card_header("TLS: Mail Exchange", result.domain.tls.mail_transfer) }}
+                        <div class="card-body">
+                            {% for mail_exchange in result.domain.tls.mail_transfer.mail_exchanges %}
+                            <table class="table">
+                                <tr>
+                                    <td class="label">{% trans %}Host{% endtrans %}</td>
+                                    <td><code>{{ mail_exchange.host }}</code></td>
+                                </tr>
+                                <tr>
+                                    <td class="label">{% trans %}Port{% endtrans %}</td>
+                                    <td><code>{{ mail_exchange.port }}</code></td>
+                                </tr>
+                                <tr>
+                                    <td class="label">{% trans %}Connected{% endtrans %}</td>
+                                    <td>{% if mail_exchange.connected %}{% trans %}yes{% endtrans %}{% else %}{% trans %}no{% endtrans %}{% endif %}</td>
+                                </tr>
+                                {% if mail_exchange.is_certificate_valid is not none %}
+                                <tr>
+                                    <td class="label">{% trans %}Certificate is valid{% endtrans %}</td>
+                                    <td>{% if mail_exchange.is_certificate_valid %}{% trans %}yes{% endtrans %}{% else %}{% trans %}no{% endtrans %}{% endif %}</td>
+                                </tr>
+                                {% endif %}
+                                {% if mail_exchange.connected %}
+                                <tr>
+                                    <td class="label">{% trans %}Supported TLS versions{% endtrans %}</td>
+                                    <td><code>
+                                        {% for supported_protocol in mail_exchange.supported_protocols %}
+                                        {{ supported_protocol }}
+                                        <br>
+                                        {% endfor %}
+                                    </code></td>
+                                </tr>
+                                {% endif %}
+                            </table>
+                            {% endfor %}
+                            <table class="table">
+                                <tr>
+                                    <td class="label">{% trans %}Warnings{% endtrans %}</td>
+                                    <td>{% if result.domain.tls.mail_transfer.warnings %}{{ render_problems(result.domain.tls.mail_transfer.warnings) }}{% else %}{% trans %}none{% endtrans %}{% endif %}</td>
+                                </tr>
+                                <tr>
+                                    <td class="label">{% trans %}Errors{% endtrans %}</td>
+                                    <td>{% if result.domain.tls.mail_transfer.errors %}{{ render_problems(result.domain.tls.mail_transfer.errors) }}{% else %}{% trans %}none{% endtrans %}{% endif %}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
                 {% endif %}
 
                 {% if result.dkim %}
