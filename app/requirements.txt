@@ -1,5 +1,4 @@
-checkdmarc==5.2.7
-git+https://github.com/CERT-Polska/checkdmarc@possibility-to-ignore-unrelated-dmarc-records
+checkdmarc==5.3.1
 dacite==1.8.1
 dkimpy==1.1.5
 email-validator==2.1.0.post1
