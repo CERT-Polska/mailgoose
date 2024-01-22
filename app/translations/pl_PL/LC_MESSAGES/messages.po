@@ -22,7 +22,7 @@ msgstr "Sprawdź domenę"
 #: app/templates/check_domain.html:12 app/templates/check_results.html:74
 #: app/templates/check_results.html:76 app/templates/check_results.html:78
 #: app/templates/check_results.html:191 app/templates/check_results.html:231
-#: app/templates/check_results.html:272
+#: app/templates/check_results.html:321
 msgid "Domain"
 msgstr "Domena"
 
@@ -235,22 +235,51 @@ msgid "Records"
 msgstr "Rekordy"
 
 #: app/templates/check_results.html:211 app/templates/check_results.html:251
-#: app/templates/check_results.html:277
+#: app/templates/check_results.html:301 app/templates/check_results.html:326
 msgid "Warnings"
 msgstr "Ostrzeżenia"
 
 #: app/templates/check_results.html:212 app/templates/check_results.html:216
 #: app/templates/check_results.html:252 app/templates/check_results.html:256
-#: app/templates/check_results.html:278 app/templates/check_results.html:282
+#: app/templates/check_results.html:302 app/templates/check_results.html:306
+#: app/templates/check_results.html:327 app/templates/check_results.html:331
 msgid "none"
 msgstr "brak"
 
 #: app/templates/check_results.html:215 app/templates/check_results.html:255
-#: app/templates/check_results.html:281
+#: app/templates/check_results.html:305 app/templates/check_results.html:330
 msgid "Errors"
 msgstr "Błędy"
 
-#: app/templates/check_results.html:294
+#: app/templates/check_results.html:269
+msgid "Host"
+msgstr "Host"
+
+#: app/templates/check_results.html:273
+msgid "Port"
+msgstr "Port"
+
+#: app/templates/check_results.html:277
+msgid "Connected"
+msgstr "Połączono"
+
+#: app/templates/check_results.html:278 app/templates/check_results.html:283
+msgid "yes"
+msgstr "tak"
+
+#: app/templates/check_results.html:278 app/templates/check_results.html:283
+msgid "no"
+msgstr "nie"
+
+#: app/templates/check_results.html:282
+msgid "Certificate is valid"
+msgstr "Certyfikat jest ważny"
+
+#: app/templates/check_results.html:288
+msgid "Supported TLS versions"
+msgstr "Wspierane wersje protokołu TLS"
+
+#: app/templates/check_results.html:343
 msgid ""
 "To increase the chance that your configuration is interpreted by all "
 "e-mail servers correctly, we recommend fixing all errors and warnings."
@@ -259,7 +288,7 @@ msgstr ""
 "zinterpretowana przez wszystkie serwery, rekomendujemy poprawę zarówno "
 "błędów, jak i ostrzeżeń."
 
-#: app/templates/check_results.html:302
+#: app/templates/check_results.html:351
 msgid ""
 "After fixing the issues, please rerun the scan - some problems can be "
 "detected only if earlier checks complete successfully."

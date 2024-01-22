@@ -1,10 +1,12 @@
 import datetime
 import io
+import ssl
 import string
 import subprocess
 from dataclasses import dataclass, field
 from email import message_from_file
 from email.message import Message as EmailMessage
+from smtplib import SMTP
 from typing import Any, Callable, Dict, List, Optional
 
 import checkdmarc.smtp
@@ -26,6 +28,30 @@ checkdmarc.smtp.STARTTLS_CACHE.max_age = 1
 psl = publicsuffixlist.PublicSuffixList()
 
 LOGGER = build_logger(__name__)
+
+
+@dataclass
+class TLSServerScanResult:
+    host: str
+    port: int
+    connected: bool
+    is_certificate_valid: Optional[bool]
+    supported_protocols: List[str]
+
+
+@dataclass
+class TLSMailTransportScanResult:
+    mta_sts = None
+    mail_exchanges: List[TLSServerScanResult]
+    valid = True
+    errors: List[str]
+    warnings: List[str]
+
+
+@dataclass
+class TLSMailScanResult:
+    mail_transfer: Optional[TLSMailTransportScanResult]
+    mail_provider = None
 
 
 @dataclass
@@ -59,6 +85,7 @@ class DMARCScanResult:
 class DomainScanResult:
     spf: SPFScanResult
     dmarc: DMARCScanResult
+    tls: TLSMailScanResult
     domain: str
     base_domain: str
     warnings: List[str]
@@ -182,6 +209,94 @@ def contains_spf_all_fail(parsed: Dict[str, Any]) -> bool:
     return False
 
 
+def scan_transport_security(domain: str, timeout: float = 5.0) -> TLSMailScanResult:
+    mx_servers: List[str] = []
+    try:
+        dns_answers = dns.resolver.resolve(domain, "MX")
+        for rdata in dns_answers:
+            mx_server_name = str(rdata.exchange).removesuffix(".")
+            mx_servers.append(mx_server_name)
+    except dns.resolver.NoAnswer:
+        mx_servers = [domain]
+    except dns.resolver.NXDOMAIN:
+        pass
+
+    mail_exchanges_scan_results: List[TLSServerScanResult] = []
+    mail_exchanges_errors: List[str] = []
+    mail_exchanges_warnings: List[str] = []
+
+    for mx_server in mx_servers:
+        port = 25
+        connected = False
+        is_certificate_valid = None
+        supported_protocols: List[ssl.TLSVersion] = []
+
+        try:
+            with SMTP(mx_server, port=port, timeout=timeout) as smtp:
+                smtp.noop()
+                connected = True
+        except (
+            ConnectionRefusedError,
+            TimeoutError,
+            OSError,
+        ):
+            mail_exchanges_warnings.append(f"Couldn't connect to host {mx_server}")
+
+        if connected:
+            for protocol in (
+                ssl.TLSVersion.TLSv1,
+                ssl.TLSVersion.TLSv1_1,
+                ssl.TLSVersion.TLSv1_2,
+                ssl.TLSVersion.TLSv1_3,
+            ):
+                ssl_context = ssl.create_default_context()
+                ssl_context.check_hostname = False
+                ssl_context.minimum_version = protocol
+                ssl_context.maximum_version = protocol
+
+                try:
+                    with SMTP(mx_server, port=port, timeout=timeout) as smtp:
+                        try:
+                            smtp.starttls(context=ssl_context)
+                            supported_protocols.append(protocol)
+                            is_certificate_valid = True
+                        except ssl.SSLCertVerificationError:
+                            supported_protocols.append(protocol)
+                            is_certificate_valid = False
+                        except ssl.SSLError:
+                            if protocol == ssl.TLSVersion.TLSv1_3:
+                                mail_exchanges_errors.append(f"Host {mx_server} doesn't support TLS 1.3")
+                except (
+                    ConnectionRefusedError,
+                    TimeoutError,
+                    OSError,
+                ):
+                    mail_exchanges_warnings.append(
+                        f"Host {mx_server} refused our connection while checking supported TLS versions. Maybe the firewall blocked us?"
+                    )
+                    break
+
+        tls_scan_result = TLSServerScanResult(
+            host=mx_server,
+            port=port,
+            connected=connected,
+            is_certificate_valid=is_certificate_valid,
+            supported_protocols=[supported_protocol.name for supported_protocol in supported_protocols],
+        )
+
+        mail_exchanges_scan_results.append(tls_scan_result)
+
+    mail_transfer_scan_results = TLSMailTransportScanResult(
+        mail_exchanges=mail_exchanges_scan_results,
+        errors=mail_exchanges_errors,
+        warnings=mail_exchanges_warnings,
+    )
+
+    return TLSMailScanResult(
+        mail_transfer=mail_transfer_scan_results,
+    )
+
+
 def scan_domain(
     envelope_domain: str,
     from_domain: str,
@@ -241,6 +356,9 @@ def scan_domain(
             location=None,
             errors=[],
             warnings=[],
+        ),
+        tls=TLSMailScanResult(
+            mail_transfer=None,
         ),
         domain=domain,
         base_domain=checkdmarc.get_base_domain(domain),
@@ -474,6 +592,8 @@ def scan_domain(
         ]
 
     domain_result.dmarc.valid = len(domain_result.dmarc.errors) == 0
+
+    domain_result.tls = scan_transport_security(envelope_domain, timeout=timeout)
 
     if not domain_result.spf.record:
         try:
