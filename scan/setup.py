@@ -13,8 +13,13 @@ setup(
     description="libmailgoose - check the settings needed to protect against e-mail spoofing",
     author="CERT Polska",
     author_email="info@cert.pl",
+    license="BSD",
     url="https://github.com/CERT-Polska/mailgoose",
     packages=["libmailgoose"],
     scripts=[],
+    classifiers=[
+        "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: BSD License",
+    ],
     install_requires=requires,
 )
