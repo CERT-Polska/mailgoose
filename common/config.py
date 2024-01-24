@@ -1,7 +1,6 @@
 from typing import Annotated, Any, List, get_type_hints
 
 import decouple
-
 from libmailgoose.language import Language
 
 DEFAULTS = {}
