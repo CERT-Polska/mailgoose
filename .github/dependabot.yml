@@ -17,6 +17,10 @@ updates:
     schedule:
       interval: "weekly"
   - package-ecosystem: "pip"
+    directory: "/scan/"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "pip"
     directory: "/test/"
     schedule:
       interval: "weekly"

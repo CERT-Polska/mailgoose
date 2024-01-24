@@ -11,8 +11,9 @@ import dkim.util
 from email_validator import EmailNotValidError, validate_email
 from fastapi import Request
 
+from libmailgoose.language import Language
+
 from common.config import Config
-from common.language import Language
 
 from .db import (
     DKIMImplementationMismatchLogEntry,

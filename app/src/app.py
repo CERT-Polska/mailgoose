@@ -13,8 +13,9 @@ from fastapi.staticfiles import StaticFiles
 from redis import Redis
 from starlette.responses import Response
 
+from libmailgoose.language import Language
+
 from common.config import Config
-from common.language import Language
 from common.mail_receiver_utils import get_key_from_username
 
 from .app_utils import (
