@@ -22,6 +22,17 @@ services:
     ports:
       - 8000:8000
     <<: *common-configuration
+  worker:
+    build:
+      context: .
+      dockerfile: app/docker/Dockerfile
+    environment:
+      DB_URL: postgresql+psycopg2://postgres:postgres@db:5432/mailgoose
+      REDIS_URL: redis://redis:6379/0
+    env_file:
+      - .env
+    command: bash -c "/wait-for-it.sh db:5432 --  rq worker"
+    <<: *common-configuration
   mail_receiver:
     build:
       context: .
