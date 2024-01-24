@@ -10,9 +10,11 @@ from typing import List, Optional, Tuple
 import dkim.util
 from email_validator import EmailNotValidError, validate_email
 from fastapi import Request
+from libmailgoose.language import Language
+from libmailgoose.scan import ScanResult, scan
+from libmailgoose.translate import translate_scan_result
 
 from common.config import Config
-from common.language import Language
 
 from .db import (
     DKIMImplementationMismatchLogEntry,
@@ -22,8 +24,6 @@ from .db import (
     Session,
 )
 from .logging import build_logger
-from .scan import ScanResult, scan
-from .translate import translate_scan_result
 
 LOGGER = build_logger(__name__)
 

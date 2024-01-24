@@ -6,6 +6,7 @@ ENV TZ=Europe/Warsaw
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 WORKDIR /app/
+COPY scan /scan
 COPY app/requirements.txt /requirements.txt
 COPY app/translations/requirements.txt /translations/requirements.txt
 

@@ -10,11 +10,13 @@ from typing import Any, Callable, Optional
 from fastapi import FastAPI, Form, HTTPException, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
+from libmailgoose.language import Language
+from libmailgoose.scan import DomainValidationException, ScanningException, ScanResult
+from libmailgoose.translate import translate
 from redis import Redis
 from starlette.responses import Response
 
 from common.config import Config
-from common.language import Language
 from common.mail_receiver_utils import get_key_from_username
 
 from .app_utils import (
@@ -26,9 +28,7 @@ from .check_results import load_check_results, save_check_results
 from .db import ScanLogEntrySource, ServerErrorLogEntry, Session
 from .logging import build_logger
 from .resolver import setup_resolver
-from .scan import DomainValidationException, ScanningException, ScanResult
 from .templates import setup_templates
-from .translate import translate
 
 app = FastAPI()
 LOGGER = build_logger(__name__)

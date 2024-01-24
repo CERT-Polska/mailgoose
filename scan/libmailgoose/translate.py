@@ -2,8 +2,7 @@ import copy
 import re
 from typing import Callable, List, Optional, Tuple
 
-from common.language import Language
-
+from .language import Language
 from .scan import DKIMScanResult, DomainScanResult, ScanResult
 
 PLACEHOLDER = "__PLACEHOLDER__"

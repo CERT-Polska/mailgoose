@@ -5,6 +5,7 @@ RUN apk add tzdata
 ENV TZ=Europe/Warsaw
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
+COPY scan /scan
 COPY mail_receiver/requirements.txt /requirements.txt
 RUN pip install -r /requirements.txt
 

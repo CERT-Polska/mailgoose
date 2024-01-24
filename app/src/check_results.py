@@ -6,12 +6,12 @@ import os
 from typing import Any, Dict, Optional
 
 import dacite
+from libmailgoose.scan import ScanResult
 from redis import Redis
 
 from common.config import Config
 
 from .logging import build_logger
-from .scan import ScanResult
 
 REDIS = Redis.from_url(Config.Data.REDIS_URL)
 
