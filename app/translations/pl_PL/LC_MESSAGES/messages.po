@@ -268,11 +268,11 @@ msgstr ""
 "zostać znalezione dopiero po udanym wykonaniu wcześniejszych testów."
 
 #: app/templates/check_running.html:10
-msgid "Domain analysis is running"
-msgstr "Trwa analiza domeny"
+msgid "Configuration analysis is running"
+msgstr "Trwa analiza konfiguracji"
 
 #: app/templates/check_running.html:14
-msgid "Waiting for the domain analysis to finish"
+msgid "Waiting for the analysis to finish"
 msgstr "Oczekiwanie na zakończenie analizy"
 
 #: app/templates/check_running.html:15

@@ -19,7 +19,7 @@ class BaseTestCase(TestCase):
         results_response = requests.get(results_url)
         results_response.raise_for_status()
 
-        while "Domain analysis is running" in results_response.text:
+        while "Configuration analysis is running" in results_response.text:
             results_response = requests.get(results_url)
             results_response.raise_for_status()
 
