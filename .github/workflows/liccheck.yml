@@ -18,12 +18,13 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r app/requirements.txt -r mail_receiver/requirements.txt -r test/requirements.txt liccheck==0.9.2
-      - name: Remove checkdmarc installed from CERT PL fork from requirements as it's not supported by liccheck
+      - name: Remove checkdmarc installed from CERT PL fork from requirements as it's not supported by liccheck, remove /scan as it's a local package
         run: cp app/requirements.txt app/requirements.txt.orig; cat app/requirements.txt.orig | grep -v ^git+.*checkdmarc | grep -v ^/scan > app/requirements.txt
       - name: Run liccheck on app/requirements.txt
         run: liccheck -r app/requirements.txt
+      - name: Remove /scan as it's a local package
+        run: cp mail_receiver/requirements.txt mail_receiver/requirements.txt.orig; cat mail_receiver/requirements.txt.orig | grep -v ^/scan > mail_receiver/requirements.txt
       - name: Run liccheck on mail_receiver/requirements.txt
         run: liccheck -r mail_receiver/requirements.txt
-        run: cp mail_receiver/requirements.txt mail_receiver/requirements.txt.orig; cat mail_receiver/requirements.txt.orig | grep -v ^/scan > mail_receiver/requirements.txt
       - name: Run liccheck on test/requirements.txt
         run: liccheck -r test/requirements.txt
