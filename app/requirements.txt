@@ -11,5 +11,4 @@ python-multipart==0.0.6
 redis==5.0.1
 SQLAlchemy==2.0.25
 uvicorn==0.26.0
-validators==0.22.0
 -r translations/requirements.txt
