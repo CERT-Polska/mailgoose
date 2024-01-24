@@ -363,8 +363,20 @@ TRANSLATIONS = {
             "Brak lub niepoprawna domena w nagłówku From e-maila.",
         ),
         (
+            "A DNS name is > 255 octets long.",
+            "Nazwa DNS ma więcej niż 255 bajtów.",
+        ),
+        (
             "The value of the pct tag must be an integer",
             "Wartość tagu 'pct' musi być liczbą całkowitą.",
+        ),
+        (
+            f"The domain for rua email address {PLACEHOLDER} has no MX records",
+            f"Domena adresu e-mail podanego w tagu 'rua': {PLACEHOLDER} nie ma rekordów MX.",
+        ),
+        (
+            f"The domain for ruf email address {PLACEHOLDER} has no MX records",
+            f"Domena adresu e-mail podanego w tagu 'ruf': {PLACEHOLDER} nie ma rekordów MX.",
         ),
         (
             f"Failed to retrieve MX records for the domain of {PLACEHOLDER} email address {PLACEHOLDER} - The domain {PLACEHOLDER} does not exist",
