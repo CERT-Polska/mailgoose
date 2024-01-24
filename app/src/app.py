@@ -1,6 +1,5 @@
 import binascii
 import dataclasses
-import datetime
 import os
 import time
 import traceback
@@ -12,27 +11,25 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from libmailgoose.language import Language
 from libmailgoose.scan import DomainValidationException, ScanningException, ScanResult
-from libmailgoose.translate import translate
 from redis import Redis
+from rq import Queue
 from starlette.responses import Response
 
 from common.config import Config
 from common.mail_receiver_utils import get_key_from_username
 
-from .app_utils import (
-    get_from_and_dkim_domain,
-    recipient_username_to_address,
-    scan_and_log,
-)
-from .check_results import load_check_results, save_check_results
+from .app_utils import recipient_username_to_address, scan_and_log
+from .check_results import load_check_results
 from .db import ScanLogEntrySource, ServerErrorLogEntry, Session
 from .logging import build_logger
 from .resolver import setup_resolver
 from .templates import setup_templates
+from .worker import scan_domain_job, scan_message_and_domain_job
 
 app = FastAPI()
 LOGGER = build_logger(__name__)
 REDIS = Redis.from_url(Config.Data.REDIS_URL)
+job_queue = Queue(connection=REDIS)
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
@@ -118,42 +115,24 @@ async def check_email_results(request: Request, recipient_username: str) -> Resp
             },
         )
 
-    message_timestamp = datetime.datetime.fromisoformat(message_timestamp_raw.decode("ascii"))
-
     _, mail_from = parseaddr(mail_from_raw.decode("ascii"))
     _, envelope_domain = tuple(mail_from.split("@", 1))
 
-    from_domain, dkim_domain = get_from_and_dkim_domain(message_data)
-    if not from_domain:
-        result = None
-        error = translate("Invalid or no e-mail domain in the message From header", Language(Config.UI.LANGUAGE))
-    else:
-        try:
-            result = scan_and_log(
-                request=request,
-                source=ScanLogEntrySource.GUI,
-                envelope_domain=envelope_domain,
-                from_domain=from_domain,
-                dkim_domain=dkim_domain,
-                message=message_data,
-                message_timestamp=message_timestamp,
-                nameservers=Config.Network.NAMESERVERS,
-                language=Language(Config.UI.LANGUAGE),
-            )
-            error = None
-        except (DomainValidationException, ScanningException) as e:
-            result = None
-            error = translate(e.message, Language(Config.UI.LANGUAGE))
+    client_ip = request.client.host if request.client else None
+    client_user_agent = request.headers.get("user-agent", None)
 
-    token = save_check_results(
-        envelope_domain=envelope_domain,
-        from_domain=from_domain or envelope_domain,
-        dkim_domain=dkim_domain,
-        result=result,
-        error=error,
-        rescan_url="/check-email/",
-        message_recipient_username=recipient_username,
+    token = binascii.hexlify(os.urandom(32)).decode("ascii")
+    job_queue.enqueue(
+        scan_message_and_domain_job,
+        client_ip,
+        client_user_agent,
+        envelope_domain,
+        token,
+        key,
+        recipient_username,
+        job_id=token,
     )
+
     return RedirectResponse(f"/check-results/{token}", status_code=302)
 
 
@@ -169,37 +148,24 @@ async def check_domain_scan_get(request: Request) -> Response:
 
 @app.post("/check-domain/scan", response_class=HTMLResponse, include_in_schema=False)
 async def check_domain_scan_post(request: Request, domain: str = Form()) -> Response:
-    try:
-        result = scan_and_log(
-            request=request,
-            source=ScanLogEntrySource.GUI,
-            envelope_domain=domain,
-            from_domain=domain,
-            dkim_domain=None,
-            message=None,
-            message_timestamp=None,
-            nameservers=Config.Network.NAMESERVERS,
-            language=Language(Config.UI.LANGUAGE),
-        )
-        error = None
-    except (DomainValidationException, ScanningException) as e:
-        result = None
-        error = translate(e.message, Language(Config.UI.LANGUAGE))
+    client_ip = request.client.host if request.client else None
+    client_user_agent = request.headers.get("user-agent", None)
 
-    token = save_check_results(
-        envelope_domain=domain,
-        from_domain=domain,
-        dkim_domain=None,
-        result=result,
-        error=error,
-        rescan_url="/check-domain/",
-        message_recipient_username=None,
-    )
+    token = binascii.hexlify(os.urandom(32)).decode("ascii")
+    job_queue.enqueue(scan_domain_job, client_ip, client_user_agent, domain, token, job_id=token)
+
     return RedirectResponse(f"/check-results/{token}", status_code=302)
 
 
 @app.get("/check-results/{token}", response_class=HTMLResponse, include_in_schema=False)
 async def check_results(request: Request, token: str) -> Response:
+    if job := job_queue.fetch_job(token):
+        if job.get_status(refresh=False) not in ["finished", "canceled", "failed"]:
+            return templates.TemplateResponse(
+                "check_running.html",
+                {"request": request},
+            )
+
     check_results = load_check_results(token)
 
     if not check_results:
@@ -228,8 +194,10 @@ async def check_domain_api(request: Request, domain: str) -> ScanAPICallResult:
     object will be empty, as DKIM can't be checked when given only a domain.
     """
     try:
+        client_ip = request.client.host if request.client else None
+        client_user_agent = request.headers.get("user-agent", None)
+
         result = scan_and_log(
-            request=request,
             source=ScanLogEntrySource.API,
             envelope_domain=domain,
             from_domain=domain,
@@ -238,6 +206,8 @@ async def check_domain_api(request: Request, domain: str) -> ScanAPICallResult:
             message_timestamp=None,
             nameservers=Config.Network.NAMESERVERS,
             language=Language(Config.UI.LANGUAGE),
+            client_ip=client_ip,
+            client_user_agent=client_user_agent,
         )
         return ScanAPICallResult(result=result)
     except (DomainValidationException, ScanningException):

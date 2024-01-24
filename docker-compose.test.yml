@@ -13,6 +13,17 @@ services:
       REDIS_MESSAGE_DATA_EXPIRY_SECONDS: 864000
       REDIS_URL: redis://redis-test:6379/0
     command: bash -c "/wait-for-it.sh db-test:5432 --  uvicorn src.app:app --host 0.0.0.0 --port 8000 --proxy-headers"
+  worker:
+    build:
+      context: .
+      dockerfile: app/docker/Dockerfile
+    environment:
+      APP_DOMAIN: "app"
+      DB_URL: postgresql+psycopg2://postgres:postgres@db-test:5432/mailgoose
+      LANGUAGE: en_US
+      REDIS_MESSAGE_DATA_EXPIRY_SECONDS: 864000
+      REDIS_URL: redis://redis-test:6379/0
+    command: bash -c "/wait-for-it.sh db:5432 --  rq worker"
   db-test:
     image: postgres:15.2-alpine
     environment:

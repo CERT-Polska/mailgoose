@@ -267,6 +267,18 @@ msgstr ""
 "Po poprawie błędów prosimy ponowić skanowanie - niektóre błędy mogą "
 "zostać znalezione dopiero po udanym wykonaniu wcześniejszych testów."
 
+#: app/templates/check_running.html:10
+msgid "Configuration analysis is running"
+msgstr "Trwa analiza konfiguracji"
+
+#: app/templates/check_running.html:14
+msgid "Waiting for the analysis to finish"
+msgstr "Oczekiwanie na zakończenie analizy"
+
+#: app/templates/check_running.html:15
+msgid "This page will refresh automatically."
+msgstr "Strona odświeży się automatycznie."
+
 #: app/templates/root.html:9
 msgid ""
 "Verify your <b>DKIM</b>, <b>DMARC</b>, and <b>SPF</b> settings by sending"

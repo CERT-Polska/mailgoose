@@ -240,6 +240,18 @@ msgid ""
 "detected only if earlier checks complete successfully."
 msgstr ""
 
+#: app/templates/check_running.html:10
+msgid "Configuration analysis is running"
+msgstr ""
+
+#: app/templates/check_running.html:14
+msgid "Waiting for the analysis to finish"
+msgstr ""
+
+#: app/templates/check_running.html:15
+msgid "This page will refresh automatically."
+msgstr ""
+
 #: app/templates/root.html:9
 msgid ""
 "Verify your <b>DKIM</b>, <b>DMARC</b>, and <b>SPF</b> settings by sending"

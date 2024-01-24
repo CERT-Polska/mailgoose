@@ -9,7 +9,6 @@ from typing import List, Optional, Tuple
 
 import dkim.util
 from email_validator import EmailNotValidError, validate_email
-from fastapi import Request
 from libmailgoose.language import Language
 from libmailgoose.scan import ScanResult, scan
 from libmailgoose.translate import translate_scan_result
@@ -70,7 +69,6 @@ def dkim_implementation_mismatch_callback(message: bytes, dkimpy_valid: bool, op
 
 
 def scan_and_log(
-    request: Request,
     source: ScanLogEntrySource,
     envelope_domain: str,
     from_domain: str,
@@ -79,6 +77,8 @@ def scan_and_log(
     message_timestamp: Optional[datetime.datetime],
     nameservers: List[str],
     language: Language,
+    client_ip: Optional[str],
+    client_user_agent: Optional[str],
 ) -> ScanResult:
     scan_log_entry = ScanLogEntry(
         envelope_domain=envelope_domain,
@@ -86,8 +86,8 @@ def scan_and_log(
         dkim_domain=dkim_domain,
         message=message,
         source=source.value,
-        client_ip=request.client.host if request.client else None,
-        client_user_agent=request.headers.get("user-agent", None),
+        client_ip=client_ip,
+        client_user_agent=client_user_agent,
         check_options={
             "nameservers": nameservers,
         },

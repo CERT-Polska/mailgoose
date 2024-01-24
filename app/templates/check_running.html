@@ -1,0 +1,20 @@
+{% extends "custom_layout.html" %}
+
+{% block header_additional %}
+    <meta http-equiv="refresh" content="5">
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="p-4">
+            <h1>{% trans %}Configuration analysis is running{% endtrans %}</h1>
+            <div>
+                <img class="float-start" src="/static/images/spinner.svg" />
+                <div class="py-5">
+                    <h5 class="waiting">{% trans %}Waiting for the analysis to finish{% endtrans %}</h5>
+                    <div>{% trans %}This page will refresh automatically.{% endtrans %}</div>
+                </div>
+            </div>
+        </div>
+   </div>
+{% endblock %}

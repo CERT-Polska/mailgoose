@@ -1,8 +1,6 @@
-import binascii
 import dataclasses
 import datetime
 import json
-import os
 from typing import Any, Dict, Optional
 
 import dacite
@@ -35,8 +33,8 @@ def save_check_results(
     error: Optional[str],
     rescan_url: str,
     message_recipient_username: Optional[str],
-) -> str:
-    token = binascii.hexlify(os.urandom(32)).decode("ascii")
+    token: str,
+) -> None:
     # We don't use HSET or HMSET, as result is a recursive dict, and values that can be stored
     # using HSET/HMSET are bytes, string, int or float, so we still wouldn't avoid serialization.
     REDIS.set(
@@ -56,7 +54,6 @@ def save_check_results(
             cls=JSONEncoderAdditionalTypes,
         ),
     )
-    return token
 
 
 def load_check_results(token: str) -> Optional[Dict[str, Any]]:
