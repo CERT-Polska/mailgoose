@@ -59,7 +59,7 @@ TRANSLATIONS = {
             "SPF record causes too many DNS lookups. The DNS lookups are caused by directives such as 'mx' or 'include'. "
             "The specification requires the number of DNS lookups to be lower or equal to 10 to decrease load on DNS servers.",
             "Rekord SPF powoduje zbyt wiele zapytań DNS. Zapytania DNS są powodowane przez niektóre dyrektywy SPF, takie jak "
-            "'mx' czy 'include'. Spefycikacja wymaga, aby liczba zapytań DNS nie przekraczała 10, aby nie powodować nadmiernego "
+            "'mx' czy 'include'. Specyfikacja wymaga, aby liczba zapytań DNS nie przekraczała 10, aby nie powodować nadmiernego "
             "obciążenia serwerów DNS.",
         ),
         (
