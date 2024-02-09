@@ -1,4 +1,5 @@
 import datetime
+import traceback
 from typing import Optional
 
 from libmailgoose.language import Language
@@ -10,7 +11,7 @@ from common.config import Config
 
 from .app_utils import get_from_and_dkim_domain, scan_and_log
 from .check_results import save_check_results
-from .db import ScanLogEntrySource
+from .db import ScanLogEntrySource, Session, ServerErrorLogEntry
 from .logging import build_logger
 from .resolver import setup_resolver
 
@@ -43,6 +44,14 @@ def scan_domain_job(
     except (DomainValidationException, ScanningException) as e:
         result = None
         error = translate(e.message, Language(Config.UI.LANGUAGE))
+    except Exception as e:
+        session = Session()
+        server_error_log_entry = ServerErrorLogEntry(url="worker", error=traceback.format_exc())
+        session.add(server_error_log_entry)
+        session.commit()
+
+        result = None
+        error = translate("An unknown error has occured during configuration validation.", Language(Config.UI.LANGUAGE))
 
     save_check_results(
         envelope_domain=domain,

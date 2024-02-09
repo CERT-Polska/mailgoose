@@ -381,6 +381,10 @@ TRANSLATIONS = {
             f"Failed to retrieve MX records for the domain of {PLACEHOLDER} email address {PLACEHOLDER} - The domain {PLACEHOLDER} does not exist",
             f"Nie udało się pobrać rekordów MX domeny adresu e-mail podanego w tagu '{PLACEHOLDER}': {PLACEHOLDER} - domena {PLACEHOLDER} nie istnieje.",
         ),
+        (
+            "An unknown error has occured during configuration validation.",
+            "Wystąpił nieznany błąd podczas sprawdzania konfiguracji.",
+        ),
         # dkimpy messages
         (
             f"{PLACEHOLDER} value is not valid base64 {PLACEHOLDER}",
