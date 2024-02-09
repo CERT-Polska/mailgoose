@@ -609,12 +609,16 @@ def translate_scan_result(
     nonexistent_translation_handler: Optional[Callable[[str], str]] = None,
 ) -> ScanResult:
     return ScanResult(
-        domain=_translate_domain_result(scan_result.domain, language, nonexistent_translation_handler)
-        if scan_result.domain
-        else None,
-        dkim=_translate_dkim_result(scan_result.dkim, language, nonexistent_translation_handler)
-        if scan_result.dkim
-        else None,
+        domain=(
+            _translate_domain_result(scan_result.domain, language, nonexistent_translation_handler)
+            if scan_result.domain
+            else None
+        ),
+        dkim=(
+            _translate_dkim_result(scan_result.dkim, language, nonexistent_translation_handler)
+            if scan_result.dkim
+            else None
+        ),
         timestamp=scan_result.timestamp,
         message_timestamp=scan_result.message_timestamp,
     )
