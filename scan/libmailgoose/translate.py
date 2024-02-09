@@ -381,6 +381,10 @@ TRANSLATIONS = {
             f"Failed to retrieve MX records for the domain of {PLACEHOLDER} email address {PLACEHOLDER} - The domain {PLACEHOLDER} does not exist",
             f"Nie udało się pobrać rekordów MX domeny adresu e-mail podanego w tagu '{PLACEHOLDER}': {PLACEHOLDER} - domena {PLACEHOLDER} nie istnieje.",
         ),
+        (
+            "An unknown error has occured during configuration validation.",
+            "Wystąpił nieznany błąd podczas sprawdzania konfiguracji.",
+        ),
         # dkimpy messages
         (
             f"{PLACEHOLDER} value is not valid base64 {PLACEHOLDER}",
@@ -605,12 +609,16 @@ def translate_scan_result(
     nonexistent_translation_handler: Optional[Callable[[str], str]] = None,
 ) -> ScanResult:
     return ScanResult(
-        domain=_translate_domain_result(scan_result.domain, language, nonexistent_translation_handler)
-        if scan_result.domain
-        else None,
-        dkim=_translate_dkim_result(scan_result.dkim, language, nonexistent_translation_handler)
-        if scan_result.dkim
-        else None,
+        domain=(
+            _translate_domain_result(scan_result.domain, language, nonexistent_translation_handler)
+            if scan_result.domain
+            else None
+        ),
+        dkim=(
+            _translate_dkim_result(scan_result.dkim, language, nonexistent_translation_handler)
+            if scan_result.dkim
+            else None
+        ),
         timestamp=scan_result.timestamp,
         message_timestamp=scan_result.message_timestamp,
     )

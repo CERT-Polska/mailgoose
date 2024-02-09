@@ -1,6 +1,6 @@
 FROM python:3.12-alpine3.18
 
-RUN apk add tzdata
+RUN apk add tzdata git
 
 ENV TZ=Europe/Warsaw
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
