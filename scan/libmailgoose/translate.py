@@ -95,6 +95,12 @@ TRANSLATIONS = {
             "Zamiast rekordu DMARC wykryto rekord SPF w subdomenie '_dmarc'.",
         ),
         (
+            f"Failed to retrieve MX records for the domain of rua email address {PLACEHOLDER} - "
+            f"The resolution lifetime expired {PLACEHOLDER}",
+            f"Nie udało się pobrać rekordów MX domeny adresu e-mail podanego w rekordzie 'rua': {PLACEHOLDER} - "
+            "przekroczono limit czasu żądania.",
+        ),
+        (
             "DMARC record uses an invalid tag. Please refer to https://datatracker.ietf.org/doc/html/rfc7489#section-6.3 "
             "for the list of available tags.",
             "Rekord DMARC zawiera niepoprawne pole. Pod adresem "
