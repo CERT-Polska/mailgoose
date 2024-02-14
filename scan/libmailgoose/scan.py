@@ -592,13 +592,15 @@ def scan(
             dkim_domain=dkim_domain,
             nameservers=nameservers,
         ),
-        dkim=scan_dkim(
-            message=message,
-            message_parsed=message_parsed,
-            dkim_implementation_mismatch_callback=dkim_implementation_mismatch_callback,
-        )
-        if message and message_parsed
-        else None,
+        dkim=(
+            scan_dkim(
+                message=message,
+                message_parsed=message_parsed,
+                dkim_implementation_mismatch_callback=dkim_implementation_mismatch_callback,
+            )
+            if message and message_parsed
+            else None
+        ),
         timestamp=datetime.datetime.now(),
         message_timestamp=message_timestamp,
     )
