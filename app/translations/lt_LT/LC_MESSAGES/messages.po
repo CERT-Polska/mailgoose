@@ -62,7 +62,7 @@ msgid ""
 "If after a while you still don't see the results, that means that we "
 "didn't receive your message. In that case:"
 msgstr ""
-"Jeigu po kurio laiko vistiek nematote rezultų, tai reiškia, kad mes"
+"Jeigu po kurio laiko vistiek nematote rezultų, tai reiškia, kad mes "
 "negavome jūsų laiško. Tokiu atveju:"
 
 #: app/templates/check_email.html:66
