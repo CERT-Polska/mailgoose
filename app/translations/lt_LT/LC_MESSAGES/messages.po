@@ -67,7 +67,7 @@ msgstr ""
 
 #: app/templates/check_email.html:66
 msgid "make sure you sent the message to the correct e-mail address"
-msgstr "įsitikinkite, kad siunčiate el-laišką teisingu adresu"
+msgstr "įsitikinkite, kad siunčiate el. laišką teisingu adresu"
 
 #: app/templates/check_email.html:67
 msgid ""
