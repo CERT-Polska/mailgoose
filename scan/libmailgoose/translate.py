@@ -192,14 +192,8 @@ TRANSLATIONS = {
             "Rastas DMARC įrašas, prasidedantis tarpais. Prašome pašalinti tarpus, kadangi kai kurios "
             "įgyvendinimo sistemos gali neteisingai juos apdoroti.",
         ),
-        (
-            f"{PLACEHOLDER} does not have any MX records",
-            f"Domenas {PLACEHOLDER} neturi jokių MX įrašų."
-        ),
-        (
-            f"{PLACEHOLDER} does not have any A/AAAA records",
-            f"Domenas {PLACEHOLDER} neturi jokių A/AAAA įrašų."
-        ),
+        (f"{PLACEHOLDER} does not have any MX records", f"Domenas {PLACEHOLDER} neturi jokių MX įrašų."),
+        (f"{PLACEHOLDER} does not have any A/AAAA records", f"Domenas {PLACEHOLDER} neturi jokių A/AAAA įrašų."),
         (
             f"{PLACEHOLDER} does not indicate that it accepts DMARC reports about {PLACEHOLDER} - Authorization record not found: {PLACEHOLDER}",
             f"Domenas {PLACEHOLDER} neatskleidžia, kad priima DMARC ataskaitas apie {PLACEHOLDER} - Autorizacijos įrašas nerastas: {PLACEHOLDER}."
