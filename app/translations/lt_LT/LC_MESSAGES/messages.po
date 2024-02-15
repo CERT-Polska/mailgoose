@@ -43,7 +43,8 @@ msgid ""
 "To verify e-mail configuration, send any e-mail message to the address "
 "<b>shown below</b>:"
 msgstr ""
-"Kad patikrinti el-pašto konfiguraciją, reikia išsiųsti bet kokį laišką adresatui <b>nurodytam žemiau</b>:"
+"Kad patikrinti el-pašto konfiguraciją, reikia išsiųsti bet kokį laišką "
+"adresatui <b>nurodytam žemiau</b>:"
 
 #: app/templates/check_email.html:57
 msgid "Waiting for the message to be received"
@@ -54,8 +55,8 @@ msgid ""
 "As soon as the message is received, the page will automatically refresh -"
 " you will then see the check results."
 msgstr ""
-"Iš karto kai tik el-laiškas bus gautas, puslapis persikraus automatiškai - "
-"ir tada bus galima patikrinti rezultatus."
+"Iš karto kai tik el-laiškas bus gautas, puslapis persikraus automatiškai "
+"- ir tada bus galima patikrinti rezultatus."
 
 #: app/templates/check_email.html:63
 msgid ""
@@ -149,10 +150,9 @@ msgstr "(el-laiškas žinutė iš %(date_str)s)"
 
 #: app/templates/check_results.html:113
 msgid "To share check results, copy the following link:"
-msgstr ""
-"Jei norite pasidalinti patikrinimo rezultatais, nukopijuokite šią nuorodą:"
-#"link:"
+msgstr "Jei norite pasidalinti patikrinimo rezultatais, nukopijuokite šią nuorodą:"
 
+# "link:"
 #: app/templates/check_results.html:129
 msgid "Check summary"
 msgstr "Patikrinimo rezultatai"
@@ -205,9 +205,8 @@ msgid ""
 "correct DKIM signatures."
 msgstr ""
 "Kadangi DMARC įrašas sukonfigūruotas teisingai, SPF įrašas nėra "
-"privalomas. Siunčiami pranešimai iš šio domeno nenaudojant SPF "
-"mechanizmą yra įmanomi - tokiu atveju žinutė turi turėti "
-"teisingą DKIM parašą."
+"privalomas. Siunčiami pranešimai iš šio domeno nenaudojant SPF mechanizmą"
+" yra įmanomi - tokiu atveju žinutė turi turėti teisingą DKIM parašą."
 
 #: app/templates/check_results.html:176
 msgid ""
@@ -217,11 +216,11 @@ msgid ""
 "protection mechanisms - SPF, DKIM and DMARC allows all servers to "
 "properly verify e-mail message authenticity."
 msgstr ""
-"Tačiau mes rekomenduojame susikonfiguruoti SPF įrašą jeigu įmanoma (net jei  "
-"domenas nėra naudojamas siųsti el-laiškams), nes senesni pašto serveriai gali "
-"nepalaikyti DMARC ir naudoti SPF tikrinimui. Visų apsaugos mechanizmų "
-"SPF, DKIM ir DMARC - kombinacija leidžia visiems serveriams tinkamai patikrinti "
-"el. pašto žinučių autentiškumą."
+"Tačiau mes rekomenduojame susikonfiguruoti SPF įrašą jeigu įmanoma (net "
+"jei  domenas nėra naudojamas siųsti el-laiškams), nes senesni pašto "
+"serveriai gali nepalaikyti DMARC ir naudoti SPF tikrinimui. Visų apsaugos"
+" mechanizmų SPF, DKIM ir DMARC - kombinacija leidžia visiems serveriams "
+"tinkamai patikrinti el. pašto žinučių autentiškumą."
 
 #: app/templates/check_results.html:197 app/templates/check_results.html:202
 #: app/templates/check_results.html:237 app/templates/check_results.html:242
@@ -254,16 +253,17 @@ msgid ""
 "e-mail servers correctly, we recommend fixing all errors and warnings."
 msgstr ""
 "Kad padidintumėte tikimybę, jog jūsų konfigūracija bus teisingai "
-"interpretuojama visų el. pašto serverių, mes rekomenduojame ištaisyti visas "
-"klaidas ir perspėjimus. "
+"interpretuojama visų el. pašto serverių, mes rekomenduojame ištaisyti "
+"visas klaidas ir perspėjimus. "
 
 #: app/templates/check_results.html:302
 msgid ""
 "After fixing the issues, please rerun the scan - some problems can be "
 "detected only if earlier checks complete successfully."
 msgstr ""
-"Ištaisius problemas, prašome pakartotinai paleisti skenavimą - kai kurios problemos  "
-"gali būti aptiktos tik tuomet, jei ankstesni patikrinimai bus sėkmingai baigti."
+"Ištaisius problemas, prašome pakartotinai paleisti skenavimą - kai kurios"
+" problemos  gali būti aptiktos tik tuomet, jei ankstesni patikrinimai bus"
+" sėkmingai baigti."
 
 #: app/templates/check_running.html:10
 msgid "Configuration analysis is running"
@@ -293,7 +293,6 @@ msgstr ""
 "Tai rekomenduojama procedūra. Laiško siuntimas leidžia mums atlikti  "
 "tikslesnę analizę."
 
-
 #: app/templates/root.html:21
 msgid "Send an e-mail"
 msgstr "Išsiųsti el. laišką"
@@ -304,6 +303,6 @@ msgid ""
 "<b>SPF</b> and <b>DMARC</b> mechanisms will be checked. To check DKIM, "
 "you need to send a test e-mail."
 msgstr ""
-"Patikrinkite savo SPF ir DMARC nustatymus pateikdami domeną. Pastaba: tik  "
-"<b>SPF</b> ir <b>DMARC</b> mechanizmai bus patikrinti. Norėdami patikrinti  "
-"DKIM, turite išsiųsti el. laišką."
+"Patikrinkite savo SPF ir DMARC nustatymus pateikdami domeną. Pastaba: tik"
+"  <b>SPF</b> ir <b>DMARC</b> mechanizmai bus patikrinti. Norėdami "
+"patikrinti  DKIM, turite išsiųsti el. laišką."
