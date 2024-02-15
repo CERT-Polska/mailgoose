@@ -123,7 +123,7 @@ msgid "SPF, DMARC and DKIM"
 msgstr "SPF, DMARC ir DKIM"
 
 #: app/templates/check_results.html:95
-<F2>#, python-format
+#, python-format
 msgid ""
 "The results you are viewing are older than %(age_threshold_minutes)s "
 "minutes."
