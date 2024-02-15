@@ -1,0 +1,308 @@
+#: app/templates/404.html:7
+msgid "Error 404"
+msgstr "Klaida 404"
+
+#: app/templates/404.html:9
+msgid "Resource not found. Make sure the address is correct or "
+msgstr "Puslapis nerastas. Įsitikinkite ar adresas yra teisingas arba "
+
+#: app/templates/404.html:10
+msgid "go back to homepage."
+msgstr "grįžkite atgal į pradinį puslapį."
+
+#: app/templates/base.html:6
+msgid "Copied"
+msgstr "Nukopijuota"
+
+#: app/templates/check_domain.html:9 app/templates/root.html:29
+#: app/templates/root.html:38
+msgid "Check domain"
+msgstr "Tikrinti domeną"
+
+#: app/templates/check_domain.html:12 app/templates/check_results.html:74
+#: app/templates/check_results.html:76 app/templates/check_results.html:78
+#: app/templates/check_results.html:191 app/templates/check_results.html:231
+#: app/templates/check_results.html:272
+msgid "Domain"
+msgstr "Domenas"
+
+#: app/templates/check_domain.html:15
+msgid "Don't put the entire e-mail address here, only the part after \"@\""
+msgstr "Neveskite viso el pašto adreso, tik tą dalį po \"@\""
+
+#: app/templates/check_domain.html:18
+msgid "Check"
+msgstr "Tikrinti"
+
+#: app/templates/check_email.html:44 app/templates/root.html:6
+msgid "Check configuration by sending an e-mail"
+msgstr "Tikrinti konfiguraciją siunčiant el. laišką"
+
+#: app/templates/check_email.html:47
+msgid ""
+"To verify e-mail configuration, send any e-mail message to the address "
+"<b>shown below</b>:"
+msgstr ""
+"Kad patikrinti el-pašto konfiguraciją, reikia išsiųsti bet kokį laišką "
+"adresatui <b>nurodytam žemiau</b>:"
+
+#: app/templates/check_email.html:57
+msgid "Waiting for the message to be received"
+msgstr "Laukiama kada el-laiškas bus gautas"
+
+#: app/templates/check_email.html:60
+msgid ""
+"As soon as the message is received, the page will automatically refresh -"
+" you will then see the check results."
+msgstr ""
+"Iš karto kai tik el-laiškas bus gautas, puslapis persikraus automatiškai "
+"- ir tada bus galima patikrinti rezultatus."
+
+#: app/templates/check_email.html:63
+msgid ""
+"If after a while you still don't see the results, that means that we "
+"didn't receive your message. In that case:"
+msgstr ""
+"Jeigu po kurio laiko vistiek nematote rezultų, tai reiškia, kad mes "
+"negavome jūsų laiško. Tokiu atveju:"
+
+#: app/templates/check_email.html:66
+msgid "make sure you sent the message to the correct e-mail address"
+msgstr "įsitikinkite, kad siunčiate el. laišką teisingu adresu"
+
+#: app/templates/check_email.html:67
+msgid ""
+"if you manage your own e-mail server, make sure that the server sent the "
+"message correctly"
+msgstr ""
+"jeigu administruojate pašto serverį, įsitikinkite, kad serveris išsiunčia"
+" žinutę teisingai."
+
+#: app/templates/check_email.html:70
+msgctxt "verb imperative"
+msgid "contact"
+msgstr "kontaktas"
+
+#: app/templates/check_email.html:70
+msgid "if the above didn't solve the problem."
+msgstr "jeigu tai neišsprendė problemos."
+
+#: app/templates/check_results.html:49
+msgid "incorrect configuration"
+msgstr "neteisinga konfiguracija"
+
+#: app/templates/check_results.html:51
+msgid "record couldn't be fully verified"
+msgstr "įrašas negali būti pilnai patvirtintas"
+
+#: app/templates/check_results.html:53
+msgid "configuration warnings"
+msgstr "konfiguracijos klaidos"
+
+#: app/templates/check_results.html:55
+msgid "correct configuration"
+msgstr "teisinga konfiguracija"
+
+#: app/templates/check_results.html:81
+msgid "e-mail sender verification mechanisms check results:"
+msgstr "pašto saugos testo rezultatai"
+
+#: app/templates/check_results.html:83
+msgid "E-mail sender verification mechanisms check results:"
+msgstr "pašto saugos testo rezultatai"
+
+#: app/templates/check_results.html:86
+msgid "SPF and DMARC"
+msgstr "SPF ir DMARC"
+
+#: app/templates/check_results.html:87
+msgid "DKIM"
+msgstr "DKIM"
+
+#: app/templates/check_results.html:88
+msgid "SPF, DMARC and DKIM"
+msgstr "SPF, DMARC ir DKIM"
+
+#: app/templates/check_results.html:95
+#, python-format
+msgid ""
+"The results you are viewing are older than %(age_threshold_minutes)s "
+"minutes."
+msgstr "Rezultatai kuriuos žiūrite yra senesni nei %(age_threshold_minutes)s min."
+
+#: app/templates/check_results.html:100
+#, python-format
+msgid ""
+"If you want to view up-to-date results, please <a "
+"href='%(rescan_url)s'>run a new check.</a>"
+msgstr ""
+"Jeigu norite pamatyti naujausius rezultatus, prašome <a "
+"href='%(rescan_url)s'>atlikti naują patikrinimą.</a>"
+
+#: app/templates/check_results.html:109
+msgid "Test date: "
+msgstr "Testo data: "
+
+#: app/templates/check_results.html:110
+#, python-format
+msgid "(e-mail message from %(date_str)s)"
+msgstr "(el-laiškas žinutė iš %(date_str)s)"
+
+#: app/templates/check_results.html:113
+msgid "To share check results, copy the following link:"
+msgstr "Jei norite pasidalinti patikrinimo rezultatais, nukopijuokite šią nuorodą:"
+
+# "link:"
+#: app/templates/check_results.html:129
+msgid "Check summary"
+msgstr "Patikrinimo rezultatai"
+
+#: app/templates/check_results.html:133
+msgctxt "zero"
+msgid "mechanisms"
+msgstr "mechanizmai"
+
+#: app/templates/check_results.html:135
+msgid "mechanism"
+msgstr "mechanizmas"
+
+#: app/templates/check_results.html:137
+msgid "mechanisms"
+msgstr "mechanizmai"
+
+#: app/templates/check_results.html:139
+msgid "out of"
+msgstr "iš"
+
+#: app/templates/check_results.html:142
+msgctxt "zero"
+msgid "configured"
+msgstr "sukonfigūruotas"
+
+#: app/templates/check_results.html:144
+msgctxt "singular"
+msgid "configured"
+msgstr "sukonfigūruotas"
+
+#: app/templates/check_results.html:146
+msgctxt "plural"
+msgid "configured"
+msgstr "sukonfigūruoti"
+
+#: app/templates/check_results.html:148
+msgid "without issues."
+msgstr "be klaidų."
+
+#: app/templates/check_results.html:165
+msgid "SPF: the record is optional"
+msgstr "SPF: įrašas neprivalomas"
+
+#: app/templates/check_results.html:169
+msgid ""
+"Because the DMARC record is configured correctly, the SPF record is not "
+"required. Sending e-mail messages from this domain without using the SPF "
+"mechanism is still possible - in that case, the messages need to have "
+"correct DKIM signatures."
+msgstr ""
+"Kadangi DMARC įrašas sukonfigūruotas teisingai, SPF įrašas nėra "
+"privalomas. Siunčiami pranešimai iš šio domeno nenaudojant SPF mechanizmą"
+" yra įmanomi - tokiu atveju žinutė turi turėti teisingą DKIM parašą."
+
+#: app/templates/check_results.html:176
+msgid ""
+"However, we recommend configuring an SPF record if possible (even if the "
+"domain is not used to send e-mails), because older mail servers may not "
+"support DMARC and use SPF for verification. The combination of all "
+"protection mechanisms - SPF, DKIM and DMARC allows all servers to "
+"properly verify e-mail message authenticity."
+msgstr ""
+"Tačiau mes rekomenduojame susikonfiguruoti SPF įrašą jeigu įmanoma (net "
+"jei  domenas nėra naudojamas siųsti el-laiškams), nes senesni pašto "
+"serveriai gali nepalaikyti DMARC ir naudoti SPF tikrinimui. Visų apsaugos"
+" mechanizmų SPF, DKIM ir DMARC - kombinacija leidžia visiems serveriams "
+"tinkamai patikrinti el. pašto žinučių autentiškumą."
+
+#: app/templates/check_results.html:197 app/templates/check_results.html:202
+#: app/templates/check_results.html:237 app/templates/check_results.html:242
+msgid "Record"
+msgstr "Įrašas"
+
+#: app/templates/check_results.html:202 app/templates/check_results.html:242
+msgid "Records"
+msgstr "Įrašai"
+
+#: app/templates/check_results.html:211 app/templates/check_results.html:251
+#: app/templates/check_results.html:277
+msgid "Warnings"
+msgstr "Įspėjimai"
+
+#: app/templates/check_results.html:212 app/templates/check_results.html:216
+#: app/templates/check_results.html:252 app/templates/check_results.html:256
+#: app/templates/check_results.html:278 app/templates/check_results.html:282
+msgid "none"
+msgstr "nėra"
+
+#: app/templates/check_results.html:215 app/templates/check_results.html:255
+#: app/templates/check_results.html:281
+msgid "Errors"
+msgstr "Klaidos"
+
+#: app/templates/check_results.html:294
+msgid ""
+"To increase the chance that your configuration is interpreted by all "
+"e-mail servers correctly, we recommend fixing all errors and warnings."
+msgstr ""
+"Kad padidintumėte tikimybę, jog jūsų konfigūracija bus teisingai "
+"interpretuojama visų el. pašto serverių, mes rekomenduojame ištaisyti "
+"visas klaidas ir perspėjimus. "
+
+#: app/templates/check_results.html:302
+msgid ""
+"After fixing the issues, please rerun the scan - some problems can be "
+"detected only if earlier checks complete successfully."
+msgstr ""
+"Ištaisius problemas, prašome pakartotinai paleisti skenavimą - kai kurios"
+" problemos  gali būti aptiktos tik tuomet, jei ankstesni patikrinimai bus"
+" sėkmingai baigti."
+
+#: app/templates/check_running.html:10
+msgid "Configuration analysis is running"
+msgstr "Konfigūracijos analizė yra vykdoma"
+
+#: app/templates/check_running.html:14
+msgid "Waiting for the analysis to finish"
+msgstr "Laukiama, kol analizė baigsis"
+
+#: app/templates/check_running.html:15
+msgid "This page will refresh automatically."
+msgstr "Šį puslapį atnaujins automatiškai."
+
+#: app/templates/root.html:9
+msgid ""
+"Verify your <b>DKIM</b>, <b>DMARC</b>, and <b>SPF</b> settings by sending"
+" a test e-mail."
+msgstr ""
+"Patikrinkite savo <b>DKIM</b>, <b>DMARC</b> ir <b>SPF</b> nustatymus,  "
+"išsiųsdami el. laišką."
+
+#: app/templates/root.html:15
+msgid ""
+"This is the recommended path. Sending a test e-mail allows us to perform "
+"more accurate analysis."
+msgstr ""
+"Tai rekomenduojama procedūra. Laiško siuntimas leidžia mums atlikti  "
+"tikslesnę analizę."
+
+#: app/templates/root.html:21
+msgid "Send an e-mail"
+msgstr "Išsiųsti el. laišką"
+
+#: app/templates/root.html:32
+msgid ""
+"Verify your SPF and DMARC settings by providing a domain. Note: only the "
+"<b>SPF</b> and <b>DMARC</b> mechanisms will be checked. To check DKIM, "
+"you need to send a test e-mail."
+msgstr ""
+"Patikrinkite savo SPF ir DMARC nustatymus pateikdami domeną. Pastaba: tik"
+"  <b>SPF</b> ir <b>DMARC</b> mechanizmai bus patikrinti. Norėdami "
+"patikrinti  DKIM, turite išsiųsti el. laišką."

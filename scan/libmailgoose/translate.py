@@ -10,6 +10,431 @@ SKIP_PLACEHOLDER = "__SKIP_PLACEHOLDER__"
 
 
 TRANSLATIONS = {
+    Language.lt_LT: [
+        (
+            "SPF '~all' or '-all' directive not found. We recommend adding it, as it describes "
+            "what should happen with messages that fail SPF verification. For example, "
+            "'-all' will tell the recipient server to drop such messages.",
+            "Nerasta SPF įrašo su '~all' arba '-all' direktyva. Rekomenduojame ją pridėti, nes ji nurodo, "
+            "kas turėtų atsitikti su pranešimais, kurie nepavyksta SPF verifikacijai. Pavyzdžiui, "
+            "'-all' informuos gavėjo serverį atmesti tokius pranešimus.",
+        ),
+        (
+            "Valid SPF record not found. We recommend using all three mechanisms: SPF, DKIM and DMARC "
+            "to decrease the possibility of successful e-mail message spoofing.",
+            "Nerastas galiojantis SPF įrašas. Rekomenduojame naudoti visus tris mechanizmus: SPF, DKIM ir DMARC, "
+            "kad sumažintumėte sėkmingų elektroninių laiškų klastojimo galimybę.",
+        ),
+        (
+            "Multiple SPF records found. We recommend leaving only one, as multiple SPF records "
+            "can cause problems with some SPF implementations.",
+            "Rasta daugiau nei vieną SPF įrašą. Rekomenduojame palikti tik vieną, nes keli SPF įrašai "
+            "gali sukelti problemų su kai kuriais SPF patvirtinimais.",
+        ),
+        (
+            f"The SPF record's include chain has a reference to the {PLACEHOLDER} domain that doesn't "
+            "have an SPF record. When using directives such as 'include' or 'redirect' remember "
+            "that the destination domain must have a correct SPF record.",
+            f"SPF įrašo 'include' grandinė nurodo į domeną {PLACEHOLDER}, kuris neturi SPF įrašo. "
+            "Naudojant direktyvas, tokias kaip 'include' arba 'redirect', prisiminkite, "
+            "kad paskirties domenas turi turėti teisingą SPF įrašą.",
+        ),
+        (
+            "SPF record causes too many void DNS lookups. Some implementations may require the number of "
+            "failed DNS lookups (e.g. ones that reference a nonexistent domain) to be low. The DNS lookups "
+            "are caused by directives such as 'mx' or 'include'.",
+            "SPF įrašas sukelia per daug tuščių DNS paieškų. Kai kuriems įgyvendinimams gali prireikti, kad "
+            "nepavykusių DNS paieškų (pvz., kurie nurodo neegzistuojantį domeną) skaičius būtų mažas. DNS paieškos "
+            "sukeliamos direktivomis, tokiomis kaip 'mx' arba 'include'.",
+        ),
+        (
+            "SPF record includes an endless loop. Please check whether 'include' or 'redirect' directives don't "
+            "create a loop where a domain redirects back to itself or earlier domain.",
+            "SPF įrašas sukuria begalinį ciklą. Patikrinkite, ar 'include' arba 'redirect' direktyvos "
+            "nesukuria ciklo, kai domenas nukreipia atgal į save ar ankstesnį domeną.",
+        ),
+        (
+            "SPF record causes too many DNS lookups. The DNS lookups are caused by directives such as 'mx' or 'include'. "
+            "The specification requires the number of DNS lookups to be lower or equal to 10 to decrease load on DNS servers.",
+            "SPF įrašas sukelia per daug DNS paieškų. DNS paieškos sukeliamos direktyvomis, tokiomis kaip 'mx' arba 'include'. "
+            "Specifikacija nurodo, kad DNS paieškų skaičius turi būti mažesnis arba lygus 10, kad būtų sumažintas "
+            "apkrovimas DNS serveriams.",
+        ),
+        (
+            "The ptr mechanism should not be used - https://tools.ietf.org/html/rfc7208#section-5.5",
+            "Mechanizmas 'ptr' neturėtų būti naudojamas - https://tools.ietf.org/html/rfc7208#section-5.5",
+        ),
+        (
+            "Valid DMARC record not found. We recommend using all three mechanisms: SPF, DKIM and DMARC "
+            "to decrease the possibility of successful e-mail message spoofing.",
+            "Nerastas galiojantis DMARC įrašas. Rekomenduojame naudoti visus tris mechanizmus: SPF, DKIM ir DMARC, "
+            "kad sumažintumėte sėkmingų elektroninių laiškų klastojimo galimybę.",
+        ),
+        (
+            "DMARC policy is 'none' and 'rua' is not set, which means that the DMARC setting is not effective.",
+            "DMARC politika yra 'none', o 'rua' nėra nustatytas, tai reiškia, kad DMARC nustatymas nėra veiksmingas.",
+        ),
+        (
+            f"The DMARC record must be located at {PLACEHOLDER}, not {PLACEHOLDER}",
+            f"DMARC įrašas turi būti įdiegtas į {PLACEHOLDER}, o ne {PLACEHOLDER}.",
+        ),
+        (
+            "There are multiple DMARC records. We recommend leaving only one, as multiple "
+            "DMARC records can cause problems with some DMARC implementations.",
+            "Yra keli DMARC įrašai. Rekomenduojame palikti tik vieną, nes keli DMARC įrašai gali sukelti problemų su kai kurių "
+            "DMARC įgyvendinimais.",
+        ),
+        (
+            "There is an SPF record instead of DMARC one on the '_dmarc' subdomain.",
+            "Subdomene '_dmarc' yra SPF įrašas, o ne DMARC.",
+        ),
+        (
+            "DMARC record uses an invalid tag. Please refer to https://datatracker.ietf.org/doc/html/rfc7489#section-6.3 "
+            "for the list of available tags.",
+            "DMARC įrašas naudoja neteisingą žymą. Skaitykite https://datatracker.ietf.org/doc/html/rfc7489#section-6.3 "
+            "dėl prieinamų žymių sąrašo.",
+        ),
+        (
+            "DMARC report URI is invalid. The report URI should be an e-mail address prefixed with mailto:.",
+            "DMARC raportas URI yra neteisingas. Raportų adresas turi būti el. pašto adresas prasidedantis su mailto:.",
+        ),
+        (
+            "The destination of a DMARC report URI does not indicate that it accepts reports for the domain.",
+            "DMARC raporto adreso paskirtis nenurodo, kad jis priima raportus iš šio domeno.",
+        ),
+        (
+            "Subdomain policy (sp=) should be reject for parked domains",
+            "Subdomenų politika (sp=) turėtų būti nustatyta kaip reject parked domenams.",
+        ),
+        (
+            "Policy (p=) should be reject for parked domains",
+            "Politika (p=) turėtų būti nustatyta kaip reject nepanaudotiems domenams.",
+        ),
+        (
+            "Unrelated TXT record found in the '_dmarc' subdomain. We recommend removing it, as such unrelated "
+            "records may cause problems with some DMARC implementations.",
+            "Rasti nepriklausomi TXT įrašai '_dmarc' subdomene. Rekomenduojame juos pašalinti, nes tokie nesusiję "
+            "įrašai gali sukelti problemų su kai kuriomis DMARC implementacijomis.",
+        ),
+        (
+            "Unrelated TXT record found in the '_dmarc' subdomain of a domain the record refers to. "
+            "We recommend removing it, as such unrelated records may cause problems with some DMARC "
+            "implementations.",
+            "Rasti nesusiję TXT įrašai '_dmarc' subdomeno domeno, į kurį nukreiptas įrašas. Rekomenduojame juos pašalinti, "
+            "nes toki neatsitinkantys įrašai gali sukelti problemų su kai kuriomis DMARC implementacijomis.",
+        ),
+        (
+            "The domain of the email address in a DMARC report URI is missing MX records. That means, that this domain "
+            "may not receive DMARC reports.",
+            "DMARC raporto adreso el. pašto domenas neturi MX įrašų. Tai reiškia, kad šis domenas gali nebegauti DMARC raportų.",
+        ),
+        (
+            "DMARC policy is 'none', which means that besides reporting no action will be taken. The policy describes what "
+            "action the recipient server should take when noticing a message that doesn't pass the verification. 'quarantine' policy "
+            "suggests the recipient server to flag the message as spam and 'reject' policy suggests the recipient "
+            "server to reject the message. We recommend using the 'quarantine' or 'reject' policy.\n\n"
+            "When testing the DMARC mechanism, to minimize the risk of correct messages not being delivered, "
+            "the 'none' policy may be used. Such tests are recommended especially when the domain is used to "
+            "send a large number of e-mails using various tools and not delivering a correct message is "
+            "unacceptable. In such cases the reports should be closely monitored, and the target setting should "
+            "be 'quarantine' or 'reject'.",
+            "DMARC politika yra 'none', tai reiškia, kad be raportavimo nebus vykdoma jokia papildoma veikla. "
+            "Politika apibūdina, kokį veiksmą turi atlikti gavėjo serveris pastebėjęs pranešimą, kuris nepasiekė patvirtinimo. "
+            "Politika 'quarantine' siūlo gavėjo serveriui žymėti pranešimą kaip spam ir politika 'reject' siūlo gavėjo serveriui "
+            "atmesti pranešimą. Rekomenduojame naudoti politiką 'quarantine' arba 'reject'.\n\n"
+            "Testuojant DMARC mechanizmą, siekiant sumažinti riziką, kad teisingi pranešimai nebus pristatyti, "
+            "gali būti naudojama 'none' politika. Tokie testai yra rekomenduojami ypač, kai domenas naudojamas "
+            "siųsti didelį kiekį el. laiškų naudojant įvairias priemones, o neteisingo pranešimo pristatymas "
+            "yra nepriimtinas. Tokiais atvejais raportai turėtų būti atidžiai stebimi, o nustatyti nustatymai "
+            "turėtų būti 'quarantine' arba 'reject'.",
+        ),
+        (
+            "rua tag (destination for aggregate reports) not found",
+            "rua žymė (adresas agreguotų raportų nukreipimui) nerastas",
+        ),
+        (
+            "Whitespace in domain name detected. Please provide a correct domain name.",
+            "Rastas 'Whitespace' domeno pavadinime. Prašome pateikti teisingą domeno pavadinimą.",
+        ),
+        (
+            f"Unexpected character in domain detected: {PLACEHOLDER}. Please provide a correct domain name.",
+            f"Nenumatytas simbolis aptiktas domeno pavadinime: {PLACEHOLDER}. Prašome pateikti teisingą domeno pavadinimą.",
+        ),
+        (
+            "Any text after the all mechanism is ignored",
+            "Bet koks tekstas po 'all' mechanizmo yra ignoruojamas. Rekomenduojame jį pašalinti arba, "
+            "jei jis yra būtinas konfigūracijos elementas, jį padėti prieš 'all' mechanizmą SPF įraše.",
+        ),
+        (
+            "No DKIM signature found",
+            "DKIM parašas nerastas. Rekomenduojame naudoti visus tris mechanizmus: SPF, DKIM ir DMARC, kad "
+            "būtų sumažinta sėkmingo el. pašto pranešimo klastojimo galimybė.",
+        ),
+        (
+            "Found an invalid DKIM signature",
+            "Rastas neteisingas DKIM parašas.",
+        ),
+        (
+            "SPF records containing macros aren't supported by the system yet.",
+            "SPF įrašai, kuriuose yra macros, nėra palaikomi sistemos.",
+        ),
+        (
+            f"The resolution lifetime expired after {PLACEHOLDER}",
+            f"Rezoliucijos galiojimo laikas baigėsi po to {PLACEHOLDER}",
+        ),
+        (
+            f"DMARC record at root of {PLACEHOLDER} has no effect",
+            f"DMARC įrašas šakniniame {PLACEHOLDER} domene neturi jokio poveikio",
+        ),
+        (
+            "Found a DMARC record that starts with whitespace. Please remove the whitespace, as some "
+            "implementations may not process it correctly.",
+            "Rastas DMARC įrašas, prasidedantis tarpais. Prašome pašalinti tarpus, kadangi kai kurios "
+            "įgyvendinimo sistemos gali neteisingai juos apdoroti.",
+        ),
+        (f"{PLACEHOLDER} does not have any MX records", f"Domenas {PLACEHOLDER} neturi jokių MX įrašų."),
+        (f"{PLACEHOLDER} does not have any A/AAAA records", f"Domenas {PLACEHOLDER} neturi jokių A/AAAA įrašų."),
+        (
+            f"{PLACEHOLDER} does not indicate that it accepts DMARC reports about {PLACEHOLDER} - Authorization record not found: {PLACEHOLDER}",
+            f"Domenas {PLACEHOLDER} neatskleidžia, kad priima DMARC ataskaitas apie {PLACEHOLDER} - Autorizacijos įrašas nerastas: {PLACEHOLDER}."
+            "Daugiau informacijos apie autorizacijos įrašus, kurie leidžia siųsti DMARC ataskaitas į kitą domeną, galima rasti adresu https://dmarc.org/2015/08/receiving-dmarc-reports-outside-your-domain/ .",
+        ),
+        (
+            "SPF type DNS records found. Use of DNS Type SPF has been removed in the standards track version of SPF, RFC 7208. These records "
+            f"should be removed and replaced with TXT records: {PLACEHOLDER}",
+            "Rasti DNS įrašai, susiję su SPF. SPF tipo DNS įrašų naudojimas buvo pašalintas standartiniame SPF versijos, RFC 7208. "
+            "Šie įrašai turėtų būti pašalinti ir pakeisti TXT įrašais: {PLACEHOLDER}.",
+        ),
+        (
+            "Requested to scan a domain that is a public suffix, i.e. a domain such as .com where anybody could "
+            "register their subdomain. Such domain don't have to have properly configured e-mail sender verification "
+            "mechanisms. Please make sure you really wanted to check such domain and not its subdomain.",
+            "Prašoma nuskaityti viešąjį sufiksą turintį domeną, t.y. domeną, tokį kaip .com, kurį gali registruoti bet kas. Toks domenas "
+            "nebūtinai turi tinkamai sukonfigūruotus el. pašto siuntėjo patvirtinimo mechanizmus. Prašome patikrinti, ar tikrai norite patikrinti tokį domeną, o ne jo subdomeną.",
+        ),
+        (
+            "Requested to scan a top-level domain. Top-level domains don't have to have properly configured e-mail sender "
+            "verification mechanisms. Please make sure you really wanted to check such domain and not its subdomain."
+            "Besides, the domain is not known to the Public Suffix List (https://publicsuffix.org/) - please verify whether "
+            "it is correct.",
+            "Prašoma nuskaityti top-level lygio domeną. top-level lygio domenai nebūtinai turi tinkamai sukonfigūruotus el. pašto siuntėjo patvirtinimo mechanizmus. "
+            "Prašome patikrinti, ar tikrai norite patikrinti tokį domeną, o ne jo subdomeną."
+            "Be to, domenas nėra įtrauktas į Viešojo Sufikso Sąrašą (https://publicsuffix.org/) - prašome patikrinti, ar tai teisinga.",
+        ),
+        ("Please provide a correct domain name.", "Prašome pateikti teisingą domeno pavadinimą."),
+        (
+            f"Failed to retrieve MX records for the domain of {PLACEHOLDER} email address {PLACEHOLDER} - All nameservers failed to answer the query {PLACEHOLDER}",
+            f"Nepavyko gauti MX įrašų domenui, susijusiam su el. pašto adresu {PLACEHOLDER}: {PLACEHOLDER} - Visi serveriai, "
+            f"kuriems užklausa {PLACEHOLDER}, neatsakė teisingai.",
+        ),
+        (
+            f"All nameservers failed to answer the query {PLACEHOLDER}. IN {PLACEHOLDER}",
+            f"Visi domeno serveriai neatsakė į užklausą dėl domeno {PLACEHOLDER}. IN {PLACEHOLDER}.",
+        ),
+        (
+            f"{PLACEHOLDER}: Expected {PLACEHOLDER} at position {PLACEHOLDER} (marked with {PLACEHOLDER}) in: {PLACEHOLDER}",
+            f"{SKIP_PLACEHOLDER}{SKIP_PLACEHOLDER}Įrašas neturi teisingos sintaksės. Klaida yra tikėtina pozicijoje {PLACEHOLDER} (pažymėtoje simboliu {PLACEHOLDER}) įraše '{PLACEHOLDER}'.",
+        ),
+        ("the p tag must immediately follow the v tag", "p žyma turi nedelsiant sekti po v žymos."),
+        ('The record is missing the required policy ("p") tag', 'Įrašas neturi būtinosios politikos ("p") žymos.'),
+        (
+            f"{PLACEHOLDER} is not a valid ipv4 value{PLACEHOLDER}",
+            f"{PLACEHOLDER} nėra galiojantis ipv4 adreso reikšmė.",
+        ),
+        (
+            f"{PLACEHOLDER} is not a valid ipv6 value{PLACEHOLDER}",
+            f"{PLACEHOLDER} nėra galiojantis ipv6 adreso reikšmė.",
+        ),
+        (
+            "Some DMARC reporters might not send to more than two rua URIs",
+            "Kai kurios DMARC ataskaitos gali neatsiųsti į daugiau nei dvi rua URIs.",
+        ),
+        (
+            "Some DMARC reporters might not send to more than two ruf URIs",
+            "Kai kurios DMARC ataskaitos gali neatsiųsti į daugiau nei dvi ruf URIs.",
+        ),
+        (f"The domain {PLACEHOLDER} does not exist", f"Domenas {PLACEHOLDER} neegzistuoja."),
+        (
+            f"{PLACEHOLDER} is not a valid DMARC report URI - please make sure that the URI begins with a schema such as mailto:",
+            f"{PLACEHOLDER} nėra galiojantis DMARC ataskaitos URI - prašome užtikrinti, kad URI prasideda schemomis, tokiais kaip mailto:",
+        ),
+        (f"{PLACEHOLDER} is not a valid DMARC report URI", f"{PLACEHOLDER} nėra galiojantis DMARC ataskaitos URI."),
+        (f"{PLACEHOLDER} is not a valid DMARC tag", f"'{PLACEHOLDER}' nėra galiojančios DMARC žymės."),
+        (
+            f"Tag {PLACEHOLDER} must have one of the following values: {PLACEHOLDER} - not {PLACEHOLDER}",
+            f"Žyma {PLACEHOLDER} turi turėti vieną iš šių reikšmių: {PLACEHOLDER} - o ne {PLACEHOLDER}.",
+        ),
+        (
+            "pct value is less than 100. This leads to inconsistent and unpredictable policy "
+            "enforcement. Consider using p=none to monitor results instead",
+            "pct reikšmė yra mažesnė nei 100. Tai lemia nenuoseklų ir neprognozuojamą politikos "
+            "įgyvendinimą. Svarstykite naudoti p=none, kad stebėti rezultatus.",
+        ),
+        ("pct value must be an integer between 0 and 100", "pct reikšmė turi būti sveikasis skaičius nuo 0 iki 100."),
+        (f"Duplicate include: {PLACEHOLDER}", f"Pakartotas įtraukimas: {PLACEHOLDER}."),
+        (
+            "When 1 is present in the fo tag, including 0 is redundant",
+            "Kai fo žymėje yra 1, įtraukti 0 yra nereikalinga.",
+        ),
+        ("Including 0 and 1 fo tag values is redundant", "reikšmė 0 ir 1  yra pertekliniai fo tag'e."),
+        (
+            f"{PLACEHOLDER} is not a valid option for the DMARC {PLACEHOLDER} tag",
+            f"'{PLACEHOLDER}' nėra galiojanti parinktis DMARC {PLACEHOLDER} žymėje.",
+        ),
+        (
+            f"Domain checked by the SPF mechanism (from the RFC5321.MailFrom header: {PLACEHOLDER}) is not aligned with "
+            f"the DMARC record domain (from the RFC5322.From header: {PLACEHOLDER}). Read more about various e-mail From "
+            f"headers on https://dmarc.org/2016/07/how-many-from-addresses-are-there/",
+            f"SPF mechanizmo tikrinama domena (iš RFC5321.MailFrom antraštės: {PLACEHOLDER}) neatitinka "
+            f"DMARC įrašo domenos (iš RFC5322.From antraštės: {PLACEHOLDER}). Daugiau informacijos apie įvairias siuntėjo "
+            f"el. pašto antraštes galite rasti adresu https://dmarc.org/2016/07/how-many-from-addresses-are-there/.",
+        ),
+        (
+            f"Domain from the DKIM signature ({PLACEHOLDER}) is not aligned with the DMARC record domain "
+            f"(from the From header: {PLACEHOLDER}).",
+            f"DKIM parašo domena ({PLACEHOLDER}) neatitinka DMARC įrašo domenos "
+            f"(iš From antraštės: {PLACEHOLDER}).",
+        ),
+        (
+            "Invalid or no e-mail domain in the message From header",
+            "Neteisinga arba nėra el. pašto domeno laiško Siuntėjo antraštėje.",
+        ),
+        (
+            "A DNS name is > 255 octets long.",
+            "DNS pavadinimas yra ilgesnis nei 255 oktetai.",
+        ),
+        (
+            "The value of the pct tag must be an integer",
+            "pct žymės reikšmė turi būti sveikasis skaičius.",
+        ),
+        (
+            f"The domain for rua email address {PLACEHOLDER} has no MX records",
+            f"rua el. pašto adreso domenas {PLACEHOLDER} neturi MX įrašų.",
+        ),
+        (
+            f"The domain for ruf email address {PLACEHOLDER} has no MX records",
+            f"ruf el. pašto adreso domenas {PLACEHOLDER} neturi MX įrašų.",
+        ),
+        (
+            f"Failed to retrieve MX records for the domain of {PLACEHOLDER} email address {PLACEHOLDER} - The domain {PLACEHOLDER} does not exist",
+            f"Nepavyko gauti MX įrašų domenui, susijusiai su el. pašto adresu {PLACEHOLDER}: {PLACEHOLDER} - Domenas {PLACEHOLDER} neegzistuoja.",
+        ),
+        (
+            "An unknown error has occured during configuration validation.",
+            "Konfigūracijos patvirtinimo metu įvyko nežinoma klaida.",
+        ),
+        # dkimpy messages
+        (
+            f"{PLACEHOLDER} value is not valid base64 {PLACEHOLDER}",
+            f"{PLACEHOLDER} reikšmė nėra galiojantis base64 {PLACEHOLDER}",
+        ),
+        (f"{PLACEHOLDER} value is not valid {PLACEHOLDER}", f"{PLACEHOLDER} reikšmė nėra galiojanti {PLACEHOLDER}"),
+        (f"missing {PLACEHOLDER}", f"trūksta {PLACEHOLDER}"),
+        (
+            f"unknown signature algorithm: {PLACEHOLDER}",
+            f"Nežinomas parašo algoritmas: {PLACEHOLDER}",
+        ),
+        (
+            f"i= domain is not a subdomain of d= {PLACEHOLDER}",
+            f"Domenas i= nėra subdomenas d= {PLACEHOLDER}",
+        ),
+        (
+            f"{PLACEHOLDER} value is not a decimal integer {PLACEHOLDER}",
+            f"{PLACEHOLDER} reikšmė nėra dešimtainis skaičius {PLACEHOLDER}",
+        ),
+        (
+            f"q= value is not dns/txt {PLACEHOLDER}",
+            f"q= reikšmė nėra dns/txt {PLACEHOLDER}",
+        ),
+        (
+            f"v= value is not 1 {PLACEHOLDER}",
+            f"v= reikšmė nėra 1 {PLACEHOLDER}",
+        ),
+        (
+            f"t= value is in the future {PLACEHOLDER}",
+            f"t= reikšmė yra ateityje {PLACEHOLDER}",
+        ),
+        (
+            f"x= value is past {PLACEHOLDER}",
+            f"x= reikšmė yra praeityje {PLACEHOLDER}",
+        ),
+        (
+            f"x= value is less than t= value {PLACEHOLDER}",
+            f"x= reikšmė yra mažesnė nei t= reikšmė {PLACEHOLDER}",
+        ),
+        (
+            f"Unexpected characters in RFC822 header: {PLACEHOLDER}",
+            f"Netikėti simboliai RFC822 antraštėje: {PLACEHOLDER}",
+        ),
+        (
+            f"missing public key: {PLACEHOLDER}",
+            f"Trūksta viešojo rakto: {PLACEHOLDER}",
+        ),
+        (
+            "bad version",
+            "Netinkama versija",
+        ),
+        (
+            f"could not parse ed25519 public key {PLACEHOLDER}",
+            f"Nepavyko analizuoti ed25519 viešojo rakto {PLACEHOLDER}",
+        ),
+        (
+            f"incomplete RSA public key: {PLACEHOLDER}",
+            f"Neužbaigtas RSA viešasis raktas: {PLACEHOLDER}",
+        ),
+        (
+            f"could not parse RSA public key {PLACEHOLDER}",
+            f"Nepavyko analizuoti RSA viešojo rakto {PLACEHOLDER}",
+        ),
+        (
+            f"unknown algorithm in k= tag: {PLACEHOLDER}",
+            f"Nežinomas algoritmas k= žymėje: {PLACEHOLDER}",
+        ),
+        (
+            f"unknown service type in s= tag: {PLACEHOLDER}",
+            f"Nežinomas paslaugos tipas s= žymėje: {PLACEHOLDER}",
+        ),
+        (
+            "digest too large for modulus",
+            "Pasirašytas tekstas per didelis moduliui",
+        ),
+        (
+            f"digest too large for modulus: {PLACEHOLDER}",
+            f"Hash per didelis moduliui: {PLACEHOLDER}",
+        ),
+        (
+            f"body hash mismatch (got b'{PLACEHOLDER}', expected b'{PLACEHOLDER}')",
+            f"body hash nesuderinamumas (gauta b'{PLACEHOLDER}', tikimasi b'{PLACEHOLDER}')",
+        ),
+        (
+            f"public key too small: {PLACEHOLDER}",
+            f"Viešas raktas per mažas: {PLACEHOLDER}",
+        ),
+        (
+            f"Duplicate ARC-Authentication-Results for instance {PLACEHOLDER}",
+            f"Kartotinos ARC-Authentication-Results {PLACEHOLDER} atveju",
+        ),
+        (
+            f"Duplicate ARC-Message-Signature for instance {PLACEHOLDER}",
+            f"Kartotinos ARC-Message-Signature {PLACEHOLDER} atveju",
+        ),
+        (
+            f"Duplicate ARC-Seal for instance {PLACEHOLDER}",
+            f"Kartotinos ARC-Seal {PLACEHOLDER} atveju",
+        ),
+        (
+            f"Incomplete ARC set for instance {PLACEHOLDER}",
+            f"Neužbaigtas ARC rinkinys {PLACEHOLDER} atveju",
+        ),
+        (
+            "h= tag not permitted in ARC-Seal header field",
+            "h= žymė neleidžiama ARC-Seal antraštėje",
+        ),
+        (
+            "An unknown error occured during DKIM signature validation.",
+            "DKIM parašo patvirtinimo metu įvyko nežinoma klaida.",
+        ),
+    ],
     Language.pl_PL: [
         (
             "SPF '~all' or '-all' directive not found. We recommend adding it, as it describes "
@@ -508,7 +933,7 @@ TRANSLATIONS = {
             "An unknown error occured during DKIM signature validation.",
             "Wystąpił nieznany błąd podczas walidacji podpisu DKIM.",
         ),
-    ]
+    ],
 }
 
 
