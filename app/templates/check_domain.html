@@ -10,7 +10,7 @@
                         <form action="{{ url_for('check_domain_scan_post') }}" method="POST" class="card-text">
                             <div class="form-group">
                                 <label for="domain-input">{% trans %}Domain{% endtrans %}</label>
-                                <input name="domain" type="text" autocomplete="off" class="form-control" id="domain-input" aria-describedby="domain-info" required="true">
+                                <input name="domain" type="text" autocomplete="off" class="form-control" id="domain-input" aria-describedby="domain-info" required>
                                 <small id="domain-info" class="form-text text-muted">
                                     {% trans %}Don't put the entire e-mail address here, only the part after "@"{% endtrans %}
                                 </small>
