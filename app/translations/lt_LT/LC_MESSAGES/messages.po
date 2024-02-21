@@ -46,6 +46,10 @@ msgstr ""
 "Kad patikrinti el-pašto konfiguraciją, reikia išsiųsti bet kokį laišką "
 "adresatui <b>nurodytam žemiau</b>:"
 
+#: app/templates/check_email.html:56
+msgid "Waiting"
+msgstr "Laukimas"
+
 #: app/templates/check_email.html:57
 msgid "Waiting for the message to be received"
 msgstr "Laukiama kada el-laiškas bus gautas"
