@@ -48,7 +48,7 @@ msgstr ""
 
 #: app/templates/check_email.html:56
 msgid "Waiting"
-msgstr "Laukimas"
+msgstr "Luktelkite"
 
 #: app/templates/check_email.html:57
 msgid "Waiting for the message to be received"
