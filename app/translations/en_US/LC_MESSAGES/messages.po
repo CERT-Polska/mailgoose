@@ -44,6 +44,10 @@ msgid ""
 "<b>shown below</b>:"
 msgstr ""
 
+#: app/templates/check_email.html:56 app/templates/check_running.html:12
+msgid "Waiting"
+msgstr ""
+
 #: app/templates/check_email.html:57
 msgid "Waiting for the message to be received"
 msgstr ""

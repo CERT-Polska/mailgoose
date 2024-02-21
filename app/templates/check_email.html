@@ -43,7 +43,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{% trans %}Check configuration by sending an e-mail{% endtrans %}</h5>
                         <div class="card-text">
-                            <label for="email-input">
+                            <label for="email">
                                 {{ _("To verify e-mail configuration, send any e-mail message to the address <b>shown below</b>:")|safe }}
                             </label>
                             <div class="mailto-link-with-button">
@@ -53,7 +53,7 @@
                                 </div>
                             </div>
 
-                            <img class="spinner waiting" src="/static/images/spinner.svg" />
+                            <img class="spinner waiting" src="/static/images/spinner.svg" alt="{% trans %}Waiting{% endtrans %}"/>
                             <h5 class="waiting">{% trans %}Waiting for the message to be received{% endtrans %}</h5>
 
                             <p>
