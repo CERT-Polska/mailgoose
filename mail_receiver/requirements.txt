@@ -1,4 +1,4 @@
-aiosmtpd==1.4.4.post2
+aiosmtpd==1.4.5
 python-decouple==3.8
 redis==5.0.1
 /scan
