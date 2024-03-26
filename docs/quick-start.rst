@@ -44,6 +44,7 @@ Before deploying the system to production, remember:
   Redis - make sure ports 25 and 587 are exposed publicly so that mailgoose will be able
   to receive a test e-mail. Make sure the domain configured in the ``APP_DOMAIN`` setting has ``MX`` DNS
   records pointing to the server ``mail_receiver`` is running on,
+- that the domain your system is listening on should not use CNAME records - this is not allowed by the RFCs and it causes multiple random issues, e.g. related to DKIM validation,
 - that SMTP SSL is supported - please refer to ``SSL_CERTIFICATE_PATH`` and ``SSL_PRIVATE_KEY_PATH``
   settings documentation in :doc:`user-guide/configuration` to learn how to set it up,
 - to change the database password to a more secure one and to use Redis password (or make sure
