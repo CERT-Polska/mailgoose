@@ -3,4 +3,4 @@ checkdmarc @ git+https://github.com/domainaware/checkdmarc@120ef5a9709fe49c8c452
 checkdmarc==5.3.1
 dkimpy==1.1.6
 python-multipart==0.0.9
-validators==0.28.0
+validators==0.28.1
