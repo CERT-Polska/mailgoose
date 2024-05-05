@@ -39,6 +39,7 @@ WHY_POLICY_NONE_IS_A_BAD_IDEA = (
     "be 'quarantine' or 'reject'."
 )
 
+
 @dataclass
 class SPFScanResult:
     record: Optional[str]
@@ -414,16 +415,20 @@ def scan_domain(
                 )
             else:
                 dmarc_warnings.append(
-                    "DMARC policy is 'none', which means that besides reporting no action will be taken. " + WHY_POLICY_NONE_IS_A_BAD_IDEA
+                    "DMARC policy is 'none', which means that besides reporting no action will be taken. "
+                    + WHY_POLICY_NONE_IS_A_BAD_IDEA
                 )
-        elif parsed_dmarc_record["tags"]["sp"]["value"] == "none":  # "elif" because we don't want to report the same problem for subdomains if p=none
+        elif (
+            parsed_dmarc_record["tags"]["sp"]["value"] == "none"
+        ):  # "elif" because we don't want to report the same problem for subdomains if p=none
             if "rua" not in parsed_dmarc_record["tags"]:
                 domain_result.dmarc.errors.append(
                     "DMARC subdomain policy is 'none' and 'rua' is not set, which means that the DMARC setting is not effective for subdomains."
                 )
             else:
                 dmarc_warnings.append(
-                    "DMARC subdomain policy is 'none', which means that besides reporting no action will be taken for e-mails coming from subdomains. " + WHY_POLICY_NONE_IS_A_BAD_IDEA
+                    "DMARC subdomain policy is 'none', which means that besides reporting no action will be taken for e-mails coming from subdomains. "
+                    + WHY_POLICY_NONE_IS_A_BAD_IDEA
                 )
 
         domain_result.dmarc.tags = parsed_dmarc_record["tags"]

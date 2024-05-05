@@ -3,7 +3,12 @@ import re
 from typing import Callable, List, Optional, Tuple
 
 from .language import Language
-from .scan import DKIMScanResult, DomainScanResult, ScanResult, WHY_POLICY_NONE_IS_A_BAD_IDEA
+from .scan import (
+    WHY_POLICY_NONE_IS_A_BAD_IDEA,
+    DKIMScanResult,
+    DomainScanResult,
+    ScanResult,
+)
 
 PLACEHOLDER = "__PLACEHOLDER__"
 SKIP_PLACEHOLDER = "__SKIP_PLACEHOLDER__"
@@ -588,12 +593,14 @@ TRANSLATIONS = {
             "poprawnie dostarczane.",
         ),
         (
-            "DMARC policy is 'none', which means that besides reporting no action will be taken. " + WHY_POLICY_NONE_IS_A_BAD_IDEA,
+            "DMARC policy is 'none', which means that besides reporting no action will be taken. "
+            + WHY_POLICY_NONE_IS_A_BAD_IDEA,
             "Polityka DMARC jest ustawiona na 'none', co oznacza, że oprócz raportowania, żadna dodatkowa akcja nie zostanie "
             "wykonana. " + WHY_POLICY_NONE_IS_A_BAD_IDEA_PL,
         ),
         (
-            "DMARC subdomain policy is 'none', which means that besides reporting no action will be taken for e-mails coming from subdomains. " + WHY_POLICY_NONE_IS_A_BAD_IDEA,
+            "DMARC subdomain policy is 'none', which means that besides reporting no action will be taken for e-mails coming from subdomains. "
+            + WHY_POLICY_NONE_IS_A_BAD_IDEA,
             "Polityka DMARC dla subdomen jest ustawiona na 'none', co oznacza, że oprócz raportowania, żadna dodatkowa akcja nie zostanie "
             "wykonana w przypadku e-maili pochodzących z subdomen. " + WHY_POLICY_NONE_IS_A_BAD_IDEA_PL,
         ),
