@@ -27,6 +27,17 @@ psl = publicsuffixlist.PublicSuffixList()
 
 LOGGER = build_logger(__name__)
 
+WHY_POLICY_NONE_IS_A_BAD_IDEA = (
+    "The policy describes what action the recipient server should take when noticing a message "
+    "that doesn't pass the verification. 'quarantine' policy suggests the recipient server to "
+    "flag the message as spam and 'reject' policy suggests the recipient server to reject the "
+    "message. We recommend using the 'quarantine' or 'reject' policy.\n\n"
+    "When testing the DMARC mechanism, to minimize the risk of correct messages not being delivered, "
+    "the 'none' policy may be used. Such tests are recommended especially when the domain is used to "
+    "send a large number of e-mails using various tools and not delivering a correct message is "
+    "unacceptable. In such cases the reports should be closely monitored, and the target setting should "
+    "be 'quarantine' or 'reject'."
+)
 
 @dataclass
 class SPFScanResult:
@@ -403,15 +414,16 @@ def scan_domain(
                 )
             else:
                 dmarc_warnings.append(
-                    "DMARC policy is 'none', which means that besides reporting no action will be taken. The policy describes what "
-                    "action the recipient server should take when noticing a message that doesn't pass the verification. 'quarantine' policy "
-                    "suggests the recipient server to flag the message as spam and 'reject' policy suggests the recipient "
-                    "server to reject the message. We recommend using the 'quarantine' or 'reject' policy.\n\n"
-                    "When testing the DMARC mechanism, to minimize the risk of correct messages not being delivered, "
-                    "the 'none' policy may be used. Such tests are recommended especially when the domain is used to "
-                    "send a large number of e-mails using various tools and not delivering a correct message is "
-                    "unacceptable. In such cases the reports should be closely monitored, and the target setting should "
-                    "be 'quarantine' or 'reject'.",
+                    "DMARC policy is 'none', which means that besides reporting no action will be taken. " + WHY_POLICY_NONE_IS_A_BAD_IDEA
+                )
+        elif parsed_dmarc_record["tags"]["sp"]["value"] == "none":  # "elif" because we don't want to report the same problem for subdomains if p=none
+            if "rua" not in parsed_dmarc_record["tags"]:
+                domain_result.dmarc.errors.append(
+                    "DMARC subdomain policy is 'none' and 'rua' is not set, which means that the DMARC setting is not effective for subdomains."
+                )
+            else:
+                dmarc_warnings.append(
+                    "DMARC subdomain policy is 'none', which means that besides reporting no action will be taken for e-mails coming from subdomains. " + WHY_POLICY_NONE_IS_A_BAD_IDEA
                 )
 
         domain_result.dmarc.tags = parsed_dmarc_record["tags"]

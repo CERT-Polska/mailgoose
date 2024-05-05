@@ -3,10 +3,21 @@ import re
 from typing import Callable, List, Optional, Tuple
 
 from .language import Language
-from .scan import DKIMScanResult, DomainScanResult, ScanResult
+from .scan import DKIMScanResult, DomainScanResult, ScanResult, WHY_POLICY_NONE_IS_A_BAD_IDEA
 
 PLACEHOLDER = "__PLACEHOLDER__"
 SKIP_PLACEHOLDER = "__SKIP_PLACEHOLDER__"
+
+WHY_POLICY_NONE_IS_A_BAD_IDEA_PL = (
+    "Polityka DMARC opisuje serwerowi odbiorcy, jaką akcję powinien podjąć, gdy wiadomość nie zostanie poprawnie "
+    "zweryfikowana. Polityka 'quarantine' oznacza, że taka wiadomość powinna zostać oznaczona jako spam, a polityka 'reject' - że "
+    "powinna zostać odrzucona przez serwer odbiorcy. Rekomendujemy korzystanie z polityki 'quarantine' lub 'reject'.\n\n"
+    "W trakcie testów działania mechanizmu DMARC, w celu zmniejszenia ryzyka, że poprawne wiadomości zostaną "
+    "odrzucone, może być tymczasowo stosowane ustawienie 'none'. Takie testy są szczególnie zalecane, jeśli "
+    "domena służy do wysyłki dużej liczby wiadomości przy użyciu różnych narzędzi, a potencjalne niedostarczenie "
+    "poprawnej wiadomości jest niedopuszczalne. W takich sytuacjach raporty powinny być dokładnie monitorowane, "
+    "a docelowym ustawieniem powinno być 'quarantine' lub 'reject'."
+)
 
 
 TRANSLATIONS = {
@@ -505,6 +516,11 @@ TRANSLATIONS = {
             "oznacza, że ustawienie DMARC nie będzie skuteczne.",
         ),
         (
+            "DMARC subdomain policy is 'none' and 'rua' is not set, which means that the DMARC setting is not effective for subdomains.",
+            "Polityka DMARC dla subdomen jest ustawiona na 'none' i nie ustawiono odbiorcy raportów w polu 'rua', co "
+            "oznacza, że ustawienie DMARC nie będzie skuteczne w przypadku e-maili pochodzących z subdomen.",
+        ),
+        (
             f"The DMARC record must be located at {PLACEHOLDER}, not {PLACEHOLDER}",
             f"Rekord DMARC powinien znajdować się w domenie {PLACEHOLDER}, nie {PLACEHOLDER}.",
         ),
@@ -572,24 +588,14 @@ TRANSLATIONS = {
             "poprawnie dostarczane.",
         ),
         (
-            "DMARC policy is 'none', which means that besides reporting no action will be taken. The policy describes what "
-            "action the recipient server should take when noticing a message that doesn't pass the verification. 'quarantine' policy "
-            "suggests the recipient server to flag the message as spam and 'reject' policy suggests the recipient "
-            "server to reject the message. We recommend using the 'quarantine' or 'reject' policy.\n\n"
-            "When testing the DMARC mechanism, to minimize the risk of correct messages not being delivered, "
-            "the 'none' policy may be used. Such tests are recommended especially when the domain is used to "
-            "send a large number of e-mails using various tools and not delivering a correct message is "
-            "unacceptable. In such cases the reports should be closely monitored, and the target setting should "
-            "be 'quarantine' or 'reject'.",
+            "DMARC policy is 'none', which means that besides reporting no action will be taken. " + WHY_POLICY_NONE_IS_A_BAD_IDEA,
             "Polityka DMARC jest ustawiona na 'none', co oznacza, że oprócz raportowania, żadna dodatkowa akcja nie zostanie "
-            "wykonana. Polityka DMARC opisuje serwerowi odbiorcy, jaką akcję powinien podjąć, gdy wiadomość nie zostanie "
-            "poprawnie zweryfikowana. Polityka 'quarantine' oznacza, że taka wiadomość powinna zostać oznaczona jako spam, a polityka 'reject' - że "
-            "powinna zostać odrzucona przez serwer odbiorcy. Rekomendujemy korzystanie z polityki 'quarantine' lub 'reject'.\n\n"
-            "W trakcie testów działania mechanizmu DMARC, w celu zmniejszenia ryzyka, że poprawne wiadomości zostaną "
-            "odrzucone, może być tymczasowo stosowane ustawienie 'none'. Takie testy są szczególnie zalecane, jeśli "
-            "domena służy do wysyłki dużej liczby wiadomości przy użyciu różnych narzędzi, a potencjalne niedostarczenie "
-            "poprawnej wiadomości jest niedopuszczalne. W takich sytuacjach raporty powinny być dokładnie monitorowane, "
-            "a docelowym ustawieniem powinno być 'quarantine' lub 'reject'.",
+            "wykonana. " + WHY_POLICY_NONE_IS_A_BAD_IDEA_PL,
+        ),
+        (
+            "DMARC subdomain policy is 'none', which means that besides reporting no action will be taken for e-mails coming from subdomains. " + WHY_POLICY_NONE_IS_A_BAD_IDEA,
+            "Polityka DMARC dla subdomen jest ustawiona na 'none', co oznacza, że oprócz raportowania, żadna dodatkowa akcja nie zostanie "
+            "wykonana w przypadku e-maili pochodzących z subdomen. " + WHY_POLICY_NONE_IS_A_BAD_IDEA_PL,
         ),
         (
             "rua tag (destination for aggregate reports) not found",
