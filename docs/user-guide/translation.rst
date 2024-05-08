@@ -31,3 +31,5 @@ If you want to support a new language:
 - run ``./scripts/update_translation_files`` and fill ``.po`` files for the UI messages for your language in ``./app/translations``
   (**you may skip that part if you want only the library error messages to be translated**),
 - add the error message translations for your language in ``scan/libmailgoose/translate.py``.
+
+**You don't have to translate everything - pull requests with partial translations are also welcome!**
