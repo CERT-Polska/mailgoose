@@ -10,6 +10,13 @@ SKIP_PLACEHOLDER = "__SKIP_PLACEHOLDER__"
 
 
 TRANSLATIONS = {
+    Language.de_DE: [
+        (
+            "Valid DMARC record not found. We recommend using all three mechanisms: SPF, DKIM and DMARC "
+            "to decrease the possibility of successful e-mail message spoofing.",
+            "Kein DMARC todo todo.",
+        ),
+    ],
     Language.lt_LT: [
         (
             "SPF '~all' or '-all' directive not found. We recommend adding it, as it describes "

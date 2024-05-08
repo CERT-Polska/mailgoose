@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LOCALES="pl_PL en_US lt_LT"
+LOCALES="pl_PL en_US lt_LT de_DE"
 
 cd $(dirname $0)/..
 
