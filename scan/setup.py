@@ -9,7 +9,7 @@ with open(os.path.join(os.path.dirname(__file__), "requirements.txt")) as f:
 
 setup(
     name="libmailgoose",
-    version="1.2.1",
+    version="1.3",
     description="libmailgoose - check the settings needed to protect against e-mail spoofing",
     author="CERT Polska",
     author_email="info@cert.pl",

@@ -51,6 +51,7 @@ def scan_domain_job(
         session.commit()
 
         result = None
+        LOGGER.exception("Error during configuration validation")
         error = translate("An unknown error has occured during configuration validation.", Language(Config.UI.LANGUAGE))
 
     save_check_results(
