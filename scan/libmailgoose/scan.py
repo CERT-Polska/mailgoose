@@ -338,20 +338,20 @@ def scan_domain(
 
         try:
             dmarc_query = checkdmarc.dmarc.query_dmarc_record(from_domain, nameservers=nameservers, timeout=timeout)
-        except checkdmarc.dmarc.DMARCRecordNotFound as e:
-            if isinstance(e.args[0], checkdmarc.dmarc.UnrelatedTXTRecordFoundAtDMARC):
-                dmarc_warnings.append(
-                    "Unrelated TXT record found in the '_dmarc' subdomain. We recommend removing it, as such unrelated "
-                    "records may cause problems with some DMARC implementations.",
-                )
-                dmarc_query = checkdmarc.dmarc.query_dmarc_record(
-                    domain,
-                    nameservers=nameservers,
-                    timeout=timeout,
-                    ignore_unrelated_records=True,
-                )
-            else:
-                raise e
+        except checkdmarc.dmarc.UnrelatedTXTRecordFoundAtDMARC:
+            dmarc_warnings.append(
+                "Unrelated TXT record found in the '_dmarc' subdomain. We recommend removing it, as such unrelated "
+                "records may cause problems with some DMARC implementations.",
+            )
+            dmarc_query = checkdmarc.dmarc.query_dmarc_record(
+                domain,
+                nameservers=nameservers,
+                timeout=timeout,
+                ignore_unrelated_records=True,
+            )
+
+        except Exception as e:
+            raise e
         domain_result.dmarc.record = dmarc_query["record"]
         if not domain_result.dmarc.record:
             raise checkdmarc.dmarc.DMARCRecordNotFound(None)
