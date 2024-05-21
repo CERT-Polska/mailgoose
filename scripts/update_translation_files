@@ -1,8 +1,8 @@
 #!/bin/bash
 
-LOCALES="pl_PL en_US lt_LT"
-
 cd $(dirname $0)/..
+
+LOCALES=`cat scan/libmailgoose/languages.txt`
 
 if [ ! -d .venv.translations ]
 then
