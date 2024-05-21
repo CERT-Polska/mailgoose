@@ -39,9 +39,7 @@ class DMARCTestCase(BaseTestCase):
         assert re.search(CONFIG_WITH_WARNINGS_REGEX, result)
         assert not re.search(CORRECT_CONFIG_REGEX, result)
         assert not re.search(INCORRECT_CONFIG_REGEX, result)
-        assert (
-            "DMARC policy is &#39;none&#39;, which means that besides reporting no action will be taken."
-        ) in result
+        assert ("DMARC policy is &#39;none&#39;, which means that besides reporting no action will be taken.") in result
         assert (
             "The policy describes what action the recipient server should take when noticing a message "
             "that doesn&#39;t pass the verification. &#39;quarantine&#39; policy "
