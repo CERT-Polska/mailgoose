@@ -10,7 +10,7 @@ SKIP_PLACEHOLDER = "__SKIP_PLACEHOLDER__"
 
 
 TRANSLATIONS = {
-    Language.lt_LT: [
+    Language.lt_LT: [  # type: ignore
         (
             "SPF '~all' or '-all' directive not found. We recommend adding it, as it describes "
             "what should happen with messages that fail SPF verification. For example, "
@@ -435,7 +435,7 @@ TRANSLATIONS = {
             "DKIM parašo patvirtinimo metu įvyko nežinoma klaida.",
         ),
     ],
-    Language.pl_PL: [
+    Language.pl_PL: [  # type: ignore
         (
             "SPF '~all' or '-all' directive not found. We recommend adding it, as it describes "
             "what should happen with messages that fail SPF verification. For example, "
@@ -985,7 +985,7 @@ def translate(
     language: Language,
     nonexistent_translation_handler: Optional[Callable[[str], str]] = None,
 ) -> str:
-    if language == Language.en_US:
+    if language == Language.en_US:  # type: ignore
         return message
 
     return _translate_using_dictionary(

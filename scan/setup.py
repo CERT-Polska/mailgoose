@@ -16,6 +16,8 @@ setup(
     license="BSD",
     url="https://github.com/CERT-Polska/mailgoose",
     packages=["libmailgoose"],
+    package_data={"": ["languages.txt"]},
+    include_package_data=True,
     scripts=[],
     classifiers=[
         "Programming Language :: Python :: 3",
