@@ -2,9 +2,5 @@ from enum import Enum
 from pathlib import Path
 
 
-class Language(Enum):
-    pass
-
-
-for line in open(Path(__file__).parent / "languages.txt"):
-    setattr(Language, line.strip(), line.strip())
+with open(Path(__file__).parent / "languages.txt") as f:
+    Language = Enum("Language", {line.strip(): line.strip() for line in f})
