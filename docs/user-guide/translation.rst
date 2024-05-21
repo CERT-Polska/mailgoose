@@ -26,7 +26,7 @@ Adding a new language
 ---------------------
 If you want to support a new language:
 
-- add it in ``languages.txt``,
+- add it in ``scan/libmailgoose/languages.txt``,
 - run ``./scripts/update_translation_files`` and fill ``.po`` files for the UI messages for your language in ``./app/translations``
   (**you may skip that part if you want only the library error messages to be translated**),
 - add the error message translations for your language in ``scan/libmailgoose/translate.py``.
