@@ -9,7 +9,7 @@ PLACEHOLDER = "__PLACEHOLDER__"
 SKIP_PLACEHOLDER = "__SKIP_PLACEHOLDER__"
 
 TRANSLATIONS = {
-    Language.lt_LT: [
+    Language.lt_LT: [  # type: ignore
         (
             "SPF '~all' or '-all' directive not found. We recommend adding it, as it describes "
             "what should happen with messages that fail SPF verification. For example, "
@@ -445,7 +445,7 @@ TRANSLATIONS = {
             "DKIM parašo patvirtinimo metu įvyko nežinoma klaida.",
         ),
     ],
-    Language.pl_PL: [
+    Language.pl_PL: [  # type: ignore
         (
             "SPF '~all' or '-all' directive not found. We recommend adding it, as it describes "
             "what should happen with messages that fail SPF verification. For example, "
@@ -609,6 +609,11 @@ TRANSLATIONS = {
             "domena służy do wysyłki dużej liczby wiadomości przy użyciu różnych narzędzi, a potencjalne niedostarczenie "
             "poprawnej wiadomości jest niedopuszczalne. W takich sytuacjach raporty powinny być dokładnie monitorowane, "
             "a docelowym ustawieniem powinno być 'quarantine' lub 'reject'.",
+        ),
+        (
+            "DMARC subdomain policy is 'none', which means that besides reporting no action will be taken for e-mails coming from subdomains. ",
+            "Polityka DMARC dla subdomen jest ustawiona na 'none', co oznacza, że oprócz raportowania, żadna dodatkowa akcja nie zostanie "
+            "wykonana w przypadku e-maili pochodzących z subdomen. ",
         ),
         (
             "rua tag (destination for aggregate reports) not found",
@@ -1004,7 +1009,7 @@ def translate(
     language: Language,
     nonexistent_translation_handler: Optional[Callable[[str], str]] = None,
 ) -> str:
-    if language == Language.en_US:
+    if language == Language.en_US:  # type: ignore
         return message
 
     return _translate_using_dictionary(
