@@ -74,6 +74,10 @@ TRANSLATIONS = {
             "DMARC politika yra 'none', o 'rua' nėra nustatytas, tai reiškia, kad DMARC nustatymas nėra veiksmingas.",
         ),
         (
+            "DMARC subdomain policy is 'none' and 'rua' is not set, which means that the DMARC setting is not effective for subdomains.",
+            "DMARC subdomeno poliika yra 'none', o 'rua' nėra nustatytas, tai reiškia, kad DMARC nustatymas nėra veiksmingas subdomenams",
+        ),
+        (
             f"The DMARC record must be located at {PLACEHOLDER}, not {PLACEHOLDER}",
             f"DMARC įrašas turi būti įdiegtas į {PLACEHOLDER}, o ne {PLACEHOLDER}.",
         ),
@@ -149,6 +153,10 @@ TRANSLATIONS = {
             "siųsti didelį kiekį el. laiškų naudojant įvairias priemones, o neteisingo pranešimo pristatymas "
             "yra nepriimtinas. Tokiais atvejais raportai turėtų būti atidžiai stebimi, o nustatyti nustatymai "
             "turėtų būti 'quarantine' arba 'reject'.",
+        ),
+        (
+            "DMARC subdomain policy is 'none', which means that besides reporting no action will be taken for e-mails coming from subdomains. ",
+            "DMARC subdomeno poliika yra 'none', tai reiškia, kad DMARC nustatymas nėra veiksmingas subdomenams",
         ),
         (
             "rua tag (destination for aggregate reports) not found",
@@ -601,11 +609,6 @@ TRANSLATIONS = {
             "domena służy do wysyłki dużej liczby wiadomości przy użyciu różnych narzędzi, a potencjalne niedostarczenie "
             "poprawnej wiadomości jest niedopuszczalne. W takich sytuacjach raporty powinny być dokładnie monitorowane, "
             "a docelowym ustawieniem powinno być 'quarantine' lub 'reject'.",
-        ),
-        (
-            "DMARC subdomain policy is 'none', which means that besides reporting no action will be taken for e-mails coming from subdomains. ",
-            "Polityka DMARC dla subdomen jest ustawiona na 'none', co oznacza, że oprócz raportowania, żadna dodatkowa akcja nie zostanie "
-            "wykonana w przypadku e-maili pochodzących z subdomen. ",
         ),
         (
             "rua tag (destination for aggregate reports) not found",
