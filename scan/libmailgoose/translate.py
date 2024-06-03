@@ -642,6 +642,10 @@ TRANSLATIONS = {
             "Znaleziono niepoprawny podpis mechanizmu DKIM.",
         ),
         (
+            "A DNS label is empty.",
+            "Wykryto pustą nazwę domenową.",
+        ),
+        (
             "SPF records containing macros aren't supported by the system yet.",
             "Rekordy SPF zawierające makra nie są jeszcze wspierane przez serwis.",
         ),
