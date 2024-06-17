@@ -544,6 +544,18 @@ def scan_dkim(
         # We don't call dkim.verify() directly because it would catch dkim.DKIMException
         # for us, thus not allowing to translate the message.
         d = dkim.DKIM(message)
+        signature_tags, _, _ = d.verify_headerprep()
+
+        LOGGER.info("DKIM signature tags: %s", repr(signature_tags))
+        if b"l" in signature_tags or "l" in signature_tags:
+            # https://www.zone.eu/blog/2024/05/17/bimi-and-dmarc-cant-save-you/
+            warnings = [
+                "Using the DKIM body length tag (l=) is not recommended, as it may allow an attacker to add own content to "
+                "the e-mail, and, in some cases, completely override it."
+            ]
+        else:
+            warnings = []
+
         dkimpy_valid = d.verify()
 
         LOGGER.info(
@@ -558,13 +570,13 @@ def scan_dkim(
             return DKIMScanResult(
                 valid=True,
                 errors=[],
-                warnings=[],
+                warnings=warnings,
             )
         else:
             return DKIMScanResult(
                 valid=False,
                 errors=["Found an invalid DKIM signature"],
-                warnings=[],
+                warnings=warnings,
             )
     except (dkim.DKIMException, dns.exception.DNSException) as e:
         LOGGER.info(

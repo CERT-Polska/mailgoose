@@ -846,6 +846,12 @@ TRANSLATIONS = {
         ),
         # dkimpy messages
         (
+            "Using the DKIM body length tag (l=) is not recommended, as it may allow an attacker to add own content to "
+            "the e-mail, and, in some cases, completely override it.",
+            "Używanie parametru 'l' (długość treści wiadomości) nie jest rekomendowane, bo może umożliwić atakującemu dodanie własnej "
+            "treści na końcu wiadomości, a w niektórych przypadkach podmianę treści wiadomości.",
+        ),
+        (
             f"{PLACEHOLDER} value is not valid base64 {PLACEHOLDER}",
             f"Wartość {PLACEHOLDER} nie jest poprawnie zakodowana algorytmem base64 {PLACEHOLDER}",
         ),
