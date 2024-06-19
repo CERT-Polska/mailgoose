@@ -1,8 +1,4 @@
-from socket import gethostbyname
-
 import dns.resolver
-
-from common.config import Config
 
 from .logging import build_logger
 
@@ -11,33 +7,14 @@ class WrappedResolver(dns.resolver.Resolver):
     logger = build_logger(__name__)
     num_retries = 3
 
-    @staticmethod
-    def _get_ns_from_soa(soa: str) -> str:
-        return soa.split()[0]
-
-    def resolve(self, domain, *args, **kwargs):  # type: ignore
+    def resolve(self, *args, **kwargs):  # type: ignore
         result = None
         last_exception = None
         num_exceptions = 0
 
         for _ in range(self.num_retries):
             try:
-                self.nameservers = Config.Network.NAMESERVERS
-                dns_response = super().resolve(domain, "NS", raise_on_no_answer=False)
-
-                self.nameservers = [gethostbyname(str(x)) for x in dns_response]
-                if not self.nameservers:
-                    if len(dns_response.response.authority) > 0:
-                        self.nameservers = [
-                            gethostbyname(self._get_ns_from_soa(str(x))) for x in dns_response.response.authority[0]
-                        ]
-                    else:
-                        self.nameservers = Config.Network.NAMESERVERS
-
-                # To save time (as checking SPF+DMARC+DKIM already needs a lot of DNS queries), we don't do a full
-                # recursive query, but ask the nameserver for the domain. Therefore any edits made by the user will
-                # still be quickly visible in the UI.
-                result = super().resolve(domain, *args, **kwargs)
+                result = super().resolve(*args, **kwargs)
                 break
             except Exception as e:
                 num_exceptions += 1
