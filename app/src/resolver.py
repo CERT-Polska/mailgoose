@@ -1,4 +1,5 @@
-from socket import gethostbyname, gaierror
+from socket import gaierror, gethostbyname
+from typing import List
 
 import dns.resolver
 
