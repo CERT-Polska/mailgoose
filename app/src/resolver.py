@@ -1,4 +1,5 @@
-from socket import gethostbyname
+from socket import gaierror, gethostbyname
+from typing import List
 
 import dns.resolver
 
@@ -21,12 +22,17 @@ class WrappedResolver(dns.resolver.Resolver):
                 self.nameservers = Config.Network.NAMESERVERS
 
                 domain_split = domain.split(".")
-                bottommost_nameservers = []
+                bottommost_nameservers: List[str] = []
                 for i in range(len(domain_split)):
                     parent_domain = ".".join(domain_split[i:])
                     dns_response = super().resolve(parent_domain, "NS", raise_on_no_answer=False)
                     if len(dns_response):
-                        bottommost_nameservers = [gethostbyname(str(x)) for x in dns_response]
+                        bottommost_nameservers = []
+                        for item in dns_response:
+                            try:
+                                bottommost_nameservers.append(gethostbyname(str(item)))
+                            except gaierror:
+                                pass
                         break
 
                 if bottommost_nameservers:
