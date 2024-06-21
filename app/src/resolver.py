@@ -26,7 +26,12 @@ class WrappedResolver(dns.resolver.Resolver):
                     parent_domain = ".".join(domain_split[i:])
                     dns_response = super().resolve(parent_domain, "NS", raise_on_no_answer=False)
                     if len(dns_response):
-                        bottommost_nameservers = [gethostbyname(str(x)) for x in dns_response]
+                        bottommost_nameservers = []
+                        for item in dns_response:
+                            try:
+                                bottommost_nameservers.append(gethostbyname(str(x)))
+                            except socket.gaierror:
+                                pass
                         break
 
                 if bottommost_nameservers:
