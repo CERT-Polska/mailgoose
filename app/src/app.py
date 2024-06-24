@@ -41,6 +41,7 @@ templates = setup_templates(Config.UI.LANGUAGE)
 @dataclasses.dataclass
 class ScanAPICallResult:
     system_error: Optional[bool] = None
+    system_error_message: Optional[str] = None
     result: Optional[ScanResult] = None
 
 
@@ -209,6 +210,6 @@ async def check_domain_api(request: Request, domain: str) -> ScanAPICallResult:
             client_user_agent=client_user_agent,
         )
         return ScanAPICallResult(result=result)
-    except (DomainValidationException, ScanningException):
+    except (DomainValidationException, ScanningException) as e:
         LOGGER.exception("An error occured during check of %s", domain)
-        return ScanAPICallResult(system_error=True)
+        return ScanAPICallResult(system_error=True, system_error_message=e.message)
