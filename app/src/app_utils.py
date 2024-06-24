@@ -5,7 +5,7 @@ import io
 import traceback
 from email import message_from_file
 from email.utils import parseaddr
-from typing import Optional, Tuple
+from typing import List, Optional, Tuple
 
 import dkim.util
 from email_validator import EmailNotValidError, validate_email
@@ -75,6 +75,7 @@ def scan_and_log(
     dkim_domain: Optional[str],
     message: Optional[bytes],
     message_timestamp: Optional[datetime.datetime],
+    nameservers: List[str],
     language: Language,
     client_ip: Optional[str],
     client_user_agent: Optional[str],
@@ -87,7 +88,9 @@ def scan_and_log(
         source=source.value,
         client_ip=client_ip,
         client_user_agent=client_user_agent,
-        check_options={},
+        check_options={
+            "nameservers": nameservers,
+        },
     )
     result = ScanResult(
         domain=None,
@@ -104,6 +107,7 @@ def scan_and_log(
                 dkim_domain=dkim_domain,
                 message=message,
                 message_timestamp=message_timestamp,
+                nameservers=nameservers,
                 dkim_implementation_mismatch_callback=dkim_implementation_mismatch_callback,
             ),
             language=language,
