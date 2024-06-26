@@ -3,9 +3,6 @@ version: "3"
 x-common-configuration:
   &common-configuration
   restart: always
-  dns:
-     - 8.8.8.8
-     - 8.8.4.4
 
 services:
   app:
@@ -22,6 +19,7 @@ services:
     ports:
       - 8000:8000
     <<: *common-configuration
+
   worker:
     build:
       context: .
@@ -33,6 +31,7 @@ services:
       - .env
     command: bash -c "/wait-for-it.sh db:5432 --  rq worker"
     <<: *common-configuration
+
   mail_receiver:
     build:
       context: .
@@ -47,6 +46,7 @@ services:
       - 25:25
       - 587:587
     <<: *common-configuration
+
   db:
     image: postgres:15.2-alpine
     environment:
@@ -56,10 +56,17 @@ services:
     volumes:
       - data-db:/var/lib/postgresql/data
     <<: *common-configuration
+
   redis:
     image: redis
     volumes:
       - data-redis:/data
+    <<: *common-configuration
+
+  bind9:
+    build:
+      context: .
+      dockerfile: docker-bind9/Dockerfile
     <<: *common-configuration
 
 volumes:

@@ -1,3 +1,4 @@
+from socket import gethostbyname
 from typing import Annotated, Any, List, get_type_hints
 
 import decouple
@@ -46,7 +47,7 @@ class Config:
             "to provide custom ones, remember to modify the ones provided to the Docker containers as well. "
             "At CERT PL we use a separate ``docker-compose.yml`` file with additional configuration specific "
             "to our instance.",
-        ] = get_config("NAMESERVERS", default="8.8.8.8", cast=decouple.Csv(str))
+        ] = get_config("NAMESERVERS", default=gethostbyname("bind9"), cast=decouple.Csv(str))
         SSL_PRIVATE_KEY_PATH: Annotated[
             str,
             "SSL private key path. Please refer to ``SSL_CERTIFICATE_PATH`` variable documentation to "
