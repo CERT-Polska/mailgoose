@@ -32,6 +32,10 @@ services:
       - POSTGRES_PASSWORD=postgres
   redis-test:
     image: redis
+  bind9:
+    build:
+      context: .
+      dockerfile: docker-bind9/Dockerfile
   test:
     profiles: ["test"]  # This will prevent the service from starting by default
     build:
