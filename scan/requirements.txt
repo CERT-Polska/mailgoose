@@ -2,4 +2,4 @@
 checkdmarc@git+https://github.com/CERT-Polska/checkdmarc@hotfixes-2024-06-05
 dkimpy==1.1.7
 python-multipart==0.0.9
-validators==0.28.3
+validators==0.30.0
