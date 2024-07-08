@@ -36,13 +36,13 @@
             {% endif %}">
 
         {% if not data.valid %}
-            ❌
+            <i class="bi bi-x-square"></i>
         {% elif data.record_could_not_be_fully_validated %}
-            ➖
+            <i class="bi bi-question-circle"></i>
         {% elif data.warnings %}
-            ⚠️
+            <i class="bi bi-exclamation-triangle"></i>
         {% else %}
-            ✓
+            <i class="bi bi-check-circle"></i>
         {% endif %}
         {{ title }}:
         {% if not data.valid %}
@@ -120,11 +120,11 @@
                 <div class="card mb-3">
                     <div class="card-body">
                         {% if result.num_correct_mechanisms == result.num_checked_mechanisms %}
-                            <span class="text-success">✓
+                            <span class="text-success"><i class="bi bi-check-circle"></i>
                         {% elif result.has_not_valid_mechanisms %}
-                            <span class="text-danger">❌
+                            <span class="text-danger"><i class="bi bi-x-square"></i>
                         {% else %}
-                            <span class="text-warning-dark">⚠️
+                            <span class="text-warning-dark"><i class="bi bi-exclamation-triangle"></i>
                         {% endif %}
                             {% trans %}Check summary{% endtrans %}:
 
