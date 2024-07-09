@@ -1,5 +1,7 @@
 import dns.resolver
 
+from common.config import Config
+
 from .logging import build_logger
 
 
@@ -12,8 +14,12 @@ class WrappedResolver(dns.resolver.Resolver):
         last_exception = None
         num_exceptions = 0
 
-        for _ in range(self.num_retries):
+        for i in range(self.num_retries):
             try:
+                if i < self.num_retries - 1:
+                    self.nameservers = Config.Network.NAMESERVERS
+                else:
+                    self.nameservers = Config.Network.FALLBACK_NAMESERVERS
                 result = super().resolve(*args, **kwargs)
                 break
             except Exception as e:
