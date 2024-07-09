@@ -43,11 +43,13 @@ class Config:
         APP_DOMAIN: Annotated[str, "The domain the site is running on."] = get_config("APP_DOMAIN")
         NAMESERVERS: Annotated[
             List[str],
-            "A comma-separated list of nameservers that will be used to resolve domains. If you want "
-            "to provide custom ones, remember to modify the ones provided to the Docker containers as well. "
-            "At CERT PL we use a separate ``docker-compose.yml`` file with additional configuration specific "
-            "to our instance.",
+            "A comma-separated list of nameservers that will be used to resolve domains.",
         ] = get_config("NAMESERVERS", default=gethostbyname("bind9"), cast=decouple.Csv(str))
+        FALLBACK_NAMESERVERS: Annotated[
+            List[str],
+            "A comma-separated list of nameservers that will be used to resolve domains if NAMESERVERS fail. This can "
+            "be used e.g. to use recursive nameservers as NAMESERVERS and nameservers such as e.g. 8.8.8.8 as FALLBACK_NAMESERVERS.",
+        ] = get_config("FALLBACK_NAMESERVERS", default="8.8.8.8", cast=decouple.Csv(str))
         SSL_PRIVATE_KEY_PATH: Annotated[
             str,
             "SSL private key path. Please refer to ``SSL_CERTIFICATE_PATH`` variable documentation to "
