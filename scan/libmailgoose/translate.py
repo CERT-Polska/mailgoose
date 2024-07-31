@@ -120,10 +120,10 @@ TRANSLATIONS = {
             "įrašai gali sukelti problemų su kai kuriomis DMARC implementacijomis.",
         ),
         (
-            "Unrelated TXT record found in the '_dmarc' subdomain of a domain the record refers to. "
+            f"Unrelated TXT record found in a domain the record refers to: {PLACEHOLDER}. "
             "We recommend removing it, as such unrelated records may cause problems with some DMARC "
             "implementations.",
-            "Rasti nesusiję TXT įrašai '_dmarc' subdomeno domeno, į kurį nukreiptas įrašas. Rekomenduojame juos pašalinti, "
+            f"Rasti nesusiję TXT įrašai domeno, į kurį nukreiptas įrašas: {PLACEHOLDER}. Rekomenduojame juos pašalinti, "
             "nes toki neatsitinkantys įrašai gali sukelti problemų su kai kuriomis DMARC implementacijomis.",
         ),
         (
@@ -573,10 +573,10 @@ TRANSLATIONS = {
             "niektóre serwery mogą w takiej sytuacji odrzucić konfigurację DMARC jako błędną.",
         ),
         (
-            "Unrelated TXT record found in the '_dmarc' subdomain of a domain the record refers to. "
+            f"Unrelated TXT record found in a domain the record refers to: {PLACEHOLDER}. "
             "We recommend removing it, as such unrelated records may cause problems with some DMARC "
             "implementations.",
-            "Znaleziono niepowiązane rekordy TXT w subdomenie '_dmarc' domeny, do której odwołuje się rekord. "
+            f"Znaleziono niepowiązane rekordy TXT w domenie, do której odwołuje się rekord: {PLACEHOLDER}. "
             "Rekomendujemy ich usunięcie, ponieważ niektóre serwery mogą w takiej sytuacji odrzucić "
             "konfigurację DMARC jako błędną.",
         ),

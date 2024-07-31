@@ -367,9 +367,9 @@ def scan_domain(
                 nameservers=nameservers,
                 timeout=timeout,
             )
-        except checkdmarc.dmarc.UnrelatedTXTRecordFoundAtDMARC:
+        except checkdmarc.dmarc.UnrelatedTXTRecordFoundAtDMARC as e:
             dmarc_warnings.append(
-                "Unrelated TXT record found in the '_dmarc' subdomain of a domain the record refers to. "
+                f"Unrelated TXT record found in a domain the record refers to: {e.data['target']}. "
                 "We recommend removing it, as such unrelated records may cause problems with some DMARC "
                 "implementations.",
             )
