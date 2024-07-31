@@ -1,5 +1,5 @@
 # Until fixes get merged, let's refer to CERT PL fork
-checkdmarc@git+https://github.com/CERT-Polska/checkdmarc@hotfixes-2024-06-05
+checkdmarc@git+https://github.com/CERT-Polska/checkdmarc@unrelated-contains-targt-info
 dkimpy==1.1.8
 python-multipart==0.0.9
 validators==0.33.0
