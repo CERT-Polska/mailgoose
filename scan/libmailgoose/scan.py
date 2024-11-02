@@ -7,6 +7,7 @@ from email import message_from_file
 from email.message import Message as EmailMessage
 from typing import Any, Callable, Dict, List, Optional
 
+import checkdmarc.dmarc
 import checkdmarc.smtp
 import checkdmarc.utils
 import dkim
@@ -157,7 +158,7 @@ def check_alignment(
         tag_value = parsed_dmarc_record["tags"][tag_name]["value"]
 
         if tag_value not in ["r", "s"]:
-            raise checkdmarc.DMARCSyntaxError(f"Unknown {tag_name} value: {tag_value}.")
+            raise checkdmarc.dmarc.DMARCSyntaxError(f"Unknown {tag_name} value: {tag_value}.")
         relaxed = tag_value == "r"
 
     if relaxed:
