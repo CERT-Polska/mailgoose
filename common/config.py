@@ -1,5 +1,4 @@
 import os
-
 from socket import gethostbyname
 from typing import Annotated, Any, List, get_type_hints
 
@@ -46,7 +45,11 @@ class Config:
         NAMESERVERS: Annotated[
             List[str],
             "A comma-separated list of nameservers that will be used to resolve domains.",
-        ] = get_config("NAMESERVERS", default=gethostbyname(os.environ.get("DEFAULT_NAMESERVER_NAME_OVERRIDE", "bind9")), cast=decouple.Csv(str))
+        ] = get_config(
+            "NAMESERVERS",
+            default=gethostbyname(os.environ.get("DEFAULT_NAMESERVER_NAME_OVERRIDE", "bind9")),
+            cast=decouple.Csv(str),
+        )
         FALLBACK_NAMESERVERS: Annotated[
             List[str],
             "A comma-separated list of nameservers that will be used to resolve domains if NAMESERVERS fail. This can "
