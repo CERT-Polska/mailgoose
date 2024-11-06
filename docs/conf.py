@@ -21,6 +21,7 @@ from typing import List
 import sphinx_rtd_theme  # noqa
 
 sys.path.insert(0, os.path.abspath("../common"))
+sys.path.insert(0, os.path.abspath("../scan"))
 sys.path.insert(0, os.path.abspath(".."))
 sys.path.insert(0, os.path.abspath("."))
 
