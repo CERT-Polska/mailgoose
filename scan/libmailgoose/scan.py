@@ -338,7 +338,7 @@ def scan_domain(
         dmarc_warnings = []
         # If the domain is encoded with UTF-8, the domain name must be converted to an A-label, as described
         # in Section 2.3 of [IDNA], for further processing.
-        from_domain = from_domain.encode('idna')
+        from_domain = from_domain.encode('idna').decode('ascii')
 
         try:
             dmarc_query = checkdmarc.dmarc.query_dmarc_record(from_domain, nameservers=nameservers, timeout=timeout)
