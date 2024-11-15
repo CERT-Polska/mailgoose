@@ -339,7 +339,7 @@ def scan_domain(
         # According to Section 6.6.1 of RFC7489 (https://datatracker.ietf.org/doc/html/rfc7489):
         # If the domain is encoded with UTF-8, the domain name must be converted to an A-label, as described
         # in Section 2.3 of [IDNA], for further processing.
-        from_domain = from_domain.encode('idna').decode('ascii')
+        from_domain = from_domain.encode("idna").decode("ascii")
 
         try:
             dmarc_query = checkdmarc.dmarc.query_dmarc_record(from_domain, nameservers=nameservers, timeout=timeout)
