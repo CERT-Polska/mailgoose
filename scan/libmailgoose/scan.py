@@ -151,6 +151,9 @@ def check_alignment(
     other_domain: str,
     from_domain: str,
 ) -> bool:
+    from_domain = from_domain.encode("idna").decode("ascii")
+    other_domain = other_domain.encode("idna").decode("ascii")
+
     if tag_name not in parsed_dmarc_record["tags"]:
         # The default value, if no aspf/adkim tag is provided, is for the alignment to be relaxed
         relaxed = True
