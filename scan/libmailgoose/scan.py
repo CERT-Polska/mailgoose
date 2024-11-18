@@ -151,6 +151,9 @@ def check_alignment(
     other_domain: str,
     from_domain: str,
 ) -> bool:
+    from_domain = from_domain.encode("idna").decode("ascii")
+    other_domain = other_domain.encode("idna").decode("ascii")
+
     if tag_name not in parsed_dmarc_record["tags"]:
         # The default value, if no aspf/adkim tag is provided, is for the alignment to be relaxed
         relaxed = True
@@ -336,6 +339,10 @@ def scan_domain(
     # DMARC
     try:
         dmarc_warnings = []
+        # According to Section 6.6.1 of RFC7489 (https://datatracker.ietf.org/doc/html/rfc7489):
+        # If the domain is encoded with UTF-8, the domain name must be converted to an A-label, as described
+        # in Section 2.3 of [IDNA], for further processing.
+        from_domain = from_domain.encode("idna").decode("ascii")
 
         try:
             dmarc_query = checkdmarc.dmarc.query_dmarc_record(from_domain, nameservers=nameservers, timeout=timeout)
