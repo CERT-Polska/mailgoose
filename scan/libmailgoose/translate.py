@@ -844,6 +844,10 @@ TRANSLATIONS = {
             "An unknown error has occured during configuration validation.",
             "Wystąpił nieznany błąd podczas sprawdzania konfiguracji.",
         ),
+        (
+            f"Unknown {PLACEHOLDER} value: {PLACEHOLDER}.",
+            f"Nieznana wartość {PLACEHOLDER}: {PLACEHOLDER}.",
+        ),
         # dkimpy messages
         (
             "Using the DKIM body length tag (l=) is not recommended, as it may allow an attacker to add own content to "
