@@ -11,6 +11,7 @@ import checkdmarc.dmarc
 import checkdmarc.smtp
 import checkdmarc.utils
 import dkim
+import dkim.dnsplug
 import dkim.util
 import dns.exception
 import dns.resolver
@@ -563,6 +564,18 @@ def scan_dkim(
             ]
         else:
             warnings = []
+
+        selector_full_name = signature_tags[b"s"] + b"._domainkey." + signature_tags[b"d"] + b"."
+        if dkim_record_raw := dkim.dnsplug.get_txt(selector_full_name):
+            dkim_record_tags = dkim.util.parse_tag_value(dkim_record_raw)
+            if acceptable_hash_algorithms_raw := dkim_record_tags[b"h"]:
+                acceptable_hash_algorithms: List[bytes] = acceptable_hash_algorithms_raw.split(b",")
+                for acceptable_hash_algorithm in acceptable_hash_algorithms:
+                    if acceptable_hash_algorithm not in (b"sha1", b"sha256"):
+                        warnings.append(
+                            "The DKIM acceptable hash algorithms tag (h=) in the DNS record contains an unsupported hash "
+                            "algorithm: " + acceptable_hash_algorithm.decode()
+                        )
 
         dkimpy_valid = d.verify()
 
