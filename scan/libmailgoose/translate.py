@@ -848,6 +848,10 @@ TRANSLATIONS = {
             f"Unknown {PLACEHOLDER} value: {PLACEHOLDER}.",
             f"Nieznana wartość {PLACEHOLDER}: {PLACEHOLDER}.",
         ),
+        (
+            f"The DKIM acceptable hash algorithms tag (h=) in the DNS record contains an unsupported hash algorithm: {PLACEHOLDER}",
+            f"Tag 'h' w rekordzie DNS, oznaczający akceptowane algorytmy haszujące, zawiera niewspierany algorytm: {PLACEHOLDER}",
+        ),
         # dkimpy messages
         (
             "Using the DKIM body length tag (l=) is not recommended, as it may allow an attacker to add own content to "
