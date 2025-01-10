@@ -568,7 +568,7 @@ def scan_dkim(
         selector_full_name = signature_tags[b"s"] + b"._domainkey." + signature_tags[b"d"] + b"."
         if dkim_record_raw := dkim.dnsplug.get_txt(selector_full_name):
             dkim_record_tags = dkim.util.parse_tag_value(dkim_record_raw)
-            if acceptable_hash_algorithms_raw := dkim_record_tags[b"h"]:
+            if acceptable_hash_algorithms_raw := dkim_record_tags.get(b"h"):
                 acceptable_hash_algorithms: List[bytes] = acceptable_hash_algorithms_raw.split(b",")
                 for acceptable_hash_algorithm in acceptable_hash_algorithms:
                     if acceptable_hash_algorithm not in (b"sha1", b"sha256"):
