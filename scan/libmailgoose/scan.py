@@ -570,9 +570,13 @@ def scan_dkim(
             try:
                 dkim_record_tags = dkim.util.parse_tag_value(dkim_record_raw)
             except dkim.util.InvalidTagSpec as e:
-                raise dkim.DKIMException("The DKIM DNS record contains an invalid tag: " + e.args[0].decode("ascii", errors="ignore"))
+                raise dkim.DKIMException(
+                    "The DKIM DNS record contains an invalid tag: " + e.args[0].decode("ascii", errors="ignore")
+                )
             except dkim.util.DuplicateTag as e:
-                raise dkim.DKIMException("The DKIM DNS record contains an duplicate tag: " + e.args[0].decode("ascii", errors="ignore"))
+                raise dkim.DKIMException(
+                    "The DKIM DNS record contains an duplicate tag: " + e.args[0].decode("ascii", errors="ignore")
+                )
             if acceptable_hash_algorithms_raw := dkim_record_tags.get(b"h"):
                 acceptable_hash_algorithms: List[bytes] = acceptable_hash_algorithms_raw.split(b",")
                 for acceptable_hash_algorithm in acceptable_hash_algorithms:

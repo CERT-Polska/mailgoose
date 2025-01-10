@@ -106,7 +106,9 @@ def scan_message_and_domain_job(
             error = translate(e.message, Language(Config.UI.LANGUAGE))
 
             result = None
-            error = translate("An unknown error has occured during configuration validation.", Language(Config.UI.LANGUAGE))
+            error = translate(
+                "An unknown error has occured during configuration validation.", Language(Config.UI.LANGUAGE)
+            )
 
     save_check_results(
         envelope_domain=envelope_domain,
