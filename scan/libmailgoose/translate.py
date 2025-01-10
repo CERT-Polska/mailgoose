@@ -852,6 +852,14 @@ TRANSLATIONS = {
             f"The DKIM acceptable hash algorithms tag (h=) in the DNS record contains an unsupported hash algorithm: {PLACEHOLDER}",
             f"Tag 'h' w rekordzie DNS, oznaczający akceptowane algorytmy haszujące, zawiera niewspierany algorytm: {PLACEHOLDER}",
         ),
+        (
+            f"The DKIM DNS record contains an invalid tag: {PLACEHOLDER}",
+            f"Rekord DKIM w DNS zawiera nieprawidłowy tag: {PLACEHOLDER}",
+        ),
+        (
+            f"The DKIM DNS record contains an duplicate tag: {PLACEHOLDER}",
+            f"Rekord DKIM w DNS zawiera zduplikowany tag: {PLACEHOLDER}",
+        ),
         # dkimpy messages
         (
             "Using the DKIM body length tag (l=) is not recommended, as it may allow an attacker to add own content to "
