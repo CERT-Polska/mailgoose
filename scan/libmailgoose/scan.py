@@ -540,6 +540,7 @@ def scan_dkim(
     message_parsed: EmailMessage,
     dkim_implementation_mismatch_callback: Optional[Callable[[bytes, bool, bool], None]] = None,
 ) -> DKIMScanResult:
+    raise Exception("kupa")
     if "dkim-signature" not in message_parsed:
         return DKIMScanResult(
             valid=False,
