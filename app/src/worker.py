@@ -104,6 +104,11 @@ def scan_message_and_domain_job(
         except (DomainValidationException, ScanningException) as e:
             result = None
             error = translate(e.message, Language(Config.UI.LANGUAGE))
+        except Exception:
+            session = Session()
+            server_error_log_entry = ServerErrorLogEntry(url="worker", error=traceback.format_exc())
+            session.add(server_error_log_entry)
+            session.commit()
 
             result = None
             error = translate(
