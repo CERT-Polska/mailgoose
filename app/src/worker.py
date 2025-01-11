@@ -110,6 +110,11 @@ def scan_message_and_domain_job(
             session.add(server_error_log_entry)
             session.commit()
 
+            result = None
+            error = translate(
+                "An unknown error has occured during configuration validation.", Language(Config.UI.LANGUAGE)
+            )
+
     save_check_results(
         envelope_domain=envelope_domain,
         from_domain=from_domain or envelope_domain,
