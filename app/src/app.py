@@ -102,10 +102,11 @@ async def check_email_results(request: Request, recipient_username: str) -> Resp
         return RedirectResponse("/check-email")
 
     message_data = REDIS.get(key)
+    message_sender_ip = REDIS.get(key + b"-sender_ip")
     message_timestamp_raw = REDIS.get(key + b"-timestamp")
     mail_from_raw = REDIS.get(key + b"-sender")
 
-    if not message_data or not message_timestamp_raw or not mail_from_raw:
+    if not message_data or not message_sender_ip or not message_timestamp_raw or not mail_from_raw:
         return templates.TemplateResponse(
             "check_email.html",
             {

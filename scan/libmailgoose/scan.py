@@ -16,6 +16,7 @@ import dkim.util
 import dns.exception
 import dns.resolver
 import publicsuffixlist
+import spf
 import validators
 
 from . import lax_record_query
@@ -191,6 +192,7 @@ def scan_domain(
     envelope_domain: str,
     from_domain: str,
     dkim_domain: Optional[str],
+    message_sender_ip: Optional[bytes] = None,
     parked: bool = False,
     nameservers: Optional[List[str]] = None,
     include_dmarc_tag_descriptions: bool = False,
@@ -289,6 +291,15 @@ def scan_domain(
                     "have an SPF record. When using directives such as 'include' or 'redirect' remember "
                     "that the destination domain must have a correct SPF record.",
                 ]
+
+        if message_sender_ip:
+            message_sender_ip_s = message_sender_ip.decode("ascii")
+            spf_check_result = spf.query(message_sender_ip_s, envelope_domain, None).check()
+            if spf_check_result[0] in ("softfail", "fail"):
+                domain_result.spf.errors.append(
+                    f"The host {message_sender_ip_s} that we received the message from is not "
+                    f"authorized by the policy to send envelopes from this domain"
+                )
     except checkdmarc.spf.SPFRecordNotFound as e:
         # https://github.com/domainaware/checkdmarc/issues/90
         if isinstance(e.args[0], dns.exception.DNSException):
@@ -637,6 +648,7 @@ def scan(
     from_domain: str,
     dkim_domain: Optional[str],
     message: Optional[bytes],
+    message_sender_ip: Optional[bytes],
     message_timestamp: Optional[datetime.datetime],
     nameservers: Optional[List[str]] = None,
     dkim_implementation_mismatch_callback: Optional[Callable[[bytes, bool, bool], None]] = None,
@@ -652,6 +664,7 @@ def scan(
             envelope_domain=envelope_domain,
             from_domain=from_domain,
             dkim_domain=dkim_domain,
+            message_sender_ip=message_sender_ip,
             nameservers=nameservers,
         ),
         dkim=(

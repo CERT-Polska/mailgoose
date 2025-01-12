@@ -73,6 +73,11 @@ class RedisHandler(BaseMessageHandler):
                 )
                 REDIS.setex(key, Config.Data.REDIS_MESSAGE_DATA_EXPIRY_SECONDS, content)
                 REDIS.setex(
+                    key + b"-sender_ip",
+                    Config.Data.REDIS_MESSAGE_DATA_EXPIRY_SECONDS,
+                    session.peer[0],
+                )
+                REDIS.setex(
                     key + b"-timestamp",
                     Config.Data.REDIS_MESSAGE_DATA_EXPIRY_SECONDS,
                     datetime.datetime.now().isoformat(),
