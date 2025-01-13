@@ -205,6 +205,7 @@ async def check_domain_api(request: Request, domain: str) -> ScanAPICallResult:
             from_domain=domain,
             dkim_domain=None,
             message=None,
+            message_sender_ip=None,
             message_timestamp=None,
             nameservers=Config.Network.NAMESERVERS,
             language=Language(Config.UI.LANGUAGE),
