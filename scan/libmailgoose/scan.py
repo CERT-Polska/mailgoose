@@ -297,8 +297,8 @@ def scan_domain(
             spf_check_result = spf.query(message_sender_ip_s, envelope_domain, None).check()
             if spf_check_result[0] in ("softfail", "fail"):
                 domain_result.spf.errors.append(
-                    f"The host {message_sender_ip_s} that we received the message from is not "
-                    f"authorized by the policy to send envelopes from this domain"
+                    f"The IP address {message_sender_ip_s} from which the message was received "
+                    f"is not authorized by the domain's policy to send messages."
                 )
     except checkdmarc.spf.SPFRecordNotFound as e:
         # https://github.com/domainaware/checkdmarc/issues/90
