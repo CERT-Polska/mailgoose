@@ -79,7 +79,7 @@ def scan_message_and_domain_job(
     message_sender_ip = REDIS.get(message_key + b"-sender_ip")
     message_timestamp_raw = REDIS.get(message_key + b"-timestamp")
 
-    if not message_data or not message_key or not message_timestamp_raw:
+    if not message_data or not message_sender_ip or not message_timestamp_raw:
         raise RuntimeError("Worker coudn't access message data")
 
     message_timestamp = datetime.datetime.fromisoformat(message_timestamp_raw.decode("ascii"))

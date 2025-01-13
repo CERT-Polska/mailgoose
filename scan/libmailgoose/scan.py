@@ -298,7 +298,7 @@ def scan_domain(
             if spf_check_result[0] in ("softfail", "fail"):
                 domain_result.spf.errors.append(
                     f"The IP address {message_sender_ip_s} from which the message was received "
-                    f"is not authorized by the domain's policy to send messages."
+                    f"is not authorized by the domain's SPF policy to send messages."
                 )
     except checkdmarc.spf.SPFRecordNotFound as e:
         # https://github.com/domainaware/checkdmarc/issues/90

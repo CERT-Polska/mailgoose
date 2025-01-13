@@ -504,9 +504,9 @@ TRANSLATIONS = {
         ),
         (
             f"The IP address {PLACEHOLDER} from which the message was received "
-            f"is not authorized by the domain's policy to send messages.",
+            f"is not authorized by the domain's SPF policy to send messages.",
             f"Adres IP {PLACEHOLDER}, z którego otrzymano wiadomość, nie jest "
-            f"uprawniony przez politykę domeny do wysyłania wiadomości.",
+            f"uprawniony przez politykę SPF domeny do wysyłania wiadomości.",
         ),
         (
             "Valid DMARC record not found. We recommend using all three mechanisms: SPF, DKIM and DMARC "
