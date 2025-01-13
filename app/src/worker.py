@@ -34,6 +34,7 @@ def scan_domain_job(
             from_domain=domain,
             dkim_domain=None,
             message=None,
+            message_sender_ip=None,
             message_timestamp=None,
             nameservers=Config.Network.NAMESERVERS,
             language=Language(Config.UI.LANGUAGE),
@@ -75,9 +76,10 @@ def scan_message_and_domain_job(
     recipient_username: str,
 ) -> None:
     message_data = REDIS.get(message_key)
+    message_sender_ip = REDIS.get(message_key + b"-sender_ip")
     message_timestamp_raw = REDIS.get(message_key + b"-timestamp")
 
-    if not message_data or not message_timestamp_raw:
+    if not message_data or not message_sender_ip or not message_timestamp_raw:
         raise RuntimeError("Worker coudn't access message data")
 
     message_timestamp = datetime.datetime.fromisoformat(message_timestamp_raw.decode("ascii"))
@@ -94,6 +96,7 @@ def scan_message_and_domain_job(
                 from_domain=from_domain,
                 dkim_domain=dkim_domain,
                 message=message_data,
+                message_sender_ip=message_sender_ip,
                 message_timestamp=message_timestamp,
                 nameservers=Config.Network.NAMESERVERS,
                 language=Language(Config.UI.LANGUAGE),
