@@ -318,6 +318,10 @@ TRANSLATIONS = {
             "pct žymės reikšmė turi būti sveikasis skaičius.",
         ),
         (
+            "The value of the ri tag must be an integer",
+            "ri žymės reikšmė turi būti sveikasis skaičius.",
+        ),
+        (
             f"The domain for rua email address {PLACEHOLDER} has no MX records",
             f"rua el. pašto adreso domenas {PLACEHOLDER} neturi MX įrašų.",
         ),
@@ -833,6 +837,10 @@ TRANSLATIONS = {
         (
             "The value of the pct tag must be an integer",
             "Wartość tagu 'pct' musi być liczbą całkowitą.",
+        ),
+        (
+            "The value of the ri tag must be an integer",
+            "Wartość tagu 'ri' musi być liczbą całkowitą.",
         ),
         (
             f"The domain for rua email address {PLACEHOLDER} has no MX records",
