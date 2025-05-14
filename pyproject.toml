@@ -7,6 +7,7 @@ line-length = 120
 [tool.liccheck]
 authorized_licenses = [
     "bsd",
+    "BSD-3-Clause",
     "apache 2.0",
     "Apache License 2.0",
     "apache software",
@@ -16,6 +17,8 @@ authorized_licenses = [
     "gnu library or lesser general public license (lgpl)",
     "mozilla public license 2.0 (mpl 2.0)",
     "mit",
+    "PSF-2.0",
+    "MIT AND Python-2.0",
     "python software foundation",
     "the unlicense (unlicense)",
     "cc0 1.0 universal (cc0 1.0) public domain dedication",
