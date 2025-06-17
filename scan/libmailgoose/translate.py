@@ -683,7 +683,6 @@ TRANSLATIONS = {
             "wykonana w przypadku e-maili pochodzących z subdomen. ",
         ),
         # End of messages left for backward compatibility
-
         (
             "rua tag (destination for aggregate reports) not found",
             "Nie znaleziono tagu 'rua' (odbiorca zagregowanych raportów).",
