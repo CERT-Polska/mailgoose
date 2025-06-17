@@ -20,6 +20,7 @@ authorized_licenses = [
     "PSF-2.0",
     "MIT AND Python-2.0",
     "python software foundation",
+    "PSF-2.0",
     "the unlicense (unlicense)",
     "cc0 1.0 universal (cc0 1.0) public domain dedication",
 ]
