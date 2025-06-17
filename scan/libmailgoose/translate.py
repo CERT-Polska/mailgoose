@@ -475,7 +475,6 @@ TRANSLATIONS = {
             f"The SPF record for parked domains should be: {PLACEHOLDER} not: {PLACEHOLDER}",
             f"Rekord SPF dla domen niesłużących do wysyłki poczty powinien mieć wartość  {PLACEHOLDER}, nie {PLACEHOLDER}",
         ),
-
         (
             "Valid SPF record not found. We recommend using all three mechanisms: SPF, DKIM and DMARC "
             "to decrease the possibility of successful e-mail message spoofing.",
