@@ -629,7 +629,7 @@ TRANSLATIONS = {
             "be 'quarantine' or 'reject'.",
             "Polityka DMARC jest ustawiona na 'none', co oznacza, że oprócz raportowania, żadna dodatkowa akcja nie zostanie "
             "wykonana.\n\n"
-            "Polityka DMARC opisuje serwerowi odbiorcy, jaką akcję powinien podjąć, gdy wiadomość nie zostanie poprawnie "
+            "Ta polityka opisuje serwerowi odbiorcy, jaką akcję powinien podjąć, gdy wiadomość nie zostanie poprawnie "
             "zweryfikowana. Polityka 'quarantine' oznacza, że taka wiadomość powinna zostać oznaczona jako spam, a polityka 'reject' - że "
             "powinna zostać odrzucona przez serwer odbiorcy. Rekomendujemy korzystanie z polityki 'quarantine' lub 'reject'.\n\n"
             "W trakcie testów działania mechanizmu DMARC, w celu zmniejszenia ryzyka, że poprawne wiadomości zostaną "
@@ -651,7 +651,7 @@ TRANSLATIONS = {
             "be 'quarantine' or 'reject'.",
             "Polityka DMARC dla subdomen jest ustawiona na 'none', co oznacza, że oprócz raportowania, żadna dodatkowa akcja nie zostanie "
             "wykonana w przypadku e-maili pochodzących z subdomen. \n\n"
-            "Polityka DMARC opisuje serwerowi odbiorcy, jaką akcję powinien podjąć, gdy wiadomość nie zostanie poprawnie "
+            "Ta polityka opisuje serwerowi odbiorcy, jaką akcję powinien podjąć, gdy wiadomość nie zostanie poprawnie "
             "zweryfikowana. Polityka 'quarantine' oznacza, że taka wiadomość powinna zostać oznaczona jako spam, a polityka 'reject' - że "
             "powinna zostać odrzucona przez serwer odbiorcy. Rekomendujemy korzystanie z polityki 'quarantine' lub 'reject'.\n\n"
             "W trakcie testów działania mechanizmu DMARC, w celu zmniejszenia ryzyka, że poprawne wiadomości zostaną "
@@ -673,7 +673,7 @@ TRANSLATIONS = {
             "be 'quarantine' or 'reject'.",
             "Polityka DMARC dla subdomen jest ustawiona na 'none', co oznacza, że oprócz raportowania, żadna dodatkowa akcja nie zostanie "
             "wykonana w przypadku e-maili pochodzących z subdomen. \n\n"
-            "Polityka DMARC opisuje serwerowi odbiorcy, jaką akcję powinien podjąć, gdy wiadomość nie zostanie poprawnie "
+            "Ta polityka opisuje serwerowi odbiorcy, jaką akcję powinien podjąć, gdy wiadomość nie zostanie poprawnie "
             "zweryfikowana. Polityka 'quarantine' oznacza, że taka wiadomość powinna zostać oznaczona jako spam, a polityka 'reject' - że "
             "powinna zostać odrzucona przez serwer odbiorcy. Rekomendujemy korzystanie z polityki 'quarantine' lub 'reject'.\n\n"
             "W trakcie testów działania mechanizmu DMARC, w celu zmniejszenia ryzyka, że poprawne wiadomości zostaną "
