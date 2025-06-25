@@ -419,7 +419,10 @@ def scan_domain(
         if parsed_dmarc_record["tags"]["p"]["value"] == "none":
             if "rua" not in parsed_dmarc_record["tags"]:
                 domain_result.dmarc.errors.append(
-                    "DMARC policy is 'none' and 'rua' is not set, which means that the DMARC setting is not effective."
+                    "DMARC policy is 'none' and 'rua' is not set, which means that the DMARC setting is not effective. "
+                    "The 'rua' setting doesn't influence the blocking behavior, but allows you to receive reports "
+                    "that will allow you to learn whether the DMARC mechanism works properly and whether it's possible "
+                    "to change the policy to 'quarantine' or 'reject'."
                 )
             else:
                 dmarc_warnings.append(
