@@ -517,6 +517,17 @@ def scan_domain(
             "may not receive DMARC reports."
         ]
 
+    # If policy is none, it will be saved as a separate error. If policy is quarantine or reject, this is
+    # optional as the messages that don't pass dmarc are blocked or quarantined.
+    #
+    # We can match on string equality as we have unittests for that so if something changes in the library
+    # we'll detect it.
+    domain_result.dmarc.warnings = [
+        warning
+        for warning in domain_result.dmarc.warnings
+        if warning != "rua tag (destination for aggregate reports) not found"
+    ]
+
     domain_result.dmarc.valid = len(domain_result.dmarc.errors) == 0
 
     if not domain_result.spf.record:

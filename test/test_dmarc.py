@@ -8,6 +8,7 @@ from config import TEST_DOMAIN
 CONFIG_WITH_WARNINGS_REGEX = r"DMARC:\s*configuration warnings"
 INCORRECT_CONFIG_REGEX = r"DMARC:\s*incorrect configuration"
 CORRECT_CONFIG_REGEX = r"DMARC:\s*correct configuration"
+WARNING_REGEX = "bi bi-exclamation-triangle"
 
 
 class DMARCTestCase(BaseTestCase):
@@ -96,3 +97,19 @@ class DMARCTestCase(BaseTestCase):
         assert not re.search(CORRECT_CONFIG_REGEX, result)
         assert "mailto:mailto:dmarc@mailgoose.cert.pl is not a valid DMARC report URI" in result
         assert "please make sure that the URI begins with a schema:" not in result
+
+    def test_no_rua_policy_none(self) -> None:
+        result = self.check_domain("_dmarc.no-rua-none.dmarc." + TEST_DOMAIN)
+        assert re.search(INCORRECT_CONFIG_REGEX, result)
+        assert not re.search(CORRECT_CONFIG_REGEX, result)
+        assert (
+            "DMARC policy is 'none' and 'rua' is not set, which means that the DMARC setting is not effective."
+            in result
+        )
+
+    def test_no_rua_policy_reject(self) -> None:
+        result = self.check_domain("_dmarc.no-rua-reject.dmarc." + TEST_DOMAIN)
+        assert not re.search(INCORRECT_CONFIG_REGEX, result)
+        assert not re.search(WARNING_REGEX, result)
+        assert "rua" not in result
+        assert re.search(CORRECT_CONFIG_REGEX, result)
