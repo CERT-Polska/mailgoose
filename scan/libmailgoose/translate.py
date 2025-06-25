@@ -687,28 +687,6 @@ TRANSLATIONS = {
             "poprawnej wiadomości jest niedopuszczalne. W takich sytuacjach raporty powinny być dokładnie monitorowane, "
             "a docelowym ustawieniem powinno być 'quarantine' lub 'reject'.",
         ),
-        (
-            "DMARC subdomain policy is 'none', which means that besides reporting no action will be taken for e-mails coming from subdomains.\n\n"
-            "The policy describes what action the recipient server should take when noticing a message that doesn't "
-            "pass the verification. 'quarantine' policy suggests the recipient server to flag the message as spam and "
-            "'reject' policy suggests the recipient server to reject the message. We recommend using the 'quarantine' "
-            "or 'reject' policy.\n\n"
-            "When testing the DMARC mechanism, to minimize the risk of correct messages not being delivered, "
-            "the 'none' policy may be used. Such tests are recommended especially when the domain is used to "
-            "send a large number of e-mails using various tools and not delivering a correct message is "
-            "unacceptable. In such cases the reports should be closely monitored, and the target setting should "
-            "be 'quarantine' or 'reject'.",
-            "Polityka DMARC dla subdomen jest ustawiona na 'none', co oznacza, że oprócz raportowania, żadna dodatkowa akcja nie zostanie "
-            "wykonana w przypadku e-maili pochodzących z subdomen. \n\n"
-            "Polityka DMARC opisuje serwerowi odbiorcy, jaką akcję powinien podjąć, gdy wiadomość nie zostanie poprawnie "
-            "zweryfikowana. Polityka 'quarantine' oznacza, że taka wiadomość powinna zostać oznaczona jako spam, a polityka 'reject' - że "
-            "powinna zostać odrzucona przez serwer odbiorcy. Rekomendujemy korzystanie z polityki 'quarantine' lub 'reject'.\n\n"
-            "W trakcie testów działania mechanizmu DMARC, w celu zmniejszenia ryzyka, że poprawne wiadomości zostaną "
-            "odrzucone, może być tymczasowo stosowane ustawienie 'none'. Takie testy są szczególnie zalecane, jeśli "
-            "domena służy do wysyłki dużej liczby wiadomości przy użyciu różnych narzędzi, a potencjalne niedostarczenie "
-            "poprawnej wiadomości jest niedopuszczalne. W takich sytuacjach raporty powinny być dokładnie monitorowane, "
-            "a docelowym ustawieniem powinno być 'quarantine' lub 'reject'.",
-        ),
         # The following three messages are used to translate old message versions
         (
             "DMARC policy is 'none', which means that besides reporting no action will be taken. ",
