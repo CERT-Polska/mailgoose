@@ -99,7 +99,7 @@ class DMARCTestCase(BaseTestCase):
         assert "please make sure that the URI begins with a schema:" not in result
 
     def test_no_rua_policy_none(self) -> None:
-        result = self.check_domain("_dmarc.no-rua-none.dmarc." + TEST_DOMAIN)
+        result = self.check_domain("no-rua-none.dmarc." + TEST_DOMAIN)
         assert re.search(INCORRECT_CONFIG_REGEX, result)
         assert not re.search(CORRECT_CONFIG_REGEX, result)
         assert (
@@ -108,7 +108,7 @@ class DMARCTestCase(BaseTestCase):
         )
 
     def test_no_rua_policy_reject(self) -> None:
-        result = self.check_domain("_dmarc.no-rua-reject.dmarc." + TEST_DOMAIN)
+        result = self.check_domain("no-rua-reject.dmarc." + TEST_DOMAIN)
         assert not re.search(INCORRECT_CONFIG_REGEX, result)
         assert not re.search(WARNING_REGEX, result)
         assert "rua" not in result
