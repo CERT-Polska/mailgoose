@@ -419,7 +419,10 @@ def scan_domain(
         if parsed_dmarc_record["tags"]["p"]["value"] == "none":
             if "rua" not in parsed_dmarc_record["tags"]:
                 domain_result.dmarc.errors.append(
-                    "DMARC policy is 'none' and 'rua' is not set, which means that the DMARC setting is not effective."
+                    "DMARC policy is 'none' and 'rua' is not set, which means that the DMARC setting is not effective. "
+                    "The 'rua' setting doesn't influence the blocking behavior, but allows you to receive reports "
+                    "that will allow you to learn whether the DMARC mechanism works properly and whether it's possible "
+                    "to change the policy to 'quarantine' or 'reject'."
                 )
             else:
                 dmarc_warnings.append(
@@ -513,6 +516,17 @@ def scan_domain(
             "The domain of the email address in a DMARC report URI is missing MX records. That means, that this domain "
             "may not receive DMARC reports."
         ]
+
+    # If policy is none, it will be saved as a separate error. If policy is quarantine or reject, this is
+    # optional as the messages that don't pass dmarc are blocked or quarantined.
+    #
+    # We can match on string equality as we have unittests for that so if something changes in the library
+    # we'll detect it.
+    domain_result.dmarc.warnings = [
+        warning
+        for warning in domain_result.dmarc.warnings
+        if warning != "rua tag (destination for aggregate reports) not found"
+    ]
 
     domain_result.dmarc.valid = len(domain_result.dmarc.errors) == 0
 
