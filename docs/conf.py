@@ -33,7 +33,7 @@ copyright = f"{datetime.datetime.now().year}, CERT Polska"
 author = "CERT Polska"
 
 # The full version, including alpha/beta/rc tags
-release = "1.3.11"
+release = "1.3.12"
 
 latex_engine = "xelatex"
 
