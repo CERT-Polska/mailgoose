@@ -550,6 +550,11 @@ TRANSLATIONS = {
             "ocenić, czy zmiana na politykę 'quarantine' lub 'reject' jest możliwa.",
         ),
         (
+            "DMARC policy is 'none' and 'rua' is not set, which means that the DMARC setting is not effective.",
+            "Polityka DMARC jest ustawiona na 'none' i nie ustawiono odbiorcy raportów w polu 'rua', co "
+            "oznacza, że ustawienie DMARC nie będzie skuteczne.",
+        ),
+        (
             "DMARC subdomain policy is 'none' and 'rua' is not set, which means that the DMARC setting is not effective for subdomains.",
             "Polityka DMARC dla subdomen jest ustawiona na 'none' i nie ustawiono odbiorcy raportów w polu 'rua', co "
             "oznacza, że ustawienie DMARC nie będzie skuteczne w przypadku e-maili pochodzących z subdomen.",
