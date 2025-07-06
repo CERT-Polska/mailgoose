@@ -525,7 +525,7 @@ def scan_domain(
     domain_result.dmarc.warnings = [
         warning
         for warning in domain_result.dmarc.warnings
-        if warning != "rua tag (destination for aggregate reports) not found"
+        if warning != "rua/ruf tag (destination for aggregate/failure reports) not found"
     ]
 
     domain_result.dmarc.valid = len(domain_result.dmarc.errors) == 0
