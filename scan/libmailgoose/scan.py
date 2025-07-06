@@ -417,7 +417,7 @@ def scan_domain(
                 )
 
         if parsed_dmarc_record["tags"]["p"]["value"] == "none":
-            if "rua" not in parsed_dmarc_record["tags"] and 'ruf' not in parsed_dmarc_record["tags"]:
+            if "rua" not in parsed_dmarc_record["tags"] and "ruf" not in parsed_dmarc_record["tags"]:
                 domain_result.dmarc.errors.append(
                     "DMARC policy is 'none' and 'rua'/'ruf' is not set, which means that the DMARC setting is not effective. "
                     "The 'rua'/'ruf' settings don't influence the blocking behavior, but allows you to receive reports "
