@@ -24,7 +24,7 @@ class Config:
             "thoroughly tested on.\n\n"
             "If you start the system using the default ``docker-compose.yml`` file in the Github repository, this "
             "variable (and a database) will be set up for you.",
-        ] = get_config("DB_URL")
+        ] = get_config("DB_URL", default=None)
         REDIS_MESSAGE_DATA_EXPIRY_SECONDS: Annotated[
             int,
             "The messages sent to the system and stored in Redis expire in order to decrease the chance that "
