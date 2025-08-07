@@ -36,7 +36,6 @@ services:
       dockerfile: mail_receiver/Dockerfile
     command: python3 /opt/server.py
     environment:
-      DB_URL: postgresql+psycopg2://postgres:postgres@db:5432/mailgoose
       REDIS_URL: redis://redis:6379/0
     env_file:
       - .env
