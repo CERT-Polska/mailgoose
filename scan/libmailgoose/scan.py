@@ -417,7 +417,7 @@ def scan_domain(
                 )
 
         if "ruf" in parsed_dmarc_record["tags"]:
-            domain_result.dmarc.warnings.append(
+            dmarc_warnings.append(
                 "Using the ruf tag is not recommended, as it's not supported by multiple e-mail providers."
             )
 
