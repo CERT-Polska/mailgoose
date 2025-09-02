@@ -722,6 +722,20 @@ TRANSLATIONS = {
             "Polityka DMARC dla subdomen jest ustawiona na 'none', co oznacza, że oprócz raportowania, żadna dodatkowa akcja nie zostanie "
             "wykonana w przypadku e-maili pochodzących z subdomen. ",
         ),
+        (
+            "DMARC policy is 'none' and 'rua'/'ruf' is not set, which means that the DMARC setting is not effective. "
+            "The 'rua'/'ruf' settings don't influence the blocking behavior, but allows you to receive reports "
+            "that will allow you to learn whether the DMARC mechanism works properly and whether it's possible "
+            "to change the policy to 'quarantine' or 'reject'.",
+            "Polityka DMARC jest ustawiona na 'none' i nie ustawiono odbiorcy raportów w polu 'rua'/'ruf', co "
+            "oznacza, że ustawienie DMARC nie będzie skuteczne. Ustawienie 'rua'/'ruf' nie wpływa na mechanizm blokowania, ale "
+            "umożliwia otrzymywanie raportów, dzięki któremu mogą Państwo sprawdzić, czy mechanizm DMARC działa poprawnie i "
+            "ocenić, czy zmiana na politykę 'quarantine' lub 'reject' jest możliwa.",
+        ),
+        (
+            "rua/ruf tag (destination for aggregate/failure reports) not found",
+            "Nie znaleziono tagu 'rua' (odbiorca zagregowanych raportów)/'ruf' (odbiorca raportów o nieudanej weryfikacji DMARC).",
+        ),
         # End of messages left for backward compatibility
         (
             "rua tag (destination for aggregate reports) not found",
