@@ -103,7 +103,7 @@ class DMARCTestCase(BaseTestCase):
         assert re.search(INCORRECT_CONFIG_REGEX, result)
         assert not re.search(CORRECT_CONFIG_REGEX, result)
         assert (
-            "DMARC policy is &#39;none&#39; and &#39;rua&#39;/&#39;ruf&#39; is not set, which means that the DMARC setting is not effective."
+            "DMARC policy is &#39;none&#39; and &#39;rua&#39; is not set, which means that the DMARC setting is not effective."
             in result
         )
 

@@ -416,11 +416,16 @@ def scan_domain(
                     f"(from the From header: {from_domain})."
                 )
 
+        if "ruf" in parsed_dmarc_record["tags"]:
+            domain_result.dmarc.warnings.append(
+                "Using the ruf tag is not recommended, as it's not supported by multiple e-mail providers."
+            )
+
         if parsed_dmarc_record["tags"]["p"]["value"] == "none":
-            if "rua" not in parsed_dmarc_record["tags"] and "ruf" not in parsed_dmarc_record["tags"]:
+            if "rua" not in parsed_dmarc_record["tags"]:
                 domain_result.dmarc.errors.append(
-                    "DMARC policy is 'none' and 'rua'/'ruf' is not set, which means that the DMARC setting is not effective. "
-                    "The 'rua'/'ruf' settings don't influence the blocking behavior, but allows you to receive reports "
+                    "DMARC policy is 'none' and 'rua' is not set, which means that the DMARC setting is not effective. "
+                    "The 'rua' setting doesn't influence the blocking behavior, but allows you to receive reports "
                     "that will allow you to learn whether the DMARC mechanism works properly and whether it's possible "
                     "to change the policy to 'quarantine' or 'reject'."
                 )
@@ -525,7 +530,7 @@ def scan_domain(
     domain_result.dmarc.warnings = [
         warning
         for warning in domain_result.dmarc.warnings
-        if warning != "rua/ruf tag (destination for aggregate/failure reports) not found"
+        if warning != "rua tag (destination for aggregate reports) not found"
     ]
 
     domain_result.dmarc.valid = len(domain_result.dmarc.errors) == 0
