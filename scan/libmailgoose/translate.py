@@ -70,12 +70,12 @@ TRANSLATIONS = {
             "kad sumažintumėte sėkmingų elektroninių laiškų klastojimo galimybę.",
         ),
         (
-            "DMARC policy is 'none' and 'rua'/'ruf' is not set, which means that the DMARC setting is not effective.",
-            "DMARC politika yra 'none', o 'rua'/'ruf' nėra nustatytas, tai reiškia, kad DMARC nustatymas nėra veiksmingas.",
+            "DMARC policy is 'none' and 'rua' is not set, which means that the DMARC setting is not effective.",
+            "DMARC politika yra 'none', o 'rua' nėra nustatytas, tai reiškia, kad DMARC nustatymas nėra veiksmingas.",
         ),
         (
-            "DMARC subdomain policy is 'none' and 'rua'/'ruf' is not set, which means that the DMARC setting is not effective for subdomains.",
-            "DMARC subdomeno poliika yra 'none', o 'rua'/'ruf' nėra nustatytas, tai reiškia, kad DMARC nustatymas nėra veiksmingas subdomenams.",
+            "DMARC subdomain policy is 'none' and 'rua' is not set, which means that the DMARC setting is not effective for subdomains.",
+            "DMARC subdomeno poliika yra 'none', o 'rua' nėra nustatytas, tai reiškia, kad DMARC nustatymas nėra veiksmingas subdomenams.",
         ),
         (
             f"The DMARC record must be located at {PLACEHOLDER}, not {PLACEHOLDER}",
@@ -550,16 +550,6 @@ TRANSLATIONS = {
             "ocenić, czy zmiana na politykę 'quarantine' lub 'reject' jest możliwa.",
         ),
         (
-            "DMARC policy is 'none' and 'rua'/'ruf' is not set, which means that the DMARC setting is not effective. "
-            "The 'rua'/'ruf' settings don't influence the blocking behavior, but allows you to receive reports "
-            "that will allow you to learn whether the DMARC mechanism works properly and whether it's possible "
-            "to change the policy to 'quarantine' or 'reject'.",
-            "Polityka DMARC jest ustawiona na 'none' i nie ustawiono odbiorcy raportów w polu 'rua'/'ruf', co "
-            "oznacza, że ustawienie DMARC nie będzie skuteczne. Ustawienie 'rua'/'ruf' nie wpływa na mechanizm blokowania, ale "
-            "umożliwia otrzymywanie raportów, dzięki któremu mogą Państwo sprawdzić, czy mechanizm DMARC działa poprawnie i "
-            "ocenić, czy zmiana na politykę 'quarantine' lub 'reject' jest możliwa.",
-        ),
-        (
             "DMARC policy is 'none' and 'rua' is not set, which means that the DMARC setting is not effective.",
             "Polityka DMARC jest ustawiona na 'none' i nie ustawiono odbiorcy raportów w polu 'rua', co "
             "oznacza, że ustawienie DMARC nie będzie skuteczne.",
@@ -732,11 +722,21 @@ TRANSLATIONS = {
             "Polityka DMARC dla subdomen jest ustawiona na 'none', co oznacza, że oprócz raportowania, żadna dodatkowa akcja nie zostanie "
             "wykonana w przypadku e-maili pochodzących z subdomen. ",
         ),
-        # End of messages left for backward compatibility
+        (
+            "DMARC policy is 'none' and 'rua'/'ruf' is not set, which means that the DMARC setting is not effective. "
+            "The 'rua'/'ruf' settings don't influence the blocking behavior, but allows you to receive reports "
+            "that will allow you to learn whether the DMARC mechanism works properly and whether it's possible "
+            "to change the policy to 'quarantine' or 'reject'.",
+            "Polityka DMARC jest ustawiona na 'none' i nie ustawiono odbiorcy raportów w polu 'rua'/'ruf', co "
+            "oznacza, że ustawienie DMARC nie będzie skuteczne. Ustawienie 'rua'/'ruf' nie wpływa na mechanizm blokowania, ale "
+            "umożliwia otrzymywanie raportów, dzięki któremu mogą Państwo sprawdzić, czy mechanizm DMARC działa poprawnie i "
+            "ocenić, czy zmiana na politykę 'quarantine' lub 'reject' jest możliwa.",
+        ),
         (
             "rua/ruf tag (destination for aggregate/failure reports) not found",
             "Nie znaleziono tagu 'rua' (odbiorca zagregowanych raportów)/'ruf' (odbiorca raportów o nieudanej weryfikacji DMARC).",
         ),
+        # End of messages left for backward compatibility
         (
             "rua tag (destination for aggregate reports) not found",
             "Nie znaleziono tagu 'rua' (odbiorca zagregowanych raportów).",
@@ -905,6 +905,10 @@ TRANSLATIONS = {
         (
             f"Duplicate include: {PLACEHOLDER}",
             f"Domena {PLACEHOLDER} występuje wielokrotnie w tagu 'include'.",
+        ),
+        (
+            "Using the ruf tag is not recommended, as it's not supported by multiple e-mail providers.",
+            "Używanie tagu ruf nie jest zalecane, bo nie jest wspierany przez wielu dostawców poczty.",
         ),
         (
             "When 1 is present in the fo tag, including 0 is redundant",
