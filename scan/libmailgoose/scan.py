@@ -530,7 +530,13 @@ def scan_domain(
     domain_result.dmarc.warnings = [
         warning
         for warning in domain_result.dmarc.warnings
-        if warning != "rua tag (destination for aggregate reports) not found"
+        if warning
+        not in [
+            "rua/ruf tag (destination for aggregate/failure reports) not found",
+            "rua tag (destination for aggregate reports) not found",
+            "When 1 is present in the fo tag, including 0 is redundant",
+            "Including 0 and 1 fo tag values is redundant",
+        ]
     ]
 
     domain_result.dmarc.valid = len(domain_result.dmarc.errors) == 0
