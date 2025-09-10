@@ -98,6 +98,12 @@ class DMARCTestCase(BaseTestCase):
         assert "mailto:mailto:dmarc@mailgoose.cert.pl is not a valid DMARC report URI" in result
         assert "please make sure that the URI begins with a schema:" not in result
 
+    def test_no_redundant_fo_message(self) -> None:
+        result = self.check_domain("redundant-fo.dmarc." + TEST_DOMAIN)
+        assert not re.search(INCORRECT_CONFIG_REGEX, result)
+        assert re.search(CORRECT_CONFIG_REGEX, result)
+        assert " fo " not in result
+
     def test_no_rua_policy_none(self) -> None:
         result = self.check_domain("no-rua-none.dmarc." + TEST_DOMAIN)
         assert re.search(INCORRECT_CONFIG_REGEX, result)
