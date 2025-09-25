@@ -186,7 +186,7 @@ async def email_received(request: Request, recipient_username: str) -> bool:
     return message_data is not None
 
 
-@app.post("/api/v1/check-domain", response_model_exclude_none=True)
+@app.route("/api/v1/check-domain", response_model_exclude_none=True, methods=["GET", "POST"])
 async def check_domain_api(request: Request, domain: str) -> ScanAPICallResult:
     """
     An API to check e-mail sender verification mechanisms of a domain.
