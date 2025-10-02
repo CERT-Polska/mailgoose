@@ -487,6 +487,10 @@ TRANSLATIONS = {
             "przez serwer odbiorcy.",
         ),
         (
+            "A pct value of 0 disables DMARC enforcement.",
+            "Wartość tagu pct równa 0 wyłącza mechanizm DMARC.",
+        ),
+        (
             "Multiple SPF records found. We recommend leaving only one, as multiple SPF records "
             "can cause problems with some SPF implementations.",
             "Wykryto więcej niż jeden rekord SPF. Rekomendujemy pozostawienie jednego z nich - "
