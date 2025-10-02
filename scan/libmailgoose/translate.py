@@ -807,6 +807,18 @@ TRANSLATIONS = {
             "Nie znaleziono tagu 'rua' (odbiorca zagregowanych raportów).",
         ),
         (
+            "When 1 is present in the fo tag, including 0 is redundant",
+            "Jeśli w tagu 'fo' (określającym, kiedy wysyłać raport DMARC) jest włączona opcja 1 (oznaczająca, że raport jest "
+            "wysyłany jeśli wiadomość nie jest poprawnie zweryfikowana przez mechanizm SPF lub DKIM, nawet, jeśli "
+            "została zweryfikowana przez drugi z mechanizmów), opcja 0 (tj. wysyłka raportów, gdy wiadomość zostanie "
+            "zweryfikowana negatywnie przez oba mechanizmy) jest zbędna.",
+        ),
+        # End of messages left for backward compatibility
+        (
+            "rua tag (destination for aggregate reports) not found.",
+            "Nie znaleziono tagu 'rua' (odbiorca zagregowanych raportów).",
+        ),
+        (
             "Whitespace in domain name detected. Please provide a correct domain name.",
             "Wykryto białe znaki w nazwie domeny. Prosimy o podanie poprawnej nazwy domeny.",
         ),
@@ -976,7 +988,7 @@ TRANSLATIONS = {
             "Używanie tagu ruf nie jest zalecane, bo nie jest wspierany przez wielu dostawców poczty.",
         ),
         (
-            "When 1 is present in the fo tag, including 0 is redundant",
+            "When 1 is present in the fo tag, including in the fo tag 0 is redundant.",
             "Jeśli w tagu 'fo' (określającym, kiedy wysyłać raport DMARC) jest włączona opcja 1 (oznaczająca, że raport jest "
             "wysyłany jeśli wiadomość nie jest poprawnie zweryfikowana przez mechanizm SPF lub DKIM, nawet, jeśli "
             "została zweryfikowana przez drugi z mechanizmów), opcja 0 (tj. wysyłka raportów, gdy wiadomość zostanie "

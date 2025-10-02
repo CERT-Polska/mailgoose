@@ -508,7 +508,9 @@ def scan_domain(
         not in [
             "rua/ruf tag (destination for aggregate/failure reports) not found",
             "rua tag (destination for aggregate reports) not found",
+            "rua tag (destination for aggregate reports) not found.",
             "When 1 is present in the fo tag, including 0 is redundant",
+            "When 1 is present in the fo tag, including in the fo tag 0 is redundant.",
             "Including 0 and 1 fo tag values is redundant",
         ]
     ]

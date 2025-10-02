@@ -186,7 +186,6 @@ async def email_received(request: Request, recipient_username: str) -> bool:
     return message_data is not None
 
 
-@app.post("/api/v1/check-domain", response_model_exclude_none=True)
 async def check_domain_api(request: Request, domain: str) -> ScanAPICallResult:
     """
     An API to check e-mail sender verification mechanisms of a domain.
@@ -216,3 +215,7 @@ async def check_domain_api(request: Request, domain: str) -> ScanAPICallResult:
     except (DomainValidationException, ScanningException) as e:
         LOGGER.exception("An error occured during check of %s", domain)
         return ScanAPICallResult(system_error=True, system_error_message=e.message)
+
+
+app.get("/api/v1/check-domain", response_model_exclude_none=True)(check_domain_api)
+app.post("/api/v1/check-domain", response_model_exclude_none=True)(check_domain_api)
