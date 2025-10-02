@@ -635,7 +635,7 @@ TRANSLATIONS = {
             "poprawnie dostarczane.",
         ),
         (
-             f"A p tag value of none has no effect on email sent as {PLACEHOLDER}.",
+            f"A p tag value of none has no effect on email sent as {PLACEHOLDER}.",
             "Polityka DMARC jest ustawiona na 'none', co oznacza, że oprócz raportowania, żadna dodatkowa akcja nie zostanie "
             "wykonana.\n\n"
             "Ta polityka opisuje serwerowi odbiorcy, jaką akcję powinien podjąć, gdy wiadomość nie zostanie poprawnie "
@@ -648,7 +648,7 @@ TRANSLATIONS = {
             "a docelowym ustawieniem powinno być 'quarantine' lub 'reject'.",
         ),
         (
-             f"An sp tag value of none has no effect on email sent as {PLACEHOLDER}.",
+            f"An sp tag value of none has no effect on email sent as {PLACEHOLDER}.",
             "Polityka DMARC dla subdomen jest ustawiona na 'none', co oznacza, że oprócz raportowania, żadna dodatkowa akcja nie zostanie "
             "wykonana w przypadku e-maili pochodzących z subdomen. \n\n"
             "Ta polityka opisuje serwerowi odbiorcy, jaką akcję powinien podjąć, gdy wiadomość nie zostanie poprawnie "
