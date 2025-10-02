@@ -491,6 +491,10 @@ TRANSLATIONS = {
             "Wartość tagu pct równa 0 wyłącza mechanizm DMARC.",
         ),
         (
+            f"The domain {PLACEHOLDER} does not exist.",
+            f"Domena {PLACEHOLDER} nie istnieje.",
+        ),
+        (
             "Multiple SPF records found. We recommend leaving only one, as multiple SPF records "
             "can cause problems with some SPF implementations.",
             "Wykryto więcej niż jeden rekord SPF. Rekomendujemy pozostawienie jednego z nich - "
