@@ -40,13 +40,7 @@ class DMARCTestCase(BaseTestCase):
         assert re.search(CONFIG_WITH_WARNINGS_REGEX, result)
         assert not re.search(CORRECT_CONFIG_REGEX, result)
         assert not re.search(INCORRECT_CONFIG_REGEX, result)
-        assert ("DMARC policy is &#39;none&#39;, which means that besides reporting no action will be taken.") in result
-        assert (
-            "The policy describes what action the recipient server should take when noticing a message "
-            "that doesn&#39;t pass the verification. &#39;quarantine&#39; policy "
-            "suggests the recipient server to flag the message as spam and &#39;reject&#39; policy suggests the recipient "
-            "server to reject the message. We recommend using the &#39;quarantine&#39; or &#39;reject&#39; policy."
-        ) in result
+        assert "A p tag value of none has no effect on email sent as" in result
 
     def test_unrelated_records(self) -> None:
         result = self.check_domain("contains-unrelated-records.dmarc." + TEST_DOMAIN)
@@ -108,10 +102,7 @@ class DMARCTestCase(BaseTestCase):
         result = self.check_domain("no-rua-none.dmarc." + TEST_DOMAIN)
         assert re.search(INCORRECT_CONFIG_REGEX, result)
         assert not re.search(CORRECT_CONFIG_REGEX, result)
-        assert (
-            "DMARC policy is &#39;none&#39; and &#39;rua&#39; is not set, which means that the DMARC setting is not effective."
-            in result
-        )
+        assert "A p tag value of none has no effect on email sent as" in result
 
     def test_no_rua_policy_reject(self) -> None:
         result = self.check_domain("no-rua-reject.dmarc." + TEST_DOMAIN)

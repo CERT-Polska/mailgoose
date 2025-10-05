@@ -209,7 +209,7 @@ TRANSLATIONS = {
             f"Rezoliucijos galiojimo laikas baigėsi po to {PLACEHOLDER}",
         ),
         (
-            f"DMARC record at root of {PLACEHOLDER} has no effect",
+            f"DMARC record at root of {PLACEHOLDER} has no effect.",
             f"DMARC įrašas šakniniame {PLACEHOLDER} domene neturi jokio poveikio",
         ),
         (
@@ -487,6 +487,14 @@ TRANSLATIONS = {
             "przez serwer odbiorcy.",
         ),
         (
+            "A pct value of 0 disables DMARC enforcement.",
+            "Wartość tagu pct równa 0 wyłącza mechanizm DMARC.",
+        ),
+        (
+            f"The domain {PLACEHOLDER} does not exist.",
+            f"Domena {PLACEHOLDER} nie istnieje.",
+        ),
+        (
             "Multiple SPF records found. We recommend leaving only one, as multiple SPF records "
             "can cause problems with some SPF implementations.",
             "Wykryto więcej niż jeden rekord SPF. Rekomendujemy pozostawienie jednego z nich - "
@@ -627,6 +635,32 @@ TRANSLATIONS = {
             "poprawnie dostarczane.",
         ),
         (
+            f"A p tag value of none has no effect on email sent as {PLACEHOLDER}.",
+            "Polityka DMARC jest ustawiona na 'none', co oznacza, że oprócz raportowania, żadna dodatkowa akcja nie zostanie "
+            "wykonana.\n\n"
+            "Ta polityka opisuje serwerowi odbiorcy, jaką akcję powinien podjąć, gdy wiadomość nie zostanie poprawnie "
+            "zweryfikowana. Polityka 'quarantine' oznacza, że taka wiadomość powinna zostać oznaczona jako spam, a polityka 'reject' - że "
+            "powinna zostać odrzucona przez serwer odbiorcy. Rekomendujemy korzystanie z polityki 'quarantine' lub 'reject'.\n\n"
+            "W trakcie testów działania mechanizmu DMARC, w celu zmniejszenia ryzyka, że poprawne wiadomości zostaną "
+            "odrzucone, może być tymczasowo stosowane ustawienie 'none'. Takie testy są szczególnie zalecane, jeśli "
+            "domena służy do wysyłki dużej liczby wiadomości przy użyciu różnych narzędzi, a potencjalne niedostarczenie "
+            "poprawnej wiadomości jest niedopuszczalne. W takich sytuacjach raporty powinny być dokładnie monitorowane, "
+            "a docelowym ustawieniem powinno być 'quarantine' lub 'reject'.",
+        ),
+        (
+            f"An sp tag value of none has no effect on email sent as {PLACEHOLDER}.",
+            "Polityka DMARC dla subdomen jest ustawiona na 'none', co oznacza, że oprócz raportowania, żadna dodatkowa akcja nie zostanie "
+            "wykonana w przypadku e-maili pochodzących z subdomen. \n\n"
+            "Ta polityka opisuje serwerowi odbiorcy, jaką akcję powinien podjąć, gdy wiadomość nie zostanie poprawnie "
+            "zweryfikowana. Polityka 'quarantine' oznacza, że taka wiadomość powinna zostać oznaczona jako spam, a polityka 'reject' - że "
+            "powinna zostać odrzucona przez serwer odbiorcy. Rekomendujemy korzystanie z polityki 'quarantine' lub 'reject'.\n\n"
+            "W trakcie testów działania mechanizmu DMARC, w celu zmniejszenia ryzyka, że poprawne wiadomości zostaną "
+            "odrzucone, może być tymczasowo stosowane ustawienie 'none'. Takie testy są szczególnie zalecane, jeśli "
+            "domena służy do wysyłki dużej liczby wiadomości przy użyciu różnych narzędzi, a potencjalne niedostarczenie "
+            "poprawnej wiadomości jest niedopuszczalne. W takich sytuacjach raporty powinny być dokładnie monitorowane, "
+            "a docelowym ustawieniem powinno być 'quarantine' lub 'reject'.",
+        ),
+        (
             "DMARC policy is 'none', which means that besides reporting no action will be taken. \n\n"
             "The policy describes what action the recipient server should take when noticing a message that doesn't "
             "pass the verification. 'quarantine' policy suggests the recipient server to flag the message as spam and "
@@ -692,7 +726,7 @@ TRANSLATIONS = {
             "poprawnej wiadomości jest niedopuszczalne. W takich sytuacjach raporty powinny być dokładnie monitorowane, "
             "a docelowym ustawieniem powinno być 'quarantine' lub 'reject'.",
         ),
-        # The following three messages are used to translate old message versions
+        # The following messages are used to translate old message versions
         (
             "DMARC policy is 'none', which means that besides reporting no action will be taken. ",
             "Polityka DMARC jest ustawiona na 'none', co oznacza, że oprócz raportowania, żadna dodatkowa akcja nie zostanie "
@@ -737,6 +771,38 @@ TRANSLATIONS = {
             "Nie znaleziono tagu 'rua' (odbiorca zagregowanych raportów)/'ruf' (odbiorca raportów o nieudanej weryfikacji DMARC).",
         ),
         (
+            "Any text after the all mechanism is ignored",
+            "Tekst umieszczony po dyrektywie 'all' zostanie zignorowany. Rekomendujemy jego usunięcie, lub, "
+            "jeśli jest niezbędnym elementem konfiguracji, umieszczenie przed dyrektywą 'all' rekordu SPF.",
+        ),
+        (
+            f"{PLACEHOLDER} does not have any MX records",
+            f"Rekord SPF w domenie {PLACEHOLDER} korzysta z dyrektywy SPF 'mx', lecz nie wykryto rekordów MX, w związku "
+            "z czym ta dyrektywa nie zadziała poprawnie.",
+        ),
+        (
+            f"{PLACEHOLDER} does not have any A/AAAA records",
+            f"Rekord SPF w domenie {PLACEHOLDER} korzysta z dyrektywy SPF 'a', lecz nie wykryto rekordów A/AAAA, w związku "
+            "z czym ta dyrektywa nie zadziała poprawnie.",
+        ),
+        (
+            "pct value is less than 100. This leads to inconsistent and unpredictable policy "
+            "enforcement. Consider using p=none to monitor results instead",
+            "Wartość tagu 'pct' wynosi mniej niż 100. Oznacza to, ze mechanizm DMARC zostanie "
+            "zastosowany do mniej niż 100% wiadomości, a więc konfiguracja nie będzie spójnie "
+            "egzekwowana. W celu monitorowania konfiguracji DMARC przed jej finalnym wdrożeniem "
+            "rekomendujemy użycie polityki 'none' i monitorowanie przychodzących raportów DMARC.",
+        ),
+        (
+            f"DMARC record at root of {PLACEHOLDER} has no effect",
+            f"Rekord DMARC w domenie '{PLACEHOLDER}' (zamiast w subdomenie '_dmarc') nie zostanie uwzględniony.",
+        ),
+        (
+            f"{PLACEHOLDER} is not a valid DMARC tag",
+            f"'{PLACEHOLDER}' nie jest poprawnym tagiem DMARC.",
+        ),
+        # End of messages left for backward compatibility
+        (
             "rua tag (destination for aggregate reports) not found",
             "Nie znaleziono tagu 'rua' (odbiorca zagregowanych raportów).",
         ),
@@ -761,7 +827,7 @@ TRANSLATIONS = {
             f"Wykryto błędne znaki w nazwie domeny: {PLACEHOLDER}. Prosimy o podanie poprawnej nazwy domeny.",
         ),
         (
-            "Any text after the all mechanism is ignored",
+            "Any text after the all mechanism is ignored.",
             "Tekst umieszczony po dyrektywie 'all' zostanie zignorowany. Rekomendujemy jego usunięcie, lub, "
             "jeśli jest niezbędnym elementem konfiguracji, umieszczenie przed dyrektywą 'all' rekordu SPF.",
         ),
@@ -787,7 +853,7 @@ TRANSLATIONS = {
             "Przekroczono czas oczekiwania na odpowiedź serwera DNS. Prosimy spróbować jeszcze raz.",
         ),
         (
-            f"DMARC record at root of {PLACEHOLDER} has no effect",
+            f"DMARC record at root of {PLACEHOLDER} has no effect.",
             f"Rekord DMARC w domenie '{PLACEHOLDER}' (zamiast w subdomenie '_dmarc') nie zostanie uwzględniony.",
         ),
         (
@@ -797,12 +863,12 @@ TRANSLATIONS = {
             "usunięcie, ponieważ niektóre serwery pocztowe mogą nie zinterpretować takiego rekordu poprawnie.",
         ),
         (
-            f"{PLACEHOLDER} does not have any MX records",
+            f"An mx mechanism points to {PLACEHOLDER}, but that domain/subdomain does not have any MX records.",
             f"Rekord SPF w domenie {PLACEHOLDER} korzysta z dyrektywy SPF 'mx', lecz nie wykryto rekordów MX, w związku "
             "z czym ta dyrektywa nie zadziała poprawnie.",
         ),
         (
-            f"{PLACEHOLDER} does not have any A/AAAA records",
+            f"An a mechanism points to {PLACEHOLDER}, but that domain/subdomain does not have any A/AAAA records.",
             f"Rekord SPF w domenie {PLACEHOLDER} korzysta z dyrektywy SPF 'a', lecz nie wykryto rekordów A/AAAA, w związku "
             "z czym ta dyrektywa nie zadziała poprawnie.",
         ),
@@ -893,7 +959,7 @@ TRANSLATIONS = {
             f"{PLACEHOLDER} nie jest poprawnym odbiorcą raportów DMARC.",
         ),
         (
-            f"{PLACEHOLDER} is not a valid DMARC tag",
+            f"{PLACEHOLDER} is not a valid DMARC tag.",
             f"'{PLACEHOLDER}' nie jest poprawnym tagiem DMARC.",
         ),
         (
@@ -902,7 +968,7 @@ TRANSLATIONS = {
         ),
         (
             "pct value is less than 100. This leads to inconsistent and unpredictable policy "
-            "enforcement. Consider using p=none to monitor results instead",
+            "enforcement. Consider using p=none to monitor results instead.",
             "Wartość tagu 'pct' wynosi mniej niż 100. Oznacza to, ze mechanizm DMARC zostanie "
             "zastosowany do mniej niż 100% wiadomości, a więc konfiguracja nie będzie spójnie "
             "egzekwowana. W celu monitorowania konfiguracji DMARC przed jej finalnym wdrożeniem "
