@@ -12,7 +12,7 @@ WARNING_REGEX = "bi bi-exclamation-triangle"
 
 class NonexistentDomainTestCase(BaseTestCase):
     def test_nonexistent_domain(self) -> None:
-        result = self.check_domain(binascii.hexlify(os.urandom(16)) + ".com")
+        result = self.check_domain(binascii.hexlify(os.urandom(16)).decode("ascii") + ".com")
         assert not re.search(CORRECT_CONFIG_REGEX, result)
         assert not re.search(INCORRECT_CONFIG_REGEX, result)
         assert "Domain does not exist" in result
