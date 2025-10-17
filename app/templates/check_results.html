@@ -120,7 +120,9 @@
 
                 {% if result.domain.domain_does_not_exist %}
                     <div class="card mb-3">
-                        {% trans "Domain does not exist." %}
+                        <div class="card-body">
+                            {% trans %}Domain does not exist.{% endtrans %}
+                        </div>
                     </div>
                 {% else %}
                     <div class="card mb-3">
