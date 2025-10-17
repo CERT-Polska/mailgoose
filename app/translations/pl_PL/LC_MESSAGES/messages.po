@@ -21,8 +21,8 @@ msgstr "Sprawdź domenę"
 
 #: app/templates/check_domain.html:12 app/templates/check_results.html:74
 #: app/templates/check_results.html:76 app/templates/check_results.html:78
-#: app/templates/check_results.html:197 app/templates/check_results.html:237
-#: app/templates/check_results.html:278
+#: app/templates/check_results.html:199 app/templates/check_results.html:239
+#: app/templates/check_results.html:280
 msgid "Domain"
 msgstr "Domena"
 
@@ -158,55 +158,55 @@ msgstr ""
 "Jeśli chcą Państwo udostępnić wyniki sprawdzenia, prosimy skopiować ten "
 "link:"
 
-#: app/templates/check_results.html:123
+#: app/templates/check_results.html:124
 msgid "Domain does not exist."
 msgstr "Domena nie istnieje."
 
-#: app/templates/check_results.html:135
+#: app/templates/check_results.html:137
 msgid "Check summary"
 msgstr "Podsumowanie sprawdzenia"
 
-#: app/templates/check_results.html:139
+#: app/templates/check_results.html:141
 msgctxt "zero"
 msgid "mechanisms"
 msgstr "mechanizmów"
 
-#: app/templates/check_results.html:141
+#: app/templates/check_results.html:143
 msgid "mechanism"
 msgstr "mechanizm"
 
-#: app/templates/check_results.html:143
+#: app/templates/check_results.html:145
 msgid "mechanisms"
 msgstr "mechanizmy"
 
-#: app/templates/check_results.html:145
+#: app/templates/check_results.html:147
 msgid "out of"
 msgstr "z"
 
-#: app/templates/check_results.html:148
+#: app/templates/check_results.html:150
 msgctxt "zero"
 msgid "configured"
 msgstr "skonfigurowanych"
 
-#: app/templates/check_results.html:150
+#: app/templates/check_results.html:152
 msgctxt "singular"
 msgid "configured"
 msgstr "skonfigurowany"
 
-#: app/templates/check_results.html:152
+#: app/templates/check_results.html:154
 msgctxt "plural"
 msgid "configured"
 msgstr "skonfigurowane"
 
-#: app/templates/check_results.html:154
+#: app/templates/check_results.html:156
 msgid "without issues."
 msgstr "bez zastrzeżeń."
 
-#: app/templates/check_results.html:171
+#: app/templates/check_results.html:173
 msgid "SPF: the record is optional"
 msgstr "SPF: rekord opcjonalny"
 
-#: app/templates/check_results.html:175
+#: app/templates/check_results.html:177
 msgid ""
 "Because the DMARC record is configured correctly, the SPF record is not "
 "required. Sending e-mail messages from this domain without using the SPF "
@@ -218,7 +218,7 @@ msgstr ""
 "mechanizmu SPF nadal jest możliwe - w takiej sytuacji wiadomości muszą "
 "posiadać poprawny podpis DKIM."
 
-#: app/templates/check_results.html:182
+#: app/templates/check_results.html:184
 msgid ""
 "However, we recommend configuring an SPF record if possible (even if the "
 "domain is not used to send e-mails), because older mail servers may not "
@@ -233,32 +233,32 @@ msgstr ""
 "DMARC umożliwi innym serwerom na poprawne zweryfikowanie wiadomości we "
 "wszystkich przypadkach."
 
-#: app/templates/check_results.html:203 app/templates/check_results.html:208
-#: app/templates/check_results.html:243 app/templates/check_results.html:248
+#: app/templates/check_results.html:205 app/templates/check_results.html:210
+#: app/templates/check_results.html:245 app/templates/check_results.html:250
 msgid "Record"
 msgstr "Rekord"
 
-#: app/templates/check_results.html:208 app/templates/check_results.html:248
+#: app/templates/check_results.html:210 app/templates/check_results.html:250
 msgid "Records"
 msgstr "Rekordy"
 
-#: app/templates/check_results.html:217 app/templates/check_results.html:257
-#: app/templates/check_results.html:283
+#: app/templates/check_results.html:219 app/templates/check_results.html:259
+#: app/templates/check_results.html:285
 msgid "Warnings"
 msgstr "Ostrzeżenia"
 
-#: app/templates/check_results.html:218 app/templates/check_results.html:222
-#: app/templates/check_results.html:258 app/templates/check_results.html:262
-#: app/templates/check_results.html:284 app/templates/check_results.html:288
+#: app/templates/check_results.html:220 app/templates/check_results.html:224
+#: app/templates/check_results.html:260 app/templates/check_results.html:264
+#: app/templates/check_results.html:286 app/templates/check_results.html:290
 msgid "none"
 msgstr "brak"
 
-#: app/templates/check_results.html:221 app/templates/check_results.html:261
-#: app/templates/check_results.html:287
+#: app/templates/check_results.html:223 app/templates/check_results.html:263
+#: app/templates/check_results.html:289
 msgid "Errors"
 msgstr "Błędy"
 
-#: app/templates/check_results.html:300
+#: app/templates/check_results.html:302
 msgid ""
 "To increase the chance that your configuration is interpreted by all "
 "e-mail servers correctly, we recommend fixing all errors and warnings."
@@ -267,7 +267,7 @@ msgstr ""
 "zinterpretowana przez wszystkie serwery, rekomendujemy poprawę zarówno "
 "błędów, jak i ostrzeżeń."
 
-#: app/templates/check_results.html:308
+#: app/templates/check_results.html:310
 msgid ""
 "After fixing the issues, please rerun the scan - some problems can be "
 "detected only if earlier checks complete successfully."
