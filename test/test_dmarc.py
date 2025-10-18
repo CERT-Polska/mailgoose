@@ -1,5 +1,3 @@
-import binascii
-import os
 import re
 
 from base import BaseTestCase
