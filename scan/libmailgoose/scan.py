@@ -36,6 +36,10 @@ def check_domain_exists(domain: str) -> bool:
     """
     Check if a domain exists by looking up its DNS records.
     """
+    if domain.lower().endswith(".test.mailgoose.cert.pl"):
+        # Let's treat test domain as existing, even if they don't have any interesting records.
+        return True
+
     for record_type in ["A", "AAAA", "MX", "TXT", "SPF"]:
         try:
             records = query_dns(domain, record_type)
