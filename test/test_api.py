@@ -11,6 +11,7 @@ class APITestCase(BaseTestCase):
             {
                 "result": {
                     "domain": {
+                        "domain_does_not_exist": False,
                         "spf": {
                             "valid": False,
                             "errors": [

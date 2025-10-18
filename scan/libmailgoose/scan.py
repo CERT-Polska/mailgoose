@@ -18,6 +18,7 @@ import dns.resolver
 import publicsuffixlist
 import spf
 import validators
+from checkdmarc.utils import query_dns
 
 from . import lax_record_query
 from .logging import build_logger
@@ -29,6 +30,25 @@ checkdmarc.smtp.STARTTLS_CACHE.max_age = 1
 psl = publicsuffixlist.PublicSuffixList()
 
 LOGGER = build_logger(__name__)
+
+
+def check_domain_exists(domain: str) -> bool:
+    """
+    Check if a domain exists by looking up its DNS records.
+    """
+    if domain.lower().endswith(".test.mailgoose.cert.pl"):
+        # Let's treat test domain as existing, even if they don't have any interesting records.
+        return True
+
+    for record_type in ["A", "AAAA", "MX", "TXT", "SPF"]:
+        try:
+            records = query_dns(domain, record_type)
+            if records:
+                return True
+        except (dns.resolver.NXDOMAIN, dns.resolver.NoAnswer):
+            pass
+
+    return False
 
 
 @dataclass
@@ -65,6 +85,7 @@ class DomainScanResult:
     domain: str
     base_domain: str
     warnings: List[str]
+    domain_does_not_exist: bool
     spf_not_required_because_of_correct_dmarc: bool = False
 
 
@@ -251,8 +272,13 @@ def scan_domain(
         ),
         domain=domain,
         base_domain=checkdmarc.get_base_domain(domain),
+        domain_does_not_exist=False,
         warnings=warnings,
     )
+
+    if not any([check_domain_exists(domain) for domain in domains_to_check]):
+        domain_result.domain_does_not_exist = True
+        return domain_result
 
     try:
         spf_query = checkdmarc.spf.query_spf_record(envelope_domain, nameservers=nameservers, timeout=timeout)

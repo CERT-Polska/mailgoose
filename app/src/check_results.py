@@ -71,6 +71,9 @@ def load_check_results(token: str) -> Optional[Dict[str, Any]]:
             result["result"]["message_timestamp"] = datetime.datetime.fromisoformat(
                 result["result"]["message_timestamp"]
             )
+        if not result["result"]["domain"].get("domain_does_not_exist"):
+            result["result"]["domain"]["domain_does_not_exist"] = False
+
         try:
             dacite.from_dict(
                 data_class=ScanResult,
