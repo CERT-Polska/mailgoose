@@ -102,7 +102,7 @@ class DMARCTestCase(BaseTestCase):
         result = self.check_domain("no-rua-none.dmarc." + TEST_DOMAIN)
         assert re.search(INCORRECT_CONFIG_REGEX, result)
         assert not re.search(CORRECT_CONFIG_REGEX, result)
-        assert "A p tag value of none has no effect on email sent as" in result
+        assert "A p tag value of none makes DMARC unenforced on email sent as" in result
 
     def test_no_rua_policy_reject(self) -> None:
         result = self.check_domain("no-rua-reject.dmarc." + TEST_DOMAIN)

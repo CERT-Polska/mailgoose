@@ -635,7 +635,7 @@ TRANSLATIONS = {
             "poprawnie dostarczane.",
         ),
         (
-            f"A p tag value of none has no effect on email sent as {PLACEHOLDER}.",
+            f"A p tag value of none makes DMARC unenforced on email sent as {PLACEHOLDER}.",
             "Polityka DMARC jest ustawiona na 'none', co oznacza, że oprócz raportowania, żadna dodatkowa akcja nie zostanie "
             "wykonana.\n\n"
             "Ta polityka opisuje serwerowi odbiorcy, jaką akcję powinien podjąć, gdy wiadomość nie zostanie poprawnie "
@@ -648,7 +648,7 @@ TRANSLATIONS = {
             "a docelowym ustawieniem powinno być 'quarantine' lub 'reject'.",
         ),
         (
-            f"An sp tag value of none has no effect on email sent as {PLACEHOLDER}.",
+            f"An sp tag value of none makes DMARC unenforced on email sent as {PLACEHOLDER}.",
             "Polityka DMARC dla subdomen jest ustawiona na 'none', co oznacza, że oprócz raportowania, żadna dodatkowa akcja nie zostanie "
             "wykonana w przypadku e-maili pochodzących z subdomen. \n\n"
             "Ta polityka opisuje serwerowi odbiorcy, jaką akcję powinien podjąć, gdy wiadomość nie zostanie poprawnie "
@@ -727,6 +727,32 @@ TRANSLATIONS = {
             "a docelowym ustawieniem powinno być 'quarantine' lub 'reject'.",
         ),
         # The following messages are used to translate old message versions
+        (
+            f"A p tag value of none has no effect on email sent as {PLACEHOLDER}.",
+            "Polityka DMARC jest ustawiona na 'none', co oznacza, że oprócz raportowania, żadna dodatkowa akcja nie zostanie "
+            "wykonana.\n\n"
+            "Ta polityka opisuje serwerowi odbiorcy, jaką akcję powinien podjąć, gdy wiadomość nie zostanie poprawnie "
+            "zweryfikowana. Polityka 'quarantine' oznacza, że taka wiadomość powinna zostać oznaczona jako spam, a polityka 'reject' - że "
+            "powinna zostać odrzucona przez serwer odbiorcy. Rekomendujemy korzystanie z polityki 'quarantine' lub 'reject'.\n\n"
+            "W trakcie testów działania mechanizmu DMARC, w celu zmniejszenia ryzyka, że poprawne wiadomości zostaną "
+            "odrzucone, może być tymczasowo stosowane ustawienie 'none'. Takie testy są szczególnie zalecane, jeśli "
+            "domena służy do wysyłki dużej liczby wiadomości przy użyciu różnych narzędzi, a potencjalne niedostarczenie "
+            "poprawnej wiadomości jest niedopuszczalne. W takich sytuacjach raporty powinny być dokładnie monitorowane, "
+            "a docelowym ustawieniem powinno być 'quarantine' lub 'reject'.",
+        ),
+        (
+            f"An sp tag value of none has no effect on email sent as {PLACEHOLDER}.",
+            "Polityka DMARC dla subdomen jest ustawiona na 'none', co oznacza, że oprócz raportowania, żadna dodatkowa akcja nie zostanie "
+            "wykonana w przypadku e-maili pochodzących z subdomen. \n\n"
+            "Ta polityka opisuje serwerowi odbiorcy, jaką akcję powinien podjąć, gdy wiadomość nie zostanie poprawnie "
+            "zweryfikowana. Polityka 'quarantine' oznacza, że taka wiadomość powinna zostać oznaczona jako spam, a polityka 'reject' - że "
+            "powinna zostać odrzucona przez serwer odbiorcy. Rekomendujemy korzystanie z polityki 'quarantine' lub 'reject'.\n\n"
+            "W trakcie testów działania mechanizmu DMARC, w celu zmniejszenia ryzyka, że poprawne wiadomości zostaną "
+            "odrzucone, może być tymczasowo stosowane ustawienie 'none'. Takie testy są szczególnie zalecane, jeśli "
+            "domena służy do wysyłki dużej liczby wiadomości przy użyciu różnych narzędzi, a potencjalne niedostarczenie "
+            "poprawnej wiadomości jest niedopuszczalne. W takich sytuacjach raporty powinny być dokładnie monitorowane, "
+            "a docelowym ustawieniem powinno być 'quarantine' lub 'reject'.",
+        ),
         (
             "DMARC policy is 'none', which means that besides reporting no action will be taken. ",
             "Polityka DMARC jest ustawiona na 'none', co oznacza, że oprócz raportowania, żadna dodatkowa akcja nie zostanie "
