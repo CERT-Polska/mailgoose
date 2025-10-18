@@ -1,4 +1,4 @@
-checkdmarc==5.10.12
+checkdmarc==5.12.2
 dkimpy==1.1.8
 PyNaCl==1.6.0
 pyspf==2.0.14
