@@ -583,9 +583,9 @@ TRANSLATIONS = {
             "Zamiast rekordu DMARC wykryto rekord SPF w subdomenie '_dmarc'.",
         ),
         (
-            f"Failed to retrieve MX records for the domain of rua email address {PLACEHOLDER} - "
+            f"Failed to retrieve MX records for the domain of {PLACEHOLDER} email address {PLACEHOLDER} - "
             f"The resolution lifetime expired {PLACEHOLDER}",
-            f"Nie udało się pobrać rekordów MX domeny adresu e-mail podanego w rekordzie 'rua': {PLACEHOLDER} - "
+            f"Nie udało się pobrać rekordów MX domeny adresu e-mail podanego w rekordzie '{PLACEHOLDER}': {PLACEHOLDER} - "
             "przekroczono limit czasu żądania.",
         ),
         (
