@@ -836,6 +836,10 @@ TRANSLATIONS = {
             "The value of the ri tag must be an integer",
             "Wartość tagu 'ri' musi być liczbą całkowitą.",
         ),
+        (
+            "the p tag must immediately follow the v tag",
+            "Tag p (polityka DMARC) musi następować bezpośrednio po tagu v (wersji DMARC).",
+        ),
         # End of messages left for backward compatibility
         (
             "rua tag (destination for aggregate reports) not found.",
@@ -948,7 +952,7 @@ TRANSLATIONS = {
             f"{PLACEHOLDER} (oznaczonej znakiem {PLACEHOLDER}) w rekordzie '{PLACEHOLDER}'",
         ),
         (
-            "the p tag must immediately follow the v tag",
+            "the p tag must immediately follow the v tag.",
             "Tag p (polityka DMARC) musi następować bezpośrednio po tagu v (wersji DMARC).",
         ),
         (
