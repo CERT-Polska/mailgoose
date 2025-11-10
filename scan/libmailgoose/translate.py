@@ -801,7 +801,22 @@ TRANSLATIONS = {
             f"{PLACEHOLDER} is not a valid DMARC tag",
             f"'{PLACEHOLDER}' nie jest poprawnym tagiem DMARC.",
         ),
-        # End of messages left for backward compatibility
+        (
+            "Some DMARC reporters might not send to more than two rua URIs",
+            "Niektóre implementacje DMARC mogą nie wysłać raportów do więcej niż dwóch odbiorców podanych w polu 'rua'.",
+        ),
+        (
+            "Some DMARC reporters might not send to more than two ruf URIs",
+            "Niektóre implementacje DMARC mogą nie wysłać raportów do więcej niż dwóch odbiorców podanych w polu 'ruf'.",
+        ),
+        (
+            f"The domain for rua email address {PLACEHOLDER} has no MX records",
+            f"Domena adresu e-mail podanego w tagu 'rua': {PLACEHOLDER} nie ma rekordów MX.",
+        ),
+        (
+            f"The domain for ruf email address {PLACEHOLDER} has no MX records",
+            f"Domena adresu e-mail podanego w tagu 'ruf': {PLACEHOLDER} nie ma rekordów MX.",
+        ),
         (
             "rua tag (destination for aggregate reports) not found",
             "Nie znaleziono tagu 'rua' (odbiorca zagregowanych raportów).",
@@ -812,6 +827,14 @@ TRANSLATIONS = {
             "wysyłany jeśli wiadomość nie jest poprawnie zweryfikowana przez mechanizm SPF lub DKIM, nawet, jeśli "
             "została zweryfikowana przez drugi z mechanizmów), opcja 0 (tj. wysyłka raportów, gdy wiadomość zostanie "
             "zweryfikowana negatywnie przez oba mechanizmy) jest zbędna.",
+        ),
+        (
+            "The value of the pct tag must be an integer",
+            "Wartość tagu 'pct' musi być liczbą całkowitą.",
+        ),
+        (
+            "The value of the ri tag must be an integer",
+            "Wartość tagu 'ri' musi być liczbą całkowitą.",
         ),
         # End of messages left for backward compatibility
         (
@@ -908,6 +931,10 @@ TRANSLATIONS = {
             "Proszę podać poprawną nazwę domeny.",
         ),
         (
+            f"Setting a size limit on {PLACEHOLDER} reports sent to {PLACEHOLDER} could cause incomplete reporting.",
+            f"Ustawienie ograniczenia rozmiaru raportów {PLACEHOLDER} wysyłanych do {PLACEHOLDER} może doprowadzić do pominięcia części z nich.",
+        ),
+        (
             f"Failed to retrieve MX records for the domain of {PLACEHOLDER} email address {PLACEHOLDER} - All nameservers failed to answer the query {PLACEHOLDER}",
             f"Nie udało się odczytać rekordów MX domeny adresu e-mail w dyrektywie {PLACEHOLDER}: {PLACEHOLDER} - serwery nazw nie odpowiedziały poprawnie na zapytanie.",
         ),
@@ -938,11 +965,11 @@ TRANSLATIONS = {
             f"{PLACEHOLDER} nie jest poprawnym adresem IPv6.",
         ),
         (
-            "Some DMARC reporters might not send to more than two rua URIs",
+            "Some DMARC reporters might not send to more than two rua URIs.",
             "Niektóre implementacje DMARC mogą nie wysłać raportów do więcej niż dwóch odbiorców podanych w polu 'rua'.",
         ),
         (
-            "Some DMARC reporters might not send to more than two ruf URIs",
+            "Some DMARC reporters might not send to more than two ruf URIs.",
             "Niektóre implementacje DMARC mogą nie wysłać raportów do więcej niż dwóch odbiorców podanych w polu 'ruf'.",
         ),
         (
@@ -1028,19 +1055,19 @@ TRANSLATIONS = {
             "Nazwa DNS ma więcej niż 255 bajtów.",
         ),
         (
-            "The value of the pct tag must be an integer",
+            "The value of the pct tag must be an integer.",
             "Wartość tagu 'pct' musi być liczbą całkowitą.",
         ),
         (
-            "The value of the ri tag must be an integer",
+            "The value of the ri tag must be an integer.",
             "Wartość tagu 'ri' musi być liczbą całkowitą.",
         ),
         (
-            f"The domain for rua email address {PLACEHOLDER} has no MX records",
+            f"The domain for rua email address {PLACEHOLDER} has no MX records.",
             f"Domena adresu e-mail podanego w tagu 'rua': {PLACEHOLDER} nie ma rekordów MX.",
         ),
         (
-            f"The domain for ruf email address {PLACEHOLDER} has no MX records",
+            f"The domain for ruf email address {PLACEHOLDER} has no MX records.",
             f"Domena adresu e-mail podanego w tagu 'ruf': {PLACEHOLDER} nie ma rekordów MX.",
         ),
         (
