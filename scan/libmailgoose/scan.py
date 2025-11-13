@@ -45,7 +45,7 @@ def check_domain_exists(domain: str) -> bool:
             records = query_dns(domain, record_type)
             if records:
                 return True
-        except (dns.resolver.NXDOMAIN, dns.resolver.NoAnswer):
+        except dns.exception.DNSException:
             pass
 
     return False
