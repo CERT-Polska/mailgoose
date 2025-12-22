@@ -2,5 +2,5 @@ checkdmarc==5.10.12
 dkimpy==1.1.8
 PyNaCl==1.6.1
 pyspf==2.0.14
-python-multipart==0.0.20
+python-multipart==0.0.21
 validators==0.35.0
