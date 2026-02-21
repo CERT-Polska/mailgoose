@@ -994,6 +994,14 @@ TRANSLATIONS = {
             f"'{PLACEHOLDER}' nie jest poprawnym tagiem DMARC.",
         ),
         (
+            'The record is missing the required policy ("p") tag.',
+            "Rekord nie zawiera wymaganego tagu `p`: polityki.",
+        ),
+        (
+            "iodef is not a valid option for the DMARC rf tag.",
+            "`iodef` nie jest właściwą opcją dla tagu `rf` DMARC.",
+        ),
+        (
             f"Tag {PLACEHOLDER} must have one of the following values: {PLACEHOLDER} - not {PLACEHOLDER}",
             f"Tag {PLACEHOLDER} powinien mieć wartość spośród: {PLACEHOLDER} - wartość '{PLACEHOLDER}' nie jest dopuszczalna.",
         ),
