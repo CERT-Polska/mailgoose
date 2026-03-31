@@ -4,23 +4,35 @@ updates:
     directory: "/app/translations/"
     schedule:
       interval: "weekly"
+    cooldown:
+      default-days: 3
   - package-ecosystem: "pip"
     directory: "/app/"
     schedule:
       interval: "weekly"
+    cooldown:
+      default-days: 3
   - package-ecosystem: "pip"
     directory: "/docs/"
     schedule:
       interval: "weekly"
+    cooldown:
+      default-days: 3
   - package-ecosystem: "pip"
     directory: "/mail_receiver/"
     schedule:
       interval: "weekly"
+    cooldown:
+      default-days: 3
   - package-ecosystem: "pip"
     directory: "/scan/"
     schedule:
       interval: "weekly"
+    cooldown:
+      default-days: 3
   - package-ecosystem: "pip"
     directory: "/test/"
     schedule:
       interval: "weekly"
+    cooldown:
+      default-days: 3
