@@ -41,7 +41,6 @@ def retrieve_MX_records(domain: str, nameservers: Optional[List[str]] = None) ->
         mx_records = sorted([(int(r.preference), r.exchange.to_text()) for r in answers])
         return [r[1].rstrip(".") for r in mx_records]
     except Exception as e:
-        print(f"Error retrieving MX records for {domain}: {e}")
         return []
 
 
@@ -101,7 +100,10 @@ def test_ssl_tls(hostname: str, nameservers: Optional[List[str]] = None, timeout
         answers = resolver.resolve(hostname, "A")
         ip = answers[0].to_text()
     except Exception:
-        return [{"port": None, "error": "DNS resolution error"}]
+        try:
+            ip = socket.gethostbyname(hostname)  # fallback
+        except socket.gaierror:
+            return [{"port": None, "error": "DNS resolution error"}]
 
     results = []
 
