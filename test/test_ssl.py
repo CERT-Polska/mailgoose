@@ -2,7 +2,7 @@ from base import BaseTestCase
 
 
 class SSLTestCase(BaseTestCase):
-    def test_dmarc_starts_with_whitespace(self) -> None:
+    def base_selfsigned_test_case(self) -> None:
         result = self.check_domain_api_v1("mailserver.local")
         del result["result"]["timestamp"]
         self.assertEqual(
