@@ -5,7 +5,6 @@ class SSLTestCase(BaseTestCase):
     def test_dmarc_starts_with_whitespace(self) -> None:
         result = self.check_domain_api_v1("mailserver.local")
         del result["result"]["timestamp"]
-        self.maxDiff = None
         self.assertEqual(
             result,
             {
@@ -26,17 +25,17 @@ class SSLTestCase(BaseTestCase):
                         "ssl": {
                             "results": [
                                 {
-                                    "error": "Connection unexpectedly " "closed: timed out",
+                                    "error": "Connection unexpectedly closed: timed out",
                                     "mx": "mailserver.local",
                                     "port": 25,
                                 },
                                 {
-                                    "error": "Certificate error: " "unable to get local " "issuer certificate",
+                                    "error": "Certificate error: unable to get local issuer certificate",
                                     "mx": "mailserver.local",
                                     "port": 465,
                                 },
                                 {
-                                    "error": "Certificate error: " "unable to get local " "issuer certificate",
+                                    "error": "Certificate error: unable to get local issuer certificate",
                                     "mx": "mailserver.local",
                                     "port": 587,
                                 },
