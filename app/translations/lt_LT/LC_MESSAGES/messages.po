@@ -22,7 +22,7 @@ msgstr "Tikrinti domeną"
 #: app/templates/check_domain.html:12 app/templates/check_results.html:74
 #: app/templates/check_results.html:76 app/templates/check_results.html:78
 #: app/templates/check_results.html:199 app/templates/check_results.html:239
-#: app/templates/check_results.html:280
+#: app/templates/check_results.html:310
 msgid "Domain"
 msgstr "Domenas"
 
@@ -240,22 +240,39 @@ msgid "Records"
 msgstr "Įrašai"
 
 #: app/templates/check_results.html:219 app/templates/check_results.html:259
-#: app/templates/check_results.html:285
+#: app/templates/check_results.html:315
 msgid "Warnings"
 msgstr "Įspėjimai"
 
 #: app/templates/check_results.html:220 app/templates/check_results.html:224
 #: app/templates/check_results.html:260 app/templates/check_results.html:264
-#: app/templates/check_results.html:286 app/templates/check_results.html:290
+#: app/templates/check_results.html:316 app/templates/check_results.html:320
 msgid "none"
 msgstr "nėra"
 
 #: app/templates/check_results.html:223 app/templates/check_results.html:263
-#: app/templates/check_results.html:289
+#: app/templates/check_results.html:319
 msgid "Errors"
 msgstr "Klaidos"
 
-#: app/templates/check_results.html:302
+#: app/templates/check_results.html:279
+msgid "Server"
+msgstr ""
+
+#: app/templates/check_results.html:280
+msgid "Port"
+msgstr ""
+
+#: app/templates/check_results.html:281
+msgid "Result"
+msgstr ""
+
+#: app/templates/check_results.html:292
+#, fuzzy
+msgid "Configuration valid"
+msgstr "konfiguracijos klaidos"
+
+#: app/templates/check_results.html:332
 msgid ""
 "To increase the chance that your configuration is interpreted by all "
 "e-mail servers correctly, we recommend fixing all errors and warnings."
@@ -264,7 +281,7 @@ msgstr ""
 "interpretuojama visų el. pašto serverių, mes rekomenduojame ištaisyti "
 "visas klaidas ir perspėjimus. "
 
-#: app/templates/check_results.html:310
+#: app/templates/check_results.html:340
 msgid ""
 "After fixing the issues, please rerun the scan - some problems can be "
 "detected only if earlier checks complete successfully."

@@ -1229,6 +1229,23 @@ TRANSLATIONS = {
             "An unknown error occured during DKIM signature validation.",
             "Wystąpił nieznany błąd podczas walidacji podpisu DKIM.",
         ),
+        # ssl messages
+        (
+            "Connection timed out",
+            "Przekroczenie czasu oczekiwania na połączenie",
+        ),
+        (
+            "DNS resolution error",
+            "Błąd rozwiązywania DNS",
+        ),
+        (
+            f"STARTTLS not supported on {PLACEHOLDER} MX server",
+            f"STARTTLS nie jest obsługiwany przez serwer MX {PLACEHOLDER}",
+        ),
+        (
+            "unable to get local issuer certificate",
+            "nie można zweryfikować, czy certyfikat jest zaufany",
+        ),
     ],
 }
 
