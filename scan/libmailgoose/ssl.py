@@ -106,9 +106,6 @@ def test_ssl_tls(hostname: str, nameservers: Optional[List[str]] = None, timeout
     results = []
 
     for port, ssl_type in ports.items():
-        if dns_resolution_error:
-            continue  # skip remaining ports if DNS resolution failed
-
         result: Dict[str, Any] = {
             "port": port,
             "error": None,
