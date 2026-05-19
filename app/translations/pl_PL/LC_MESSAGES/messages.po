@@ -272,7 +272,7 @@ msgstr "Rezultat"
 
 #: app/templates/check_results.html:292
 msgid "Configuration valid"
-msgstr "uwagi dotyczące konfiguracji"
+msgstr "Konfiguracja prawidłowa"
 
 #: app/templates/check_results.html:332
 msgid ""

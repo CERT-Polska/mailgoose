@@ -1246,6 +1246,14 @@ TRANSLATIONS = {
             "unable to get local issuer certificate",
             "nie można zweryfikować, czy certyfikat jest zaufany",
         ),
+        (
+            "Connection refused",
+            "Połączenie odrzucone",
+        ),
+        (
+            "Certificate error: self-signed certificate",
+            "Błąd certyfikatu: certyfikat podpisany samodzielnie (self-signed certificate)",
+        ),
     ],
 }
 
