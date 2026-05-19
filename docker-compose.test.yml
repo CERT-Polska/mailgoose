@@ -49,6 +49,11 @@ services:
     env_file: mailserver.env
     volumes:
       - /etc/localtime:/etc/localtime:ro
+    ports:
+      - "25:25"
+      - "465:465"
+      - "587:587"
+      - "993:993"
     restart: always
     stop_grace_period: 1m
     healthcheck:
