@@ -1328,12 +1328,18 @@ def _translate_domain_result(
     new_domain_result.spf.warnings = [
         translate(warning, language, nonexistent_translation_handler) for warning in domain_result.spf.warnings
     ]
+
     new_domain_result.dmarc.errors = [
         translate(error, language, nonexistent_translation_handler) for error in domain_result.dmarc.errors
     ]
     new_domain_result.dmarc.warnings = [
         translate(warning, language, nonexistent_translation_handler) for warning in domain_result.dmarc.warnings
     ]
+
+    for item in new_domain_result.ssl:
+        if item:
+            item.error = translate(error, language, nonexistent_translation_handler)
+
     new_domain_result.warnings = [
         translate(warning, language, nonexistent_translation_handler) for warning in new_domain_result.warnings
     ]
