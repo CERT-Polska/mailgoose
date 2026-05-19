@@ -46,14 +46,20 @@ services:
     image: ghcr.io/docker-mailserver/docker-mailserver:latest
     container_name: mailserver.local
     hostname: mailserver.local
-    env_file: mailserver.env
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
+    env_file: test-mailserver/env
     ports:
       - "25:25"
       - "465:465"
       - "587:587"
       - "993:993"
+    volumes:
+      - ./test-mailserver/docker-data/dms/mail-data/:/var/mail/
+      - ./test-mailserver/docker-data/dms/mail-state/:/var/mail-state/
+      - ./test-mailserver/docker-data/dms/mail-logs/:/var/log/mail/
+      - ./docker-data/dms/config/:/tmp/docker-mailserver/
+      - /etc/localtime:/etc/localtime:ro
+      - ./test-mailserver/docker-data/dms/config/ssl-certs/cert.pem:/etc/ssl/certs/ssl-cert.pem:ro
+      - ./test-mailserver/docker-data/dms/config/ssl-certs/key.pem:/etc/ssl/private/ssl-cert-key.pem:ro
     restart: always
     stop_grace_period: 1m
     healthcheck:
