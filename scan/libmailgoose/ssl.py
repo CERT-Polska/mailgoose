@@ -208,7 +208,6 @@ def validate_ssl(host: str, nameservers: Optional[List[str]], timeout: float = 5
     results: List[SSLMXScanResult] = []
     for mx in mx_records:
         results_mx = test_ssl_tls(mx, nameservers=nameservers, timeout=timeout)
-        print(results_mx)
         for result_mx in results_mx:
             results.append(SSLMXScanResult(mx=mx, port=result_mx["port"], error=result_mx["error"]))
     return SSLScanResult(valid=all(item.error is None for item in results), results=results)
