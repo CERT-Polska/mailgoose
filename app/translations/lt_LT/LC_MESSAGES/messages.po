@@ -268,9 +268,8 @@ msgid "Result"
 msgstr ""
 
 #: app/templates/check_results.html:292
-#, fuzzy
 msgid "Configuration valid"
-msgstr "konfiguracijos klaidos"
+msgstr ""
 
 #: app/templates/check_results.html:332
 msgid ""
