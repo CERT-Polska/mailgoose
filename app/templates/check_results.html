@@ -269,6 +269,36 @@
                         </div>
                     {% endif %}
 
+                    {% if result.domain.ssl %}
+                        <div class="card p-1 bg-light border rounded-3 mb-3">
+                            {{ card_header("SSL/TLS", result.domain.ssl) }}
+                            <div class="card-body">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>{% trans %}Server{% endtrans %}</th>
+                                            <th>{% trans %}Port{% endtrans %}</th>
+                                            <th>{% trans %}Result{% endtrans %}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for item in result.domain.ssl.results %}
+                                            <tr>
+                                                <td>{{ item.mx }}</td>
+                                                <td>{% if item.port %}{{ item.port }}{% else %}-{% endif %}</td>
+                                                {% if item.error %}
+                                                    <td class="text-danger">{{ item.error }}</td>
+                                                {% else %}
+                                                    <td class="text-success">{% trans %}Configuration valid{% endtrans %}</td>
+                                                {% endif %}
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    {% endif %}
+
                     {% if result.dkim %}
                         <div class="card p-1 bg-light border rounded-3 mb-3">
                             {{ card_header("DKIM", result.dkim) }}
@@ -294,7 +324,7 @@
                         </div>
                     {% endif %}
 
-                    {% if result.domain.spf.warnings or result.domain.spf.errors or result.domain.dmarc.warnings or result.domain.dmarc.errors or result.dkim.warnings or result.dkim.errors %}
+                    {% if result.domain.spf.warnings or result.domain.spf.errors or result.domain.dmarc.warnings or result.domain.dmarc.errors or result.dkim.warnings or result.dkim.errors or not result.domain.ssl.valid %}
                         <div class="card border rounded-3 mb-3">
                             <div class="card-body">
                                 {% if result.domain.spf.warnings or result.domain.dmarc.warnings or result.dkim.warnings %}
