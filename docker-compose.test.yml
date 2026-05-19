@@ -47,15 +47,7 @@ services:
     container_name: mailserver.local
     hostname: mailserver.local
     env_file: test-mailserver/env
-    ports:
-      - "25:25"
-      - "465:465"
-      - "587:587"
-      - "993:993"
     volumes:
-      - ./test-mailserver/docker-data/dms/mail-data/:/var/mail/
-      - ./test-mailserver/docker-data/dms/mail-state/:/var/mail-state/
-      - ./test-mailserver/docker-data/dms/mail-logs/:/var/log/mail/
       - ./docker-data/dms/config/:/tmp/docker-mailserver/
       - /etc/localtime:/etc/localtime:ro
       - ./test-mailserver/docker-data/dms/config/ssl-certs/cert.pem:/etc/ssl/certs/ssl-cert.pem:ro
