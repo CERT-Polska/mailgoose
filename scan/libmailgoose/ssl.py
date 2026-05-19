@@ -31,7 +31,11 @@ class SSLInternalError(Exception):
     pass
 
 
-def retrieve_MX_records(domain: str) -> List[str]:
+def retrieve_MX_records(domain: str, nameservers: Optional[List[str]] = None) -> List[str]:
+    resolver = dns.resolver.Resolver()
+    if nameservers:
+        resolver.nameservers = nameservers
+
     try:
         answers = dns.resolver.resolve(domain, "MX")
         mx_records = sorted([(int(r.preference), r.exchange.to_text()) for r in answers])
@@ -197,7 +201,7 @@ def test_ssl_tls(hostname: str, nameservers: Optional[List[str]] = None, timeout
 
 
 def validate_ssl(host: str, nameservers: Optional[List[str]], timeout: float = 5.0) -> SSLScanResult:
-    mx_records = retrieve_MX_records(host)
+    mx_records = retrieve_MX_records(host, nameservers=nameservers)
     if not mx_records:
         mx_records = [host]
 
