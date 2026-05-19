@@ -20,7 +20,7 @@ import spf
 import validators
 from checkdmarc.utils import query_dns
 
-from . import lax_record_query
+from . import lax_record_query, ssl
 from .logging import build_logger
 
 checkdmarc.utils.DNS_CACHE.max_age = 1
@@ -82,6 +82,7 @@ class DMARCScanResult:
 class DomainScanResult:
     spf: SPFScanResult
     dmarc: DMARCScanResult
+    ssl: ssl.SSLScanResult
     domain: str
     base_domain: str
     warnings: List[str]
@@ -116,7 +117,7 @@ class ScanResult:
     def num_correct_mechanisms(self) -> int:
         result = 0
         for mechanism in self.mechanisms:
-            if mechanism.valid and not mechanism.warnings:
+            if mechanism.valid and not (hasattr(mechanism, 'warnings') and mechanism.warnings):
                 result += 1
         return result
 
@@ -132,6 +133,7 @@ class ScanResult:
         mechanisms: List[Any] = []
         if self.domain:
             mechanisms.append(self.domain.spf)
+            mechanisms.append(self.domain.ssl)
             mechanisms.append(self.domain.dmarc)
 
         if self.dkim:
@@ -270,6 +272,7 @@ def scan_domain(
             errors=[],
             warnings=[],
         ),
+        ssl=ssl.validate_ssl(from_domain, nameservers=nameservers, timeout=timeout),
         domain=domain,
         base_domain=checkdmarc.get_base_domain(domain),
         domain_does_not_exist=False,
