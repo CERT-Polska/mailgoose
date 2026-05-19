@@ -82,7 +82,7 @@ class DMARCScanResult:
 class DomainScanResult:
     spf: SPFScanResult
     dmarc: DMARCScanResult
-    ssl: ssl.SSLScanResult
+    ssl: ssl_check.SSLScanResult
     domain: str
     base_domain: str
     warnings: List[str]
@@ -272,7 +272,7 @@ def scan_domain(
             errors=[],
             warnings=[],
         ),
-        ssl=ssl.validate_ssl(from_domain, nameservers=nameservers, timeout=timeout),
+        ssl=ssl_check.validate_ssl(from_domain, nameservers=nameservers, timeout=timeout),
         domain=domain,
         base_domain=checkdmarc.get_base_domain(domain),
         domain_does_not_exist=False,
