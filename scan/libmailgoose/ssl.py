@@ -17,7 +17,7 @@ class SSLEnum(enum.Enum):
 @dataclasses.dataclass
 class SSLMXScanResult:
     mx: str
-    port: int
+    port: Optional[int]
     error: Optional[str] = None
 
 
