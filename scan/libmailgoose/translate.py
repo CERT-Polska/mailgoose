@@ -1336,9 +1336,9 @@ def _translate_domain_result(
         translate(warning, language, nonexistent_translation_handler) for warning in domain_result.dmarc.warnings
     ]
 
-    for item in new_domain_result.ssl:
-        if item:
-            item.error = translate(error, language, nonexistent_translation_handler)
+    for result in new_domain_result.ssl.results:
+        if result.error:
+            result.error = translate(result.error, language, nonexistent_translation_handler)
 
     new_domain_result.warnings = [
         translate(warning, language, nonexistent_translation_handler) for warning in new_domain_result.warnings
