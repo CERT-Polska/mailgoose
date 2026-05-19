@@ -268,7 +268,7 @@ msgstr "Port"
 
 #: app/templates/check_results.html:281
 msgid "Result"
-msgstr "Rezultat"
+msgstr "Wynik"
 
 #: app/templates/check_results.html:292
 msgid "Configuration valid"

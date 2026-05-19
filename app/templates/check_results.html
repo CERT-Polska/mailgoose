@@ -285,7 +285,7 @@
                                         {% for item in result.domain.ssl.results %}
                                             <tr>
                                                 <td>{{ item.mx }}</td>
-                                                <td>{{ item.port }}</td>
+                                                <td>{% if item.port %}{{ item.port }}{% else %}-{% endif %}</td>
                                                 {% if item.error %}
                                                     <td class="text-danger">{{ item.error }}</td>
                                                 {% else %}

@@ -94,8 +94,15 @@ def test_ssl_tls(hostname: str, nameservers: Optional[List[str]] = None, timeout
         587: SSLEnum.STARTTLS,
     }
 
-    ip = None
-    dns_resolution_error = False
+    resolver = dns.resolver.Resolver()
+    if nameservers:
+        resolver.nameservers = nameservers
+    try:
+        answers = resolver.resolve(hostname, "A")
+        ip = answers[0].to_text()
+    except Exception:
+        return [{"port": None, "error": "DNS resolution error"}]
+
     results = []
 
     for port, ssl_type in ports.items():
@@ -104,16 +111,6 @@ def test_ssl_tls(hostname: str, nameservers: Optional[List[str]] = None, timeout
 
         result: Dict[str, Any] = {
             "port": port,
-            "description": ssl_type.value,
-            "connected": False,
-            "tls": False,
-            "protocol": None,
-            "cipher": None,
-            "cert_subject": None,
-            "cert_expiry": None,
-            "cert_valid": False,
-            "cert_hostname_valid": False,
-            "cert_alt_names": [],
             "error": None,
         }
 
@@ -122,18 +119,6 @@ def test_ssl_tls(hostname: str, nameservers: Optional[List[str]] = None, timeout
         context.verify_mode = ssl.CERT_REQUIRED
 
         try:
-            if not ip:
-                # resolve hostname to IP using nameservers
-                resolver = dns.resolver.Resolver()
-                if nameservers:
-                    resolver.nameservers = nameservers
-                try:
-                    answers = resolver.resolve(hostname, "A")
-                    ip = answers[0].to_text()
-                except Exception:
-                    dns_resolution_error = True
-                    raise SSLInternalError("DNS resolution error")
-
             if ssl_type == SSLEnum.IMPLICIT:
                 # Implicit TLS — wrap socket immediately
                 with socket.create_connection((ip, port), timeout=timeout) as sock:
