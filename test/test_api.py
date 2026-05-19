@@ -37,15 +37,6 @@ class APITestCase(BaseTestCase):
                         "domain": "starts-with-whitespace.dmarc.test.mailgoose.cert.pl",
                         "base_domain": "cert.pl",
                         "warnings": [],
-                        "ssl": {
-                            "results": [
-                                {
-                                    "error": "DNS resolution error",
-                                    "mx": "starts-with-whitespace.dmarc.test.mailgoose.cert.pl",
-                                }
-                            ],
-                            "valid": False,
-                        },
                     },
                 },
             },

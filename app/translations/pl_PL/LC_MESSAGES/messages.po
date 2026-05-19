@@ -22,7 +22,7 @@ msgstr "Sprawdź domenę"
 #: app/templates/check_domain.html:12 app/templates/check_results.html:74
 #: app/templates/check_results.html:76 app/templates/check_results.html:78
 #: app/templates/check_results.html:199 app/templates/check_results.html:239
-#: app/templates/check_results.html:310
+#: app/templates/check_results.html:280
 msgid "Domain"
 msgstr "Domena"
 
@@ -243,38 +243,22 @@ msgid "Records"
 msgstr "Rekordy"
 
 #: app/templates/check_results.html:219 app/templates/check_results.html:259
-#: app/templates/check_results.html:315
+#: app/templates/check_results.html:285
 msgid "Warnings"
 msgstr "Ostrzeżenia"
 
 #: app/templates/check_results.html:220 app/templates/check_results.html:224
 #: app/templates/check_results.html:260 app/templates/check_results.html:264
-#: app/templates/check_results.html:316 app/templates/check_results.html:320
+#: app/templates/check_results.html:286 app/templates/check_results.html:290
 msgid "none"
 msgstr "brak"
 
 #: app/templates/check_results.html:223 app/templates/check_results.html:263
-#: app/templates/check_results.html:319
+#: app/templates/check_results.html:289
 msgid "Errors"
 msgstr "Błędy"
 
-#: app/templates/check_results.html:279
-msgid "Server"
-msgstr "Serwer"
-
-#: app/templates/check_results.html:280
-msgid "Port"
-msgstr "Port"
-
-#: app/templates/check_results.html:281
-msgid "Result"
-msgstr "Wynik"
-
-#: app/templates/check_results.html:292
-msgid "Configuration valid"
-msgstr "Konfiguracja prawidłowa"
-
-#: app/templates/check_results.html:332
+#: app/templates/check_results.html:302
 msgid ""
 "To increase the chance that your configuration is interpreted by all "
 "e-mail servers correctly, we recommend fixing all errors and warnings."
@@ -283,7 +267,7 @@ msgstr ""
 "zinterpretowana przez wszystkie serwery, rekomendujemy poprawę zarówno "
 "błędów, jak i ostrzeżeń."
 
-#: app/templates/check_results.html:340
+#: app/templates/check_results.html:310
 msgid ""
 "After fixing the issues, please rerun the scan - some problems can be "
 "detected only if earlier checks complete successfully."
