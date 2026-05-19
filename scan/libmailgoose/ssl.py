@@ -1,10 +1,11 @@
-from typing import Dict, List, Optional, Any
 import dataclasses
-import ssl
-import socket
-import smtplib
 import datetime
 import enum
+import smtplib
+import socket
+import ssl
+from typing import Any, Dict, List, Optional
+
 import dns.resolver
 
 
@@ -32,9 +33,9 @@ class SSLInternalError(Exception):
 
 def retrieve_MX_records(domain: str) -> List[str]:
     try:
-        answers = dns.resolver.resolve(domain, 'MX')
+        answers = dns.resolver.resolve(domain, "MX")
         mx_records = sorted([(int(r.preference), r.exchange.to_text()) for r in answers])
-        return [r[1].rstrip('.') for r in mx_records]
+        return [r[1].rstrip(".") for r in mx_records]
     except Exception as e:
         print(f"Error retrieving MX records for {domain}: {e}")
         return []
@@ -61,7 +62,7 @@ def check_cert_hostnames(cert: Dict[str, Any], hostname: str) -> bool:
 def extract_tls_info(tls_sock: ssl.SSLSocket) -> Dict[str, Any]:
     info: Dict[str, Any] = {
         "protocol": tls_sock.version(),
-        "cipher": tls_sock.cipher()[0],
+        "cipher": tls_sock.cipher()[0],  # type: ignore
         "cert_subject": None,
         "cert_expiry": None,
         "cert_valid": False,
@@ -70,11 +71,13 @@ def extract_tls_info(tls_sock: ssl.SSLSocket) -> Dict[str, Any]:
     }
     cert = tls_sock.getpeercert()
     if cert:
-        info["cert_subject"] = dict(x[0] for x in cert["subject"])
-        expiry = datetime.datetime.strptime(cert["notAfter"], "%b %d %H:%M:%S %Y %Z")
+        info["cert_subject"] = dict(x[0] for x in cert["subject"])  # type: ignore
+        expiry = datetime.datetime.strptime(cert["notAfter"], "%b %d %H:%M:%S %Y %Z")  # type: ignore
         info["cert_expiry"] = expiry.strftime("%Y-%m-%d")
         info["cert_valid"] = expiry > datetime.datetime.now()
-        info["cert_hostname_valid"] = check_cert_hostnames(cert, tls_sock.server_hostname) if tls_sock.server_hostname else False
+        info["cert_hostname_valid"] = (
+            check_cert_hostnames(cert, tls_sock.server_hostname) if tls_sock.server_hostname else False
+        )
         info["cert_alt_names"] = [x[1] for x in cert.get("subjectAltName", [])]
     return info
 
@@ -121,7 +124,7 @@ def test_ssl_tls(hostname: str, nameservers: Optional[List[str]] = None, timeout
                 if nameservers:
                     resolver.nameservers = nameservers
                 try:
-                    answers = resolver.resolve(hostname, 'A')
+                    answers = resolver.resolve(hostname, "A")
                     ip = answers[0].to_text()
                 except Exception:
                     dns_resolution_error = True
@@ -153,7 +156,7 @@ def test_ssl_tls(hostname: str, nameservers: Optional[List[str]] = None, timeout
                 with smtplib.SMTP(hostname, port, timeout=5) as smtp:
                     result["connected"] = True
                     smtp.ehlo()
-                    ehlo_response = smtp.ehlo_resp.decode() if smtp.ehlo_resp else None
+                    ehlo_response = smtp.ehlo_resp.decode() if smtp.ehlo_resp else None  # type: ignore
                     if not ehlo_response:
                         raise SSLInternalError("No EHLO response received before STARTTLS")
 
@@ -161,12 +164,12 @@ def test_ssl_tls(hostname: str, nameservers: Optional[List[str]] = None, timeout
                         smtp.starttls(context=context)
 
                         smtp.ehlo()
-                        ehlo_response = smtp.ehlo_resp.decode() if smtp.ehlo_resp else None
+                        ehlo_response = smtp.ehlo_resp.decode() if smtp.ehlo_resp else None  # type: ignore
                         if not ehlo_response:
                             raise SSLInternalError("No EHLO response received after STARTTLS")
 
                         result["tls"] = True
-                        tls_sock = smtp.sock
+                        tls_sock = smtp.sock  # type: ignore
                         cert_info = extract_tls_info(tls_sock)
                         result.update(cert_info)
                     else:

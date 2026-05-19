@@ -117,7 +117,7 @@ class ScanResult:
     def num_correct_mechanisms(self) -> int:
         result = 0
         for mechanism in self.mechanisms:
-            if mechanism.valid and not (hasattr(mechanism, 'warnings') and mechanism.warnings):
+            if mechanism.valid and not (hasattr(mechanism, "warnings") and mechanism.warnings):
                 result += 1
         return result
 
