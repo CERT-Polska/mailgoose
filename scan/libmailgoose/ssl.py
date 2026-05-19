@@ -62,27 +62,13 @@ def check_cert_hostnames(cert: Dict[str, Any], hostname: str) -> bool:
     raise SSLInternalError(f"Certificate hostname mismatch: {hostname} not found in CN or SANs")
 
 
-def extract_tls_info(tls_sock: ssl.SSLSocket) -> Dict[str, Any]:
-    info: Dict[str, Any] = {
-        "protocol": tls_sock.version(),
-        "cipher": tls_sock.cipher()[0],  # type: ignore
-        "cert_subject": None,
-        "cert_expiry": None,
-        "cert_valid": False,
-        "cert_hostname_valid": False,
-        "cert_alt_names": [],
-    }
+def validate_tls_info(tls_sock: ssl.SSLSocket) -> None:
     cert = tls_sock.getpeercert()
-    if cert:
-        info["cert_subject"] = dict(x[0] for x in cert["subject"])  # type: ignore
+    if cert and tls_sock.server_hostname:
+        check_cert_hostnames(cert, tls_sock.server_hostname)
         expiry = datetime.datetime.strptime(cert["notAfter"], "%b %d %H:%M:%S %Y %Z")  # type: ignore
-        info["cert_expiry"] = expiry.strftime("%Y-%m-%d")
-        info["cert_valid"] = expiry > datetime.datetime.now()
-        info["cert_hostname_valid"] = (
-            check_cert_hostnames(cert, tls_sock.server_hostname) if tls_sock.server_hostname else False
-        )
-        info["cert_alt_names"] = [x[1] for x in cert.get("subjectAltName", [])]
-    return info
+        if expiry < datetime.datetime.now():
+            raise SSLInternalError("SSL certificate expired")
 
 
 def test_ssl_tls(hostname: str, nameservers: Optional[List[str]] = None, timeout: float = 5.0) -> List[Dict[str, Any]]:
@@ -124,8 +110,7 @@ def test_ssl_tls(hostname: str, nameservers: Optional[List[str]] = None, timeout
                     with context.wrap_socket(sock, server_hostname=hostname) as tls_sock:
                         result["connected"] = True
                         result["tls"] = True
-                        cert_info = extract_tls_info(tls_sock)
-                        result.update(cert_info)
+                        validate_tls_info(tls_sock)
                         tls_sock.send(b"EHLO %s\r\n" % "127.0.0.1".encode())
                         welcome_banner = tls_sock.recv(1024).decode()
                         if "220" not in welcome_banner:
@@ -158,8 +143,7 @@ def test_ssl_tls(hostname: str, nameservers: Optional[List[str]] = None, timeout
 
                         result["tls"] = True
                         tls_sock = smtp.sock  # type: ignore
-                        cert_info = extract_tls_info(tls_sock)
-                        result.update(cert_info)
+                        validate_tls_info(tls_sock)
                     else:
                         raise SSLInternalError(f"STARTTLS not supported on {hostname} MX server")
 
