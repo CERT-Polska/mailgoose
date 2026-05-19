@@ -20,7 +20,7 @@ import spf
 import validators
 from checkdmarc.utils import query_dns
 
-from . import lax_record_query, ssl
+from . import lax_record_query, ssl_check
 from .logging import build_logger
 
 checkdmarc.utils.DNS_CACHE.max_age = 1
