@@ -108,7 +108,7 @@ class ScanResult:
     def num_checked_mechanisms(self) -> int:
         result = 0
         if self.domain:
-            result += 2
+            result += 3
         if self.dkim:
             result += 1
         return result
