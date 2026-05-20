@@ -41,7 +41,7 @@ def retrieve_MX_records(domain: str, nameservers: Optional[List[str]] = None) ->
     try:
         answers = dns.resolver.resolve(domain, "MX")
         mx_records = sorted([(int(r.preference), r.exchange.to_text()) for r in answers])
-        return [r[0], r[1].rstrip(".") for r in mx_records]
+        return [(r[0], r[1].rstrip(".")) for r in mx_records]
     except Exception:
         return []
 
