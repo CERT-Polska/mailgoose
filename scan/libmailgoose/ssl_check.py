@@ -5,7 +5,7 @@ import smtplib
 import socket
 import ssl
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Tuple
 
 import dns.resolver
 
@@ -17,6 +17,7 @@ class SSLEnum(enum.Enum):
 
 @dataclasses.dataclass
 class SSLMXScanResult:
+    preference: int
     mx: str
     port: Optional[int]
     error: Optional[str] = None
@@ -32,7 +33,7 @@ class SSLInternalError(Exception):
     pass
 
 
-def retrieve_MX_records(domain: str, nameservers: Optional[List[str]] = None) -> List[str]:
+def retrieve_MX_records(domain: str, nameservers: Optional[List[str]] = None) -> List[Tuple[int, str]]:
     resolver = dns.resolver.Resolver()
     if nameservers:
         resolver.nameservers = nameservers
@@ -40,7 +41,7 @@ def retrieve_MX_records(domain: str, nameservers: Optional[List[str]] = None) ->
     try:
         answers = dns.resolver.resolve(domain, "MX")
         mx_records = sorted([(int(r.preference), r.exchange.to_text()) for r in answers])
-        return [r[1].rstrip(".") for r in mx_records]
+        return [r[0], r[1].rstrip(".") for r in mx_records]
     except Exception:
         return []
 
@@ -155,11 +156,11 @@ def validate_ssl(host: str, nameservers: Optional[List[str]], timeout: float) ->
 
     mx_records = retrieve_MX_records(host, nameservers=nameservers)
     if not mx_records:
-        mx_records = [host]
+        mx_records = [None, host]
 
     results: List[SSLMXScanResult] = []
 
-    def scan_mx(port: int, ssl_type: SSLEnum, mx: str, ip: str) -> SSLMXScanResult:
+    def scan_mx(preference: int, port: int, ssl_type: SSLEnum, mx: str, ip: str) -> SSLMXScanResult:
         result_mx = test_ssl_tls(
             mx,
             ip,
@@ -168,13 +169,13 @@ def validate_ssl(host: str, nameservers: Optional[List[str]], timeout: float) ->
             nameservers=nameservers,
             timeout=timeout,
         )
-        return SSLMXScanResult(mx=mx, port=result_mx["port"], error=result_mx["error"])
+        return SSLMXScanResult(preference=preference, mx=mx, port=result_mx["port"], error=result_mx["error"])
 
     results = []
 
     with ThreadPoolExecutor(max_workers=len(mx_records) * len(ports)) as executor:
         futures = []
-        for mx in mx_records:
+        for preference, mx in mx_records:
             ip = None
             resolver = dns.resolver.Resolver()
             if nameservers:
@@ -186,17 +187,17 @@ def validate_ssl(host: str, nameservers: Optional[List[str]], timeout: float) ->
                 try:
                     ip = socket.gethostbyname(mx)  # fallback
                 except socket.gaierror:
-                    results.append(SSLMXScanResult(mx=mx, port=None, error="DNS resolution error"))
+                    results.append(SSLMXScanResult(preference=preference, mx=mx, port=None, error="DNS resolution error"))
                     continue
 
             for port, ssl_type in ports.items():
-                future = executor.submit(scan_mx, port, ssl_type, mx, ip)
+                future = executor.submit(preference, scan_mx, port, ssl_type, mx, ip)
                 futures.append(future)
 
         mx_has_working_port: set[str] = set()
         for result in sorted(
             [item.result() for item in as_completed(futures)],
-            key=lambda item: (item.mx, item.port),
+            key=lambda item: (item.preference, item.mx, item.port),
         ):
             if result.mx in mx_has_working_port:
                 # Most important port has SSL/TLS accepted
