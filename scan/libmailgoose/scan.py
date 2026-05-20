@@ -219,7 +219,7 @@ def scan_domain(
     parked: bool = False,
     nameservers: Optional[List[str]] = None,
     include_dmarc_tag_descriptions: bool = False,
-    timeout: float = 5.0,
+    timeout: float = 10.0,
     ignore_void_dns_lookups: bool = False,
 ) -> DomainScanResult:
     envelope_domain = validate_and_sanitize_domain(envelope_domain)

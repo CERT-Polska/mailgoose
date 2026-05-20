@@ -1254,6 +1254,10 @@ TRANSLATIONS = {
             "Certificate error: self-signed certificate",
             "Błąd certyfikatu: certyfikat podpisany samodzielnie (self-signed certificate)",
         ),
+        (
+            "[SSL: SSLV3_ALERT_HANDSHAKE_FAILURE] sslv3 alert handshake failure (_ssl.c:992)",
+            "błąd nawiązywania połączenia sslv3 (SSLV3_ALERT_HANDSHAKE_FAILURE)",
+        ),
     ],
 }
 

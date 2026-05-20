@@ -4,6 +4,7 @@ import enum
 import smtplib
 import socket
 import ssl
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Any, Dict, List, Optional
 
 import dns.resolver
@@ -71,7 +72,7 @@ def validate_tls_info(tls_sock: ssl.SSLSocket) -> None:
             raise SSLInternalError("SSL certificate expired")
 
 
-def test_ssl_tls(hostname: str, nameservers: Optional[List[str]] = None, timeout: float = 5.0) -> List[Dict[str, Any]]:
+def test_ssl_tls(hostname: str, nameservers: Optional[List[str]], timeout: float) -> List[Dict[str, Any]]:
     # important - some servers rejects EHLO if reverse hostname is invalid (eg. poczta.onet.pl)
     ports = {
         25: SSLEnum.STARTTLS,
@@ -126,7 +127,7 @@ def test_ssl_tls(hostname: str, nameservers: Optional[List[str]] = None, timeout
                             raise SSLInternalError("Unexpected response to STARTTLS on implicit TLS connection")
             else:
                 # STARTTLS — connect plain, then upgrade
-                with smtplib.SMTP(hostname, port, timeout=5) as smtp:
+                with smtplib.SMTP(hostname, port, timeout=timeout) as smtp:
                     result["connected"] = True
                     smtp.ehlo()
                     ehlo_response = smtp.ehlo_resp.decode() if smtp.ehlo_resp else None  # type: ignore
@@ -168,14 +169,29 @@ def test_ssl_tls(hostname: str, nameservers: Optional[List[str]] = None, timeout
     return results
 
 
-def validate_ssl(host: str, nameservers: Optional[List[str]], timeout: float = 5.0) -> SSLScanResult:
+def validate_ssl(host: str, nameservers: Optional[List[str]], timeout: float) -> SSLScanResult:
     mx_records = retrieve_MX_records(host, nameservers=nameservers)
     if not mx_records:
         mx_records = [host]
 
     results: List[SSLMXScanResult] = []
-    for mx in mx_records:
-        results_mx = test_ssl_tls(mx, nameservers=nameservers, timeout=timeout)
-        for result_mx in results_mx:
-            results.append(SSLMXScanResult(mx=mx, port=result_mx["port"], error=result_mx["error"]))
-    return SSLScanResult(valid=all(item.error is None for item in results), results=results)
+
+    def scan_mx(mx: str) -> List[SSLMXScanResult]:
+        results_mx = test_ssl_tls(
+            mx,
+            nameservers=nameservers,
+            timeout=timeout,
+        )
+
+        return [SSLMXScanResult(mx=mx, port=result_mx["port"], error=result_mx["error"]) for result_mx in results_mx]
+
+    with ThreadPoolExecutor(max_workers=len(mx_records)) as executor:
+        futures = {executor.submit(scan_mx, mx): mx for mx in mx_records}
+
+        for future in as_completed(futures):
+            results.extend(future.result())
+
+    return SSLScanResult(
+        valid=all(item.error is None for item in results),
+        results=results,
+    )
