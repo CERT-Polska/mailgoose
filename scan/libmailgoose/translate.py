@@ -1266,6 +1266,10 @@ TRANSLATIONS = {
             "[SSL: SSLV3_ALERT_HANDSHAKE_FAILURE] sslv3 alert handshake failure (_ssl.c:992)",
             "błąd nawiązywania połączenia sslv3 (SSLV3_ALERT_HANDSHAKE_FAILURE)",
         ),
+        (
+            "[Errno 97] Address family not supported by protocol",
+            "Połączenie wykonane przez nieobsługiwaną rodzinę adresu",
+        ),
     ],
 }
 
