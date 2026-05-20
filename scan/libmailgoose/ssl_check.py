@@ -48,15 +48,15 @@ def retrieve_MX_records(domain: str, nameservers: Optional[List[str]] = None) ->
 def check_cert_name(cn: str, hostname: str) -> bool:
     if cn.startswith("*."):
         return hostname.endswith(cn[1:])
-    return cn == hostname
+    return cn.lower() == hostname.lower()
 
 
 def check_cert_hostnames(cert: Dict[str, Any], hostname: str) -> bool:
-    main_CN = dict(x[0] for x in cert["subject"]).get("commonName", "").lower()
+    main_CN = dict(x[0] for x in cert["subject"]).get("commonName", "")
     if check_cert_name(main_CN, hostname):
         return True
 
-    alt_names = [x[1].lower() for x in cert.get("subjectAltName", [])]
+    alt_names = [x[1] for x in cert.get("subjectAltName", [])]
     for alt_name in alt_names:
         if check_cert_name(alt_name, hostname):
             return True
