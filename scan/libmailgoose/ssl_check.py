@@ -72,7 +72,7 @@ def validate_tls_info(tls_sock: ssl.SSLSocket) -> None:
             raise SSLInternalError("SSL certificate expired")
 
 
-def test_ssl_tls(hostname: str, nameservers: Optional[List[str]] = None, timeout: float) -> List[Dict[str, Any]]:
+def test_ssl_tls(hostname: str, nameservers: Optional[List[str]], timeout: float) -> List[Dict[str, Any]]:
     # important - some servers rejects EHLO if reverse hostname is invalid (eg. poczta.onet.pl)
     ports = {
         25: SSLEnum.STARTTLS,
