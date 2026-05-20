@@ -193,5 +193,5 @@ def validate_ssl(host: str, nameservers: Optional[List[str]], timeout: float) ->
 
     return SSLScanResult(
         valid=all(item.error is None for item in results),
-        results=results,
+        results=list(sorted(results, key=lambda item: (item.mx, item.port))),
     )
