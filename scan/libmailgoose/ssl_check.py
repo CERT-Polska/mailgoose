@@ -61,7 +61,7 @@ def check_cert_hostnames(cert: Dict[str, Any], hostname: str) -> bool:
         if check_cert_name(alt_name, hostname):
             return True
     raise SSLInternalError(
-        f"Certificate hostname mismatch: {hostname} doesn't match certificate names: {', '.join([main_CN] + alt_names)}"
+        f"Certificate hostname mismatch: {hostname} doesn't match certificate names: {', '.join(sorted(set([main_CN] + alt_names)))}"
     )
 
 
