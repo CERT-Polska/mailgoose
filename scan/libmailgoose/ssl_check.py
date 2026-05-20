@@ -17,7 +17,7 @@ class SSLEnum(enum.Enum):
 
 @dataclasses.dataclass
 class SSLMXScanResult:
-    preference: int
+    preference: Optional[int]
     mx: str
     port: Optional[int]
     error: Optional[str] = None
@@ -33,7 +33,7 @@ class SSLInternalError(Exception):
     pass
 
 
-def retrieve_MX_records(domain: str, nameservers: Optional[List[str]] = None) -> List[Tuple[int, str]]:
+def retrieve_MX_records(domain: str, nameservers: Optional[List[str]] = None) -> List[Tuple[Optional[int], str]]:
     resolver = dns.resolver.Resolver()
     if nameservers:
         resolver.nameservers = nameservers
@@ -154,13 +154,13 @@ def validate_ssl(host: str, nameservers: Optional[List[str]], timeout: float) ->
         587: SSLEnum.STARTTLS,
     }
 
-    mx_records = retrieve_MX_records(host, nameservers=nameservers)
+    mx_records: List[Tuple[Optional[int], str]] = retrieve_MX_records(host, nameservers=nameservers)
     if not mx_records:
-        mx_records = [None, host]
+        mx_records = [(None, host)]
 
     results: List[SSLMXScanResult] = []
 
-    def scan_mx(preference: int, port: int, ssl_type: SSLEnum, mx: str, ip: str) -> SSLMXScanResult:
+    def scan_mx(preference: Optional[int], port: int, ssl_type: SSLEnum, mx: str, ip: str) -> SSLMXScanResult:
         result_mx = test_ssl_tls(
             mx,
             ip,
@@ -187,11 +187,13 @@ def validate_ssl(host: str, nameservers: Optional[List[str]], timeout: float) ->
                 try:
                     ip = socket.gethostbyname(mx)  # fallback
                 except socket.gaierror:
-                    results.append(SSLMXScanResult(preference=preference, mx=mx, port=None, error="DNS resolution error"))
+                    results.append(
+                        SSLMXScanResult(preference=preference, mx=mx, port=None, error="DNS resolution error")
+                    )
                     continue
 
             for port, ssl_type in ports.items():
-                future = executor.submit(preference, scan_mx, port, ssl_type, mx, ip)
+                future = executor.submit(scan_mx, preference, port, ssl_type, mx, ip)
                 futures.append(future)
 
         mx_has_working_port: set[str] = set()
