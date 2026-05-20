@@ -192,7 +192,7 @@ def validate_ssl(host: str, nameservers: Optional[List[str]], timeout: float) ->
                 futures.append(future)
 
         mx_has_working_port: set[str] = set()
-        for future in as_completed(futures):
+        for future in sorted(as_completed(futures), key=list(sorted(results, key=lambda item: (item.mx, item.port)))):
             result = future.result()
             if result.mx in mx_has_working_port:
                 # Most important port has SSL/TLS accepted
@@ -206,5 +206,5 @@ def validate_ssl(host: str, nameservers: Optional[List[str]], timeout: float) ->
 
     return SSLScanResult(
         valid=all(item.error is None for item in results),
-        results=list(sorted(results, key=lambda item: (item.mx, item.port))),
+        results=results,
     )
