@@ -1229,6 +1229,31 @@ TRANSLATIONS = {
             "An unknown error occured during DKIM signature validation.",
             "Wystąpił nieznany błąd podczas walidacji podpisu DKIM.",
         ),
+        # ssl messages
+        (
+            "Connection timed out",
+            "Przekroczenie czasu oczekiwania na połączenie",
+        ),
+        (
+            "DNS resolution error",
+            "Błąd rozwiązywania DNS",
+        ),
+        (
+            f"STARTTLS not supported on {PLACEHOLDER} MX server",
+            f"STARTTLS nie jest obsługiwany przez serwer MX {PLACEHOLDER}",
+        ),
+        (
+            "unable to get local issuer certificate",
+            "nie można zweryfikować, czy certyfikat jest zaufany",
+        ),
+        (
+            "Connection refused",
+            "Połączenie odrzucone",
+        ),
+        (
+            "Certificate error: self-signed certificate",
+            "Błąd certyfikatu: certyfikat podpisany samodzielnie (self-signed certificate)",
+        ),
     ],
 }
 
@@ -1303,12 +1328,18 @@ def _translate_domain_result(
     new_domain_result.spf.warnings = [
         translate(warning, language, nonexistent_translation_handler) for warning in domain_result.spf.warnings
     ]
+
     new_domain_result.dmarc.errors = [
         translate(error, language, nonexistent_translation_handler) for error in domain_result.dmarc.errors
     ]
     new_domain_result.dmarc.warnings = [
         translate(warning, language, nonexistent_translation_handler) for warning in domain_result.dmarc.warnings
     ]
+
+    for result in new_domain_result.ssl.results:
+        if result.error:
+            result.error = translate(result.error, language, nonexistent_translation_handler)
+
     new_domain_result.warnings = [
         translate(warning, language, nonexistent_translation_handler) for warning in new_domain_result.warnings
     ]
