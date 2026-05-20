@@ -335,6 +335,3 @@ msgstr ""
 "domenę. W tym wypadku zostaną sprawdzone tylko mechanizmy <b>SPF</b> "
 "i&nbsp;<b>DMARC</b> - dla sprawdzenia DKIM konieczne jest wysłanie "
 "testowego e-maila."
-
-#~ msgid "Server and port"
-#~ msgstr "Serwer i port"
