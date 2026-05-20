@@ -22,7 +22,7 @@ msgstr "Tikrinti domeną"
 #: app/templates/check_domain.html:12 app/templates/check_results.html:74
 #: app/templates/check_results.html:76 app/templates/check_results.html:78
 #: app/templates/check_results.html:199 app/templates/check_results.html:239
-#: app/templates/check_results.html:310
+#: app/templates/check_results.html:312
 msgid "Domain"
 msgstr "Domenas"
 
@@ -240,38 +240,38 @@ msgid "Records"
 msgstr "Įrašai"
 
 #: app/templates/check_results.html:219 app/templates/check_results.html:259
-#: app/templates/check_results.html:315
+#: app/templates/check_results.html:317
 msgid "Warnings"
 msgstr "Įspėjimai"
 
 #: app/templates/check_results.html:220 app/templates/check_results.html:224
 #: app/templates/check_results.html:260 app/templates/check_results.html:264
-#: app/templates/check_results.html:316 app/templates/check_results.html:320
+#: app/templates/check_results.html:318 app/templates/check_results.html:322
 msgid "none"
 msgstr "nėra"
 
 #: app/templates/check_results.html:223 app/templates/check_results.html:263
-#: app/templates/check_results.html:319
+#: app/templates/check_results.html:321
 msgid "Errors"
 msgstr "Klaidos"
 
-#: app/templates/check_results.html:279
+#: app/templates/check_results.html:280
 msgid "Server"
 msgstr ""
 
-#: app/templates/check_results.html:280
+#: app/templates/check_results.html:281
 msgid "Port"
 msgstr ""
 
-#: app/templates/check_results.html:281
+#: app/templates/check_results.html:282
 msgid "Result"
 msgstr ""
 
-#: app/templates/check_results.html:292
+#: app/templates/check_results.html:294
 msgid "Configuration valid"
 msgstr ""
 
-#: app/templates/check_results.html:332
+#: app/templates/check_results.html:334
 msgid ""
 "To increase the chance that your configuration is interpreted by all "
 "e-mail servers correctly, we recommend fixing all errors and warnings."
@@ -280,7 +280,7 @@ msgstr ""
 "interpretuojama visų el. pašto serverių, mes rekomenduojame ištaisyti "
 "visas klaidas ir perspėjimus. "
 
-#: app/templates/check_results.html:340
+#: app/templates/check_results.html:342
 msgid ""
 "After fixing the issues, please rerun the scan - some problems can be "
 "detected only if earlier checks complete successfully."
