@@ -42,3 +42,19 @@ services:
       context: .
       dockerfile: test/Dockerfile
     command: bash -c "/wait-for-it.sh app:8000 -- python -m unittest discover"
+  mailserver:
+    image: ghcr.io/docker-mailserver/docker-mailserver:latest
+    container_name: mailserver.local
+    hostname: mailserver.local
+    env_file: test-mailserver/env
+    volumes:
+      - ./docker-data/dms/config/:/tmp/docker-mailserver/
+      - /etc/localtime:/etc/localtime:ro
+      - ./test-mailserver/docker-data/dms/config/ssl-certs/cert.pem:/etc/ssl/certs/ssl-cert.pem:ro
+      - ./test-mailserver/docker-data/dms/config/ssl-certs/key.pem:/etc/ssl/private/ssl-cert-key.pem:ro
+    restart: always
+    stop_grace_period: 1m
+    healthcheck:
+      test: "ss --listening --ipv4 --tcp | grep --silent ':smtp' || exit 1"
+      timeout: 3s
+      retries: 0
