@@ -236,10 +236,6 @@ msgstr ""
 msgid "Errors"
 msgstr ""
 
-#: app/templates/check_results.html:279
-msgid "Server and port"
-msgstr ""
-
 #: app/templates/check_results.html:280
 msgid "Server"
 msgstr ""
@@ -302,3 +298,6 @@ msgid ""
 "<b>SPF</b> and <b>DMARC</b> mechanisms will be checked. To check DKIM, "
 "you need to send a test e-mail."
 msgstr ""
+
+#~ msgid "Server and port"
+#~ msgstr ""

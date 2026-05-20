@@ -255,10 +255,6 @@ msgstr "nėra"
 msgid "Errors"
 msgstr "Klaidos"
 
-#: app/templates/check_results.html:279
-msgid "Server and port"
-msgstr ""
-
 #: app/templates/check_results.html:280
 msgid "Server"
 msgstr ""
@@ -334,3 +330,6 @@ msgstr ""
 "Patikrinkite savo SPF ir DMARC nustatymus pateikdami domeną. Pastaba: tik"
 "  <b>SPF</b> ir <b>DMARC</b> mechanizmai bus patikrinti. Norėdami "
 "patikrinti  DKIM, turite išsiųsti el. laišką."
+
+#~ msgid "Server and port"
+#~ msgstr ""

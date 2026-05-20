@@ -258,10 +258,6 @@ msgstr "brak"
 msgid "Errors"
 msgstr "Błędy"
 
-#: app/templates/check_results.html:279
-msgid "Server and port"
-msgstr "Serwer i port"
-
 #: app/templates/check_results.html:280
 msgid "Server"
 msgstr "Serwer"
@@ -339,3 +335,6 @@ msgstr ""
 "domenę. W tym wypadku zostaną sprawdzone tylko mechanizmy <b>SPF</b> "
 "i&nbsp;<b>DMARC</b> - dla sprawdzenia DKIM konieczne jest wysłanie "
 "testowego e-maila."
+
+#~ msgid "Server and port"
+#~ msgstr "Serwer i port"
