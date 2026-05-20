@@ -48,7 +48,7 @@ def retrieve_MX_records(domain: str, nameservers: Optional[List[str]] = None) ->
 def check_cert_name(cn: str, hostname: str) -> bool:
     if cn.startswith("*."):
         return hostname.endswith(cn[1:])
-    return cn == hostname
+    return cn.lower() == hostname.lower()
 
 
 def check_cert_hostnames(cert: Dict[str, Any], hostname: str) -> bool:
@@ -60,7 +60,9 @@ def check_cert_hostnames(cert: Dict[str, Any], hostname: str) -> bool:
     for alt_name in alt_names:
         if check_cert_name(alt_name, hostname):
             return True
-    raise SSLInternalError(f"Certificate hostname mismatch: {hostname} not found in CN or SANs")
+    raise SSLInternalError(
+        f"Certificate hostname mismatch: {hostname} doesn't match certificate names: {', '.join(sorted(set([main_CN] + alt_names)))}"
+    )
 
 
 def validate_tls_info(tls_sock: ssl.SSLSocket) -> None:

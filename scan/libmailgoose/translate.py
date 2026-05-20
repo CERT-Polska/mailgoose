@@ -1267,6 +1267,10 @@ TRANSLATIONS = {
             "błąd nawiązywania połączenia sslv3 (SSLV3_ALERT_HANDSHAKE_FAILURE)",
         ),
         (
+            f"Certificate hostname mismatch: {PLACEHOLDER} doesn't match certificate names: {PLACEHOLDER}",
+            f"Niezgodność nazwy hosta: {PLACEHOLDER} nie pasuje do nazw przypisanych do certyfikatu: {PLACEHOLDER}",
+        ),
+        (
             "[Errno 97] Address family not supported by protocol",
             "Połączenie wykonane przez nieobsługiwaną rodzinę adresu",
         ),
