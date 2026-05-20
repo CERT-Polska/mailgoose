@@ -1247,6 +1247,10 @@ TRANSLATIONS = {
             "nie można zweryfikować, czy certyfikat jest zaufany",
         ),
         (
+            "Certificate error: unable to get local issuer certificate",
+            "Błąd certyfikatu: nie można zweryfikować, czy certyfikat jest zaufany",
+        ),
+        (
             "Connection refused",
             "Połączenie odrzucone",
         ),
