@@ -1266,6 +1266,10 @@ TRANSLATIONS = {
             "[SSL: SSLV3_ALERT_HANDSHAKE_FAILURE] sslv3 alert handshake failure (_ssl.c:992)",
             "błąd nawiązywania połączenia sslv3 (SSLV3_ALERT_HANDSHAKE_FAILURE)",
         ),
+        (
+            f"Certificate hostname mismatch: {PLACEHOLDER} doesn't match certificate names: {PLACEHOLDER}",
+            f"Niezgodność nazwy hosta: {PLACEHOLDER} nie pasuje do nazw przypisanych do certyfikatu: {PLACEHOLDER}",
+        ),
     ],
 }
 

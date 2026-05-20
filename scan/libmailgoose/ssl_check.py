@@ -52,15 +52,17 @@ def check_cert_name(cn: str, hostname: str) -> bool:
 
 
 def check_cert_hostnames(cert: Dict[str, Any], hostname: str) -> bool:
-    main_CN = dict(x[0] for x in cert["subject"]).get("commonName", "")
+    main_CN = dict(x[0] for x in cert["subject"]).get("commonName", "").lower()
     if check_cert_name(main_CN, hostname):
         return True
 
-    alt_names = [x[1] for x in cert.get("subjectAltName", [])]
+    alt_names = [x[1].lower() for x in cert.get("subjectAltName", [])]
     for alt_name in alt_names:
         if check_cert_name(alt_name, hostname):
             return True
-    raise SSLInternalError(f"Certificate hostname mismatch: {hostname} not found in CN or SANs")
+    raise SSLInternalError(
+        f"Certificate hostname mismatch: {hostname} doesn't match certificate names: {', '.join([main_CN] + alt_names)}"
+    )
 
 
 def validate_tls_info(tls_sock: ssl.SSLSocket) -> None:
