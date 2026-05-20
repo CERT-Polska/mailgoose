@@ -276,6 +276,7 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
+                                            <th class="d-none d-sm-table-cell">{% trans %}Preference{% endtrans %}</th>
                                             <th class="d-table-cell d-sm-none">&nbsp;</th>
                                             <th class="d-none d-sm-table-cell">{% trans %}Server{% endtrans %}</th>
                                             <th class="d-none d-sm-table-cell">{% trans %}Port{% endtrans %}</th>
@@ -285,6 +286,7 @@
                                     <tbody>
                                         {% for item in result.domain.ssl.results %}
                                             <tr>
+                                                <td class="d-none d-sm-table-cell">{% if item.preference is not none %}{{ item.preference }}{% else %}-{% endif %}</td>
                                                 <td class="d-table-cell d-sm-none">{{ item.mx }}:{% if item.port %}{{ item.port }}{% else %}-{% endif %}</td>
                                                 <td class="d-none d-sm-table-cell">{{ item.mx }}</td>
                                                 <td class="d-none d-sm-table-cell">{% if item.port %}{{ item.port }}{% else %}-{% endif %}</td>
