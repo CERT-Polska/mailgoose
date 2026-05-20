@@ -192,8 +192,10 @@ def validate_ssl(host: str, nameservers: Optional[List[str]], timeout: float) ->
                 futures.append(future)
 
         mx_has_working_port: set[str] = set()
-        for future in sorted(as_completed(futures), key=list(sorted(results, key=lambda item: (item.mx, item.port)))):
-            result = future.result()
+        for result in sorted(
+            [item.result() for item in as_completed(futures)],
+            key=lambda item: (item.mx, item.port),
+        ):
             if result.mx in mx_has_working_port:
                 # Most important port has SSL/TLS accepted
                 # Issue happens with google/outlook - Port 25 is working normally, but for 465, 587 raises network unreachable OSError
