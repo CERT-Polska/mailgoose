@@ -72,7 +72,7 @@ def validate_tls_info(tls_sock: ssl.SSLSocket) -> None:
             raise SSLInternalError("SSL certificate expired")
 
 
-def test_ssl_tls(hostname: str, nameservers: Optional[List[str]] = None, timeout: float = 5.0) -> List[Dict[str, Any]]:
+def test_ssl_tls(hostname: str, nameservers: Optional[List[str]] = None, timeout: float) -> List[Dict[str, Any]]:
     # important - some servers rejects EHLO if reverse hostname is invalid (eg. poczta.onet.pl)
     ports = {
         25: SSLEnum.STARTTLS,
@@ -127,7 +127,7 @@ def test_ssl_tls(hostname: str, nameservers: Optional[List[str]] = None, timeout
                             raise SSLInternalError("Unexpected response to STARTTLS on implicit TLS connection")
             else:
                 # STARTTLS — connect plain, then upgrade
-                with smtplib.SMTP(hostname, port, timeout=5) as smtp:
+                with smtplib.SMTP(hostname, port, timeout=timeout) as smtp:
                     result["connected"] = True
                     smtp.ehlo()
                     ehlo_response = smtp.ehlo_resp.decode() if smtp.ehlo_resp else None  # type: ignore
@@ -169,7 +169,7 @@ def test_ssl_tls(hostname: str, nameservers: Optional[List[str]] = None, timeout
     return results
 
 
-def validate_ssl(host: str, nameservers: Optional[List[str]], timeout: float = 5.0) -> SSLScanResult:
+def validate_ssl(host: str, nameservers: Optional[List[str]], timeout: float) -> SSLScanResult:
     mx_records = retrieve_MX_records(host, nameservers=nameservers)
     if not mx_records:
         mx_records = [host]
