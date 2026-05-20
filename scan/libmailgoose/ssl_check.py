@@ -4,6 +4,7 @@ import enum
 import smtplib
 import socket
 import ssl
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Any, Dict, List, Optional
 
 import dns.resolver
@@ -174,8 +175,23 @@ def validate_ssl(host: str, nameservers: Optional[List[str]], timeout: float = 5
         mx_records = [host]
 
     results: List[SSLMXScanResult] = []
-    for mx in mx_records:
-        results_mx = test_ssl_tls(mx, nameservers=nameservers, timeout=timeout)
-        for result_mx in results_mx:
-            results.append(SSLMXScanResult(mx=mx, port=result_mx["port"], error=result_mx["error"]))
-    return SSLScanResult(valid=all(item.error is None for item in results), results=results)
+
+    def scan_mx(mx: str) -> List[SSLMXScanResult]:
+        results_mx = test_ssl_tls(
+            mx,
+            nameservers=nameservers,
+            timeout=timeout,
+        )
+
+        return [SSLMXScanResult(mx=mx, port=result_mx["port"], error=result_mx["error"]) for result_mx in results_mx]
+
+    with ThreadPoolExecutor(max_workers=len(mx_records)) as executor:
+        futures = {executor.submit(scan_mx, mx): mx for mx in mx_records}
+
+        for future in as_completed(futures):
+            results.extend(future.result())
+
+    return SSLScanResult(
+        valid=all(item.error is None for item in results),
+        results=results,
+    )
