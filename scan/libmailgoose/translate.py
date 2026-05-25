@@ -583,9 +583,9 @@ TRANSLATIONS = {
             "Zamiast rekordu DMARC wykryto rekord SPF w subdomenie '_dmarc'.",
         ),
         (
-            f"Failed to retrieve MX records for the domain of rua email address {PLACEHOLDER} - "
+            f"Failed to retrieve MX records for the domain of {PLACEHOLDER} email address {PLACEHOLDER} - "
             f"The resolution lifetime expired {PLACEHOLDER}",
-            f"Nie udało się pobrać rekordów MX domeny adresu e-mail podanego w rekordzie 'rua': {PLACEHOLDER} - "
+            f"Nie udało się pobrać rekordów MX domeny adresu e-mail podanego w rekordzie '{PLACEHOLDER}': {PLACEHOLDER} - "
             "przekroczono limit czasu żądania.",
         ),
         (
@@ -827,7 +827,22 @@ TRANSLATIONS = {
             f"{PLACEHOLDER} is not a valid DMARC tag",
             f"'{PLACEHOLDER}' nie jest poprawnym tagiem DMARC.",
         ),
-        # End of messages left for backward compatibility
+        (
+            "Some DMARC reporters might not send to more than two rua URIs",
+            "Niektóre implementacje DMARC mogą nie wysłać raportów do więcej niż dwóch odbiorców podanych w polu 'rua'.",
+        ),
+        (
+            "Some DMARC reporters might not send to more than two ruf URIs",
+            "Niektóre implementacje DMARC mogą nie wysłać raportów do więcej niż dwóch odbiorców podanych w polu 'ruf'.",
+        ),
+        (
+            f"The domain for rua email address {PLACEHOLDER} has no MX records",
+            f"Domena adresu e-mail podanego w tagu 'rua': {PLACEHOLDER} nie ma rekordów MX.",
+        ),
+        (
+            f"The domain for ruf email address {PLACEHOLDER} has no MX records",
+            f"Domena adresu e-mail podanego w tagu 'ruf': {PLACEHOLDER} nie ma rekordów MX.",
+        ),
         (
             "rua tag (destination for aggregate reports) not found",
             "Nie znaleziono tagu 'rua' (odbiorca zagregowanych raportów).",
@@ -838,6 +853,18 @@ TRANSLATIONS = {
             "wysyłany jeśli wiadomość nie jest poprawnie zweryfikowana przez mechanizm SPF lub DKIM, nawet, jeśli "
             "została zweryfikowana przez drugi z mechanizmów), opcja 0 (tj. wysyłka raportów, gdy wiadomość zostanie "
             "zweryfikowana negatywnie przez oba mechanizmy) jest zbędna.",
+        ),
+        (
+            "The value of the pct tag must be an integer",
+            "Wartość tagu 'pct' musi być liczbą całkowitą.",
+        ),
+        (
+            "The value of the ri tag must be an integer",
+            "Wartość tagu 'ri' musi być liczbą całkowitą.",
+        ),
+        (
+            "the p tag must immediately follow the v tag",
+            "Tag p (polityka DMARC) musi następować bezpośrednio po tagu v (wersji DMARC).",
         ),
         # End of messages left for backward compatibility
         (
@@ -934,6 +961,10 @@ TRANSLATIONS = {
             "Proszę podać poprawną nazwę domeny.",
         ),
         (
+            f"Setting a size limit on {PLACEHOLDER} reports sent to {PLACEHOLDER} could cause incomplete reporting.",
+            f"Ustawienie ograniczenia rozmiaru raportów {PLACEHOLDER} wysyłanych do {PLACEHOLDER} może doprowadzić do pominięcia części z nich.",
+        ),
+        (
             f"Failed to retrieve MX records for the domain of {PLACEHOLDER} email address {PLACEHOLDER} - All nameservers failed to answer the query {PLACEHOLDER}",
             f"Nie udało się odczytać rekordów MX domeny adresu e-mail w dyrektywie {PLACEHOLDER}: {PLACEHOLDER} - serwery nazw nie odpowiedziały poprawnie na zapytanie.",
         ),
@@ -947,7 +978,7 @@ TRANSLATIONS = {
             f"{PLACEHOLDER} (oznaczonej znakiem {PLACEHOLDER}) w rekordzie '{PLACEHOLDER}'",
         ),
         (
-            "the p tag must immediately follow the v tag",
+            "the p tag must immediately follow the v tag.",
             "Tag p (polityka DMARC) musi następować bezpośrednio po tagu v (wersji DMARC).",
         ),
         (
@@ -964,11 +995,11 @@ TRANSLATIONS = {
             f"{PLACEHOLDER} nie jest poprawnym adresem IPv6.",
         ),
         (
-            "Some DMARC reporters might not send to more than two rua URIs",
+            "Some DMARC reporters might not send to more than two rua URIs.",
             "Niektóre implementacje DMARC mogą nie wysłać raportów do więcej niż dwóch odbiorców podanych w polu 'rua'.",
         ),
         (
-            "Some DMARC reporters might not send to more than two ruf URIs",
+            "Some DMARC reporters might not send to more than two ruf URIs.",
             "Niektóre implementacje DMARC mogą nie wysłać raportów do więcej niż dwóch odbiorców podanych w polu 'ruf'.",
         ),
         (
@@ -987,6 +1018,14 @@ TRANSLATIONS = {
         (
             f"{PLACEHOLDER} is not a valid DMARC tag.",
             f"'{PLACEHOLDER}' nie jest poprawnym tagiem DMARC.",
+        ),
+        (
+            'The record is missing the required policy ("p") tag.',
+            "Rekord nie zawiera wymaganego tagu `p`: polityki.",
+        ),
+        (
+            "iodef is not a valid option for the DMARC rf tag.",
+            "`iodef` nie jest właściwą opcją dla tagu `rf` DMARC.",
         ),
         (
             f"Tag {PLACEHOLDER} must have one of the following values: {PLACEHOLDER} - not {PLACEHOLDER}",
@@ -1012,6 +1051,12 @@ TRANSLATIONS = {
         (
             "Using the ruf tag is not recommended, as it's not supported by multiple e-mail providers.",
             "Używanie tagu ruf nie jest zalecane, bo nie jest wspierany przez wielu dostawców poczty.",
+        ),
+        (
+            "If you use the ruf tag, make sure you take into account the fact that it's not supported by multiple "
+            "e-mail providers and you don't rely on it as the sole source of information.",
+            "Jeśli używają Państwo tagu 'ruf', prosimy wziąć pod uwagę, że nie jest on wspierany przez wielu dostawców "
+            "poczty i nie należy polegać na nim jako jedynym źródle informacji o nieudanych weryfikacjach DMARC.",
         ),
         (
             "When 1 is present in the fo tag, including in the fo tag 0 is redundant.",
@@ -1054,19 +1099,19 @@ TRANSLATIONS = {
             "Nazwa DNS ma więcej niż 255 bajtów.",
         ),
         (
-            "The value of the pct tag must be an integer",
+            "The value of the pct tag must be an integer.",
             "Wartość tagu 'pct' musi być liczbą całkowitą.",
         ),
         (
-            "The value of the ri tag must be an integer",
+            "The value of the ri tag must be an integer.",
             "Wartość tagu 'ri' musi być liczbą całkowitą.",
         ),
         (
-            f"The domain for rua email address {PLACEHOLDER} has no MX records",
+            f"The domain for rua email address {PLACEHOLDER} has no MX records.",
             f"Domena adresu e-mail podanego w tagu 'rua': {PLACEHOLDER} nie ma rekordów MX.",
         ),
         (
-            f"The domain for ruf email address {PLACEHOLDER} has no MX records",
+            f"The domain for ruf email address {PLACEHOLDER} has no MX records.",
             f"Domena adresu e-mail podanego w tagu 'ruf': {PLACEHOLDER} nie ma rekordów MX.",
         ),
         (
@@ -1216,6 +1261,51 @@ TRANSLATIONS = {
             "An unknown error occured during DKIM signature validation.",
             "Wystąpił nieznany błąd podczas walidacji podpisu DKIM.",
         ),
+        # ssl messages
+        (
+            "Connection timed out",
+            "Przekroczenie czasu oczekiwania na połączenie",
+        ),
+        (
+            "DNS resolution error",
+            "Błąd rozwiązywania DNS",
+        ),
+        (
+            f"STARTTLS not supported on {PLACEHOLDER} MX server",
+            f"STARTTLS nie jest obsługiwany przez serwer MX {PLACEHOLDER}",
+        ),
+        (
+            "unable to get local issuer certificate",
+            "nie można zweryfikować, czy certyfikat jest zaufany",
+        ),
+        (
+            "Certificate error: unable to get local issuer certificate",
+            "Błąd certyfikatu: nie można zweryfikować, czy certyfikat jest zaufany",
+        ),
+        (
+            "Connection refused",
+            "Połączenie odrzucone",
+        ),
+        (
+            "Certificate error: self-signed certificate",
+            "Błąd certyfikatu: certyfikat podpisany samodzielnie (self-signed certificate)",
+        ),
+        (
+            "Certificate error: certificate has expired",
+            "Błąd certyfikatu: certyfikat wygasł",
+        ),
+        (
+            "[SSL: SSLV3_ALERT_HANDSHAKE_FAILURE] sslv3 alert handshake failure (_ssl.c:992)",
+            "błąd nawiązywania połączenia sslv3 (SSLV3_ALERT_HANDSHAKE_FAILURE)",
+        ),
+        (
+            f"Certificate hostname mismatch: {PLACEHOLDER} doesn't match certificate names: {PLACEHOLDER}",
+            f"Niezgodność nazwy hosta: {PLACEHOLDER} nie pasuje do nazw przypisanych do certyfikatu: {PLACEHOLDER}",
+        ),
+        (
+            "[Errno 97] Address family not supported by protocol",
+            "Połączenie wykonane przez nieobsługiwaną rodzinę adresu",
+        ),
     ],
 }
 
@@ -1290,12 +1380,22 @@ def _translate_domain_result(
     new_domain_result.spf.warnings = [
         translate(warning, language, nonexistent_translation_handler) for warning in domain_result.spf.warnings
     ]
+
     new_domain_result.dmarc.errors = [
         translate(error, language, nonexistent_translation_handler) for error in domain_result.dmarc.errors
     ]
     new_domain_result.dmarc.warnings = [
         translate(warning, language, nonexistent_translation_handler) for warning in domain_result.dmarc.warnings
     ]
+    new_domain_result.dmarc.additional_info = [
+        translate(additional_info, language, nonexistent_translation_handler)
+        for additional_info in domain_result.dmarc.additional_info
+    ]
+
+    for result in new_domain_result.ssl.results:
+        if result.error:
+            result.error = translate(result.error, language, nonexistent_translation_handler)
+
     new_domain_result.warnings = [
         translate(warning, language, nonexistent_translation_handler) for warning in new_domain_result.warnings
     ]

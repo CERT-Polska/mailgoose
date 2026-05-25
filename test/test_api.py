@@ -11,6 +11,7 @@ class APITestCase(BaseTestCase):
             {
                 "result": {
                     "domain": {
+                        "domain_does_not_exist": False,
                         "spf": {
                             "valid": False,
                             "errors": [
@@ -30,12 +31,22 @@ class APITestCase(BaseTestCase):
                                 "implementations may not process it correctly.",
                             ],
                             "warnings": [],
+                            "additional_info": [],
                             "record_not_found": False,
                         },
                         "spf_not_required_because_of_correct_dmarc": False,
                         "domain": "starts-with-whitespace.dmarc.test.mailgoose.cert.pl",
                         "base_domain": "cert.pl",
                         "warnings": [],
+                        "ssl": {
+                            "results": [
+                                {
+                                    "error": "DNS resolution error",
+                                    "mx": "starts-with-whitespace.dmarc.test.mailgoose.cert.pl",
+                                }
+                            ],
+                            "valid": False,
+                        },
                     },
                 },
             },

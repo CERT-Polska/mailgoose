@@ -18,8 +18,9 @@ import dns.resolver
 import publicsuffixlist
 import spf
 import validators
+from checkdmarc.utils import query_dns
 
-from . import lax_record_query
+from . import lax_record_query, ssl_check
 from .logging import build_logger
 
 checkdmarc.utils.DNS_CACHE.max_age = 1
@@ -29,6 +30,25 @@ checkdmarc.smtp.STARTTLS_CACHE.max_age = 1
 psl = publicsuffixlist.PublicSuffixList()
 
 LOGGER = build_logger(__name__)
+
+
+def check_domain_exists(domain: str) -> bool:
+    """
+    Check if a domain exists by looking up its DNS records.
+    """
+    if domain.lower().endswith(".test.mailgoose.cert.pl"):
+        # Let's treat test domain as existing, even if they don't have any interesting records.
+        return True
+
+    for record_type in ["A", "AAAA", "MX", "TXT", "SPF"]:
+        try:
+            records = query_dns(domain, record_type)
+            if records:
+                return True
+        except dns.exception.DNSException:
+            pass
+
+    return False
 
 
 @dataclass
@@ -52,6 +72,7 @@ class DMARCScanResult:
     valid: bool
     errors: List[str]
     warnings: List[str]
+    additional_info: List[str]
     # As this error is interpreted in a special way by downstream tools,
     # let's have a flag (not only string message) whether it happened.
     record_not_found: bool = False
@@ -62,9 +83,11 @@ class DMARCScanResult:
 class DomainScanResult:
     spf: SPFScanResult
     dmarc: DMARCScanResult
+    ssl: ssl_check.SSLScanResult
     domain: str
     base_domain: str
     warnings: List[str]
+    domain_does_not_exist: bool
     spf_not_required_because_of_correct_dmarc: bool = False
 
 
@@ -86,7 +109,7 @@ class ScanResult:
     def num_checked_mechanisms(self) -> int:
         result = 0
         if self.domain:
-            result += 2
+            result += 3
         if self.dkim:
             result += 1
         return result
@@ -95,7 +118,7 @@ class ScanResult:
     def num_correct_mechanisms(self) -> int:
         result = 0
         for mechanism in self.mechanisms:
-            if mechanism.valid and not mechanism.warnings:
+            if mechanism.valid and not (hasattr(mechanism, "warnings") and mechanism.warnings):
                 result += 1
         return result
 
@@ -111,6 +134,7 @@ class ScanResult:
         mechanisms: List[Any] = []
         if self.domain:
             mechanisms.append(self.domain.spf)
+            mechanisms.append(self.domain.ssl)
             mechanisms.append(self.domain.dmarc)
 
         if self.dkim:
@@ -196,7 +220,7 @@ def scan_domain(
     parked: bool = False,
     nameservers: Optional[List[str]] = None,
     include_dmarc_tag_descriptions: bool = False,
-    timeout: float = 5.0,
+    timeout: float = 10.0,
     ignore_void_dns_lookups: bool = False,
 ) -> DomainScanResult:
     envelope_domain = validate_and_sanitize_domain(envelope_domain)
@@ -248,11 +272,18 @@ def scan_domain(
             location=None,
             errors=[],
             warnings=[],
+            additional_info=[],
         ),
+        ssl=ssl_check.validate_ssl(from_domain, nameservers=nameservers, timeout=timeout, parked=parked),
         domain=domain,
         base_domain=checkdmarc.get_base_domain(domain),
+        domain_does_not_exist=False,
         warnings=warnings,
     )
+
+    if not any([check_domain_exists(domain) for domain in domains_to_check]):
+        domain_result.domain_does_not_exist = True
+        return domain_result
 
     try:
         spf_query = checkdmarc.spf.query_spf_record(envelope_domain, nameservers=nameservers, timeout=timeout)
@@ -417,8 +448,9 @@ def scan_domain(
                 )
 
         if "ruf" in parsed_dmarc_record["tags"]:
-            dmarc_warnings.append(
-                "Using the ruf tag is not recommended, as it's not supported by multiple e-mail providers."
+            domain_result.dmarc.additional_info.append(
+                "If you use the ruf tag, make sure you take into account the fact that it's not supported by multiple "
+                "e-mail providers and you don't rely on it as the sole source of information."
             )
 
         if parsed_dmarc_record["tags"]["p"]["value"] == "none":

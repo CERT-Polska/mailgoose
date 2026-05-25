@@ -1,5 +1,3 @@
-import binascii
-import os
 import re
 
 from base import BaseTestCase
@@ -16,15 +14,6 @@ class DMARCTestCase(BaseTestCase):
         result = self.check_domain("correct.dmarc." + TEST_DOMAIN)
         assert re.search(CORRECT_CONFIG_REGEX, result)
         assert not re.search(INCORRECT_CONFIG_REGEX, result)
-
-    def test_nonexistent_dmarc(self) -> None:
-        result = self.check_domain(binascii.hexlify(os.urandom(20)).decode("ascii") + ".com")
-        assert re.search(INCORRECT_CONFIG_REGEX, result)
-        assert not re.search(CORRECT_CONFIG_REGEX, result)
-        assert (
-            "Valid DMARC record not found. We recommend using all three mechanisms: SPF, DKIM and DMARC "
-            "to decrease the possibility of successful e-mail message spoofing."
-        ) in result
 
     def test_starts_with_whitespace(self) -> None:
         result = self.check_domain("starts-with-whitespace.dmarc." + TEST_DOMAIN)
