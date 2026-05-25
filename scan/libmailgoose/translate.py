@@ -1030,7 +1030,7 @@ TRANSLATIONS = {
             "If you use the ruf tag, make sure you take into account the fact that it's not supported by multiple "
             "e-mail providers and you don't rely on it as the sole source of information.",
             "Jeśli używają Państwo tagu 'ruf', prosimy wziąć pod uwagę, że nie jest on wspierany przez wielu dostawców "
-            "poczty i nie należy polegać na nim jako jedynym źródle informacji o nieudanych weryfikacjach DMARC."
+            "poczty i nie należy polegać na nim jako jedynym źródle informacji o nieudanych weryfikacjach DMARC.",
         ),
         (
             "When 1 is present in the fo tag, including in the fo tag 0 is redundant.",
@@ -1362,7 +1362,8 @@ def _translate_domain_result(
         translate(warning, language, nonexistent_translation_handler) for warning in domain_result.dmarc.warnings
     ]
     new_domain_result.dmarc.additional_info = [
-        translate(additional_info, language, nonexistent_translation_handler) for additional_info in domain_result.dmarc.additional_info
+        translate(additional_info, language, nonexistent_translation_handler)
+        for additional_info in domain_result.dmarc.additional_info
     ]
 
     for result in new_domain_result.ssl.results:
