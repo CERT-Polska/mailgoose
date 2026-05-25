@@ -31,6 +31,7 @@ class APITestCase(BaseTestCase):
                                 "implementations may not process it correctly.",
                             ],
                             "warnings": [],
+                            "additional_info": [],
                             "record_not_found": False,
                         },
                         "spf_not_required_because_of_correct_dmarc": False,
