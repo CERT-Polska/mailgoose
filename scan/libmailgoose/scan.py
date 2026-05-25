@@ -469,8 +469,6 @@ def scan_domain(
                     "DMARC subdomain policy is 'none' and 'rua' is not set, which means that the DMARC setting is not effective for subdomains."
                 )
 
-        print("AAAA", parsed_dmarc_record)
-
         domain_result.dmarc.tags = parsed_dmarc_record["tags"]
         domain_result.dmarc.warnings = list(
             set(dmarc_query["warnings"]) | set(parsed_dmarc_record["warnings"]) | set(dmarc_warnings)
