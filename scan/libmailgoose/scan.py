@@ -72,6 +72,7 @@ class DMARCScanResult:
     valid: bool
     errors: List[str]
     warnings: List[str]
+    additional_info: List[str]
     # As this error is interpreted in a special way by downstream tools,
     # let's have a flag (not only string message) whether it happened.
     record_not_found: bool = False
@@ -271,6 +272,7 @@ def scan_domain(
             location=None,
             errors=[],
             warnings=[],
+            additional_info=[],
         ),
         ssl=ssl_check.validate_ssl(from_domain, nameservers=nameservers, timeout=timeout),
         domain=domain,
@@ -446,8 +448,9 @@ def scan_domain(
                 )
 
         if "ruf" in parsed_dmarc_record["tags"]:
-            dmarc_warnings.append(
-                "Using the ruf tag is not recommended, as it's not supported by multiple e-mail providers."
+            domain_result.dmarc.additional_info.append(
+                "If you use the ruf tag, make sure you take into account the fact that it's not supported by multiple "
+                "e-mail providers and you don't rely on it as the sole source of information."
             )
 
         if parsed_dmarc_record["tags"]["p"]["value"] == "none":

@@ -263,6 +263,16 @@
                                             <td class="label">{% trans %}Errors{% endtrans %}</td>
                                             <td>{% if result.domain.dmarc.errors %}{{ render_problems(result.domain.dmarc.errors) }}{% else %}{% trans %}none{% endtrans %}{% endif %}</td>
                                         </tr>
+                                            <tr>
+                                                <td class="label">{% trans %}Additional information{% endtrans %}</td>
+                                                <td>
+                                                    {% if result.domain.dmarc.additional_info %}
+                                                        {{ render_problems(result.domain.dmarc.additional_info) }}
+                                                    {% else %}
+                                                        {% trans %}none{% endtrans %}
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
                                     </tbody>
                                 </table>
                             </div>
