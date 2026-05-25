@@ -961,6 +961,10 @@ TRANSLATIONS = {
             "Proszę podać poprawną nazwę domeny.",
         ),
         (
+            f"{PLACEHOLDER} The domain does not exist.",
+            f"{PLACEHOLDER} Domena nie istnieje.",
+        ),
+        (
             f"Setting a size limit on {PLACEHOLDER} reports sent to {PLACEHOLDER} could cause incomplete reporting.",
             f"Ustawienie ograniczenia rozmiaru raportów {PLACEHOLDER} wysyłanych do {PLACEHOLDER} może doprowadzić do pominięcia części z nich.",
         ),
@@ -993,6 +997,10 @@ TRANSLATIONS = {
         (
             f"{PLACEHOLDER} is not a valid ipv6 value{PLACEHOLDER}",
             f"{PLACEHOLDER} nie jest poprawnym adresem IPv6.",
+        ),
+        (
+            "Support for the pct tag was removed in RFC 9989",
+            "Wsparcie dla tagu `pct` zostało usunięte w RFC 9989.",
         ),
         (
             "Some DMARC reporters might not send to more than two rua URIs.",
