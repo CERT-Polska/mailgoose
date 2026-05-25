@@ -22,7 +22,7 @@ msgstr "Tikrinti domeną"
 #: app/templates/check_domain.html:12 app/templates/check_results.html:74
 #: app/templates/check_results.html:76 app/templates/check_results.html:78
 #: app/templates/check_results.html:199 app/templates/check_results.html:239
-#: app/templates/check_results.html:314
+#: app/templates/check_results.html:324
 msgid "Domain"
 msgstr "Domenas"
 
@@ -240,42 +240,47 @@ msgid "Records"
 msgstr "Įrašai"
 
 #: app/templates/check_results.html:219 app/templates/check_results.html:259
-#: app/templates/check_results.html:319
+#: app/templates/check_results.html:329
 msgid "Warnings"
 msgstr "Įspėjimai"
 
 #: app/templates/check_results.html:220 app/templates/check_results.html:224
 #: app/templates/check_results.html:260 app/templates/check_results.html:264
-#: app/templates/check_results.html:320 app/templates/check_results.html:324
+#: app/templates/check_results.html:272 app/templates/check_results.html:330
+#: app/templates/check_results.html:334
 msgid "none"
 msgstr "nėra"
 
 #: app/templates/check_results.html:223 app/templates/check_results.html:263
-#: app/templates/check_results.html:323
+#: app/templates/check_results.html:333
 msgid "Errors"
 msgstr "Klaidos"
 
-#: app/templates/check_results.html:279
+#: app/templates/check_results.html:267
+msgid "Additional information"
+msgstr ""
+
+#: app/templates/check_results.html:289
 msgid "Preference"
 msgstr ""
 
-#: app/templates/check_results.html:281
+#: app/templates/check_results.html:291
 msgid "Server"
 msgstr ""
 
-#: app/templates/check_results.html:282
+#: app/templates/check_results.html:292
 msgid "Port"
 msgstr ""
 
-#: app/templates/check_results.html:283
+#: app/templates/check_results.html:293
 msgid "Result"
 msgstr ""
 
-#: app/templates/check_results.html:296
+#: app/templates/check_results.html:306
 msgid "Configuration valid"
 msgstr ""
 
-#: app/templates/check_results.html:336
+#: app/templates/check_results.html:346
 msgid ""
 "To increase the chance that your configuration is interpreted by all "
 "e-mail servers correctly, we recommend fixing all errors and warnings."
@@ -284,7 +289,7 @@ msgstr ""
 "interpretuojama visų el. pašto serverių, mes rekomenduojame ištaisyti "
 "visas klaidas ir perspėjimus. "
 
-#: app/templates/check_results.html:344
+#: app/templates/check_results.html:354
 msgid ""
 "After fixing the issues, please rerun the scan - some problems can be "
 "detected only if earlier checks complete successfully."
