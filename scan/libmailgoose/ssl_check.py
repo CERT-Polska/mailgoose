@@ -76,7 +76,7 @@ def validate_tls_info(tls_sock: ssl.SSLSocket) -> None:
 
 
 def test_ssl_tls(
-    hostname: str, ip: str, port: int, ssl_type: SSLEnum, nameservers: Optional[List[str]], timeout: float
+    hostname: str, ip: str, port: int, ssl_type: SSLEnum, nameservers: Optional[List[str]], timeout: float, parked: bool
 ) -> Dict[str, Any]:
     # important - some servers rejects EHLO if reverse hostname is invalid (eg. poczta.onet.pl)
     result: Dict[str, Any] = {
@@ -136,7 +136,9 @@ def test_ssl_tls(
         result["connected"] = True
         result["error"] = f"Certificate error: {e.verify_message}"
     except ConnectionRefusedError:
-        result["error"] = "Connection refused"
+        if not parked:
+            # ECONNREFUSED is OK for parked domains
+            result["error"] = "Connection refused"
     except SSLInternalError as e:
         result["error"] = str(e)
     except TimeoutError:
@@ -147,7 +149,7 @@ def test_ssl_tls(
     return result
 
 
-def validate_ssl(host: str, nameservers: Optional[List[str]], timeout: float) -> SSLScanResult:
+def validate_ssl(host: str, nameservers: Optional[List[str]], timeout: float, parked: bool) -> SSLScanResult:
     ports = {
         25: SSLEnum.STARTTLS,
         465: SSLEnum.IMPLICIT,
@@ -168,6 +170,7 @@ def validate_ssl(host: str, nameservers: Optional[List[str]], timeout: float) ->
             ssl_type,
             nameservers=nameservers,
             timeout=timeout,
+            parked=parked,
         )
         return SSLMXScanResult(preference=preference, mx=mx, port=result_mx["port"], error=result_mx["error"])
 
