@@ -274,7 +274,7 @@ def scan_domain(
             warnings=[],
             additional_info=[],
         ),
-        ssl=ssl_check.validate_ssl(from_domain, nameservers=nameservers, timeout=timeout),
+        ssl=ssl_check.validate_ssl(from_domain, nameservers=nameservers, timeout=timeout, parked=parked),
         domain=domain,
         base_domain=checkdmarc.get_base_domain(domain),
         domain_does_not_exist=False,
