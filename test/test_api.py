@@ -42,6 +42,7 @@ class APITestCase(BaseTestCase):
                             "results": [
                                 {
                                     "error": "DNS resolution error",
+                                    "warning": None,
                                     "mx": "starts-with-whitespace.dmarc.test.mailgoose.cert.pl",
                                 }
                             ],
