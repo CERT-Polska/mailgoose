@@ -3,6 +3,7 @@ import re
 from base import BaseTestCase
 from config import TEST_DOMAIN
 
+WARNING_REGEX = "bi bi-exclamation-triangle"
 RECORD_COULD_NOT_BE_FULLY_VERIFIED_REGEX = r"SPF:\s*record couldn't be fully verified"
 INCORRECT_CONFIG_REGEX = r"SPF:\s*incorrect configuration"
 CORRECT_CONFIG_REGEX = r"SPF:\s*correct configuration"
@@ -41,10 +42,6 @@ class SPFTestCase(BaseTestCase):
 
     def test_problematic_include(self) -> None:
         result = self.check_domain("includes-other-domain.spf." + TEST_DOMAIN)
-        assert re.search(INCORRECT_CONFIG_REGEX, result)
+        assert re.search(WARNING_REGEX, result)
         assert not re.search(CORRECT_CONFIG_REGEX, result)
-        assert (
-            "The SPF record&#39;s include chain has a reference to the <tt>includes-yet-another-domain.spf.test.mailgoose.cert.pl</tt> "
-            "domain that doesn&#39;t have an SPF record. When using directives such as &#39;include&#39; "
-            "or &#39;redirect&#39; remember that the destination domain must have a correct SPF record."
-        ) in result
+        assert ("<tt>includes-yet-another-domain.spf.test.mailgoose.cert.pl:</tt> The domain does not exist.") in result

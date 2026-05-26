@@ -1,4 +1,5 @@
 import re
+from unittest import skip
 
 from base import BaseTestCase
 from config import TEST_DOMAIN
@@ -29,7 +30,7 @@ class DMARCTestCase(BaseTestCase):
         assert re.search(CONFIG_WITH_WARNINGS_REGEX, result)
         assert not re.search(CORRECT_CONFIG_REGEX, result)
         assert not re.search(INCORRECT_CONFIG_REGEX, result)
-        assert "A p tag value of none has no effect on email sent as" in result
+        assert "A p tag value of none makes DMARC unenforced on email sent as" in result
 
     def test_unrelated_records(self) -> None:
         result = self.check_domain("contains-unrelated-records.dmarc." + TEST_DOMAIN)
@@ -59,6 +60,10 @@ class DMARCTestCase(BaseTestCase):
             "Error: Expected tag_value or end_of_statement at position 10 (marked with ➞) in: v=DMARC1; ➞=none"
         ) in result
 
+    @skip(
+        "This test is currently skipped because the pct tag is removed by checkdmarc, thus the warning is "
+        "not emitted. After our test DNS records are updated to use other tag, we can unskip this test."
+    )
     def test_syntax_error_policy_location(self) -> None:
         result = self.check_domain("syntax-error-policy-location.dmarc." + TEST_DOMAIN)
         assert re.search(INCORRECT_CONFIG_REGEX, result)
@@ -91,7 +96,7 @@ class DMARCTestCase(BaseTestCase):
         result = self.check_domain("no-rua-none.dmarc." + TEST_DOMAIN)
         assert re.search(INCORRECT_CONFIG_REGEX, result)
         assert not re.search(CORRECT_CONFIG_REGEX, result)
-        assert "A p tag value of none has no effect on email sent as" in result
+        assert "A p tag value of none makes DMARC unenforced on email sent as" in result
 
     def test_no_rua_policy_reject(self) -> None:
         result = self.check_domain("no-rua-reject.dmarc." + TEST_DOMAIN)
