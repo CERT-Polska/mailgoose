@@ -74,7 +74,12 @@ def load_check_results(token: str) -> Optional[Dict[str, Any]]:
         if not result["result"]["domain"].get("domain_does_not_exist"):
             result["result"]["domain"]["domain_does_not_exist"] = False
         if not result["result"]["domain"].get("ssl"):
-            result["result"]["domain"]["ssl"] = {"valid": True, "results": []}
+            result["result"]["domain"]["ssl"] = {"valid": True, "warnings": False, "results": []}
+        if "warnings" not in result["result"]["domain"]["ssl"]:
+            result["result"]["domain"]["ssl"]["warnings"] = False
+        for item in result["result"]["domain"]["ssl"]["results"]:
+            if "warning" not in item:
+                item["warning"] = None
         if not result["result"]["domain"]["dmarc"].get("additional_info"):
             result["result"]["domain"]["dmarc"]["additional_info"] = []
 

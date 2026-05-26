@@ -1,5 +1,4 @@
 import re
-from unittest import skip
 
 from base import BaseTestCase
 from config import TEST_DOMAIN
@@ -60,15 +59,10 @@ class DMARCTestCase(BaseTestCase):
             "Error: Expected tag_value or end_of_statement at position 10 (marked with ➞) in: v=DMARC1; ➞=none"
         ) in result
 
-    @skip(
-        "This test is currently skipped because the pct tag is removed by checkdmarc, thus the warning is "
-        "not emitted. After our test DNS records are updated to use other tag, we can unskip this test."
-    )
     def test_syntax_error_policy_location(self) -> None:
         result = self.check_domain("syntax-error-policy-location.dmarc." + TEST_DOMAIN)
-        assert re.search(INCORRECT_CONFIG_REGEX, result)
-        assert not re.search(CORRECT_CONFIG_REGEX, result)
-        assert ("the p tag must immediately follow the v tag") in result
+        assert re.search(WARNING_REGEX, result)
+        assert ("The p tag does not immediately follow the v tag.") in result
 
     def test_rua_no_mailto(self) -> None:
         result = self.check_domain("rua-no-mailto.dmarc." + TEST_DOMAIN)

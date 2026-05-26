@@ -48,7 +48,6 @@ pre-commit install
 ```
 
 ### Building the docs
-
 To build the documentation, use:
 
 ```

@@ -21,15 +21,21 @@ class SSLMXScanResult:
     mx: str
     port: Optional[int]
     error: Optional[str] = None
+    warning: Optional[str] = None
 
 
 @dataclasses.dataclass
 class SSLScanResult:
     valid: bool
+    warnings: bool
     results: List[SSLMXScanResult]
 
 
 class SSLInternalError(Exception):
+    pass
+
+
+class SSLCertificateError(Exception):
     pass
 
 
@@ -61,7 +67,7 @@ def check_cert_hostnames(cert: Dict[str, Any], hostname: str) -> bool:
     for alt_name in alt_names:
         if check_cert_name(alt_name, hostname):
             return True
-    raise SSLInternalError(
+    raise SSLCertificateError(
         f"Certificate hostname mismatch: {hostname} doesn't match certificate names: {', '.join(sorted(set([main_CN] + alt_names)))}"
     )
 
@@ -72,7 +78,7 @@ def validate_tls_info(tls_sock: ssl.SSLSocket) -> None:
         check_cert_hostnames(cert, tls_sock.server_hostname)
         expiry = datetime.datetime.strptime(cert["notAfter"], "%b %d %H:%M:%S %Y %Z")  # type: ignore
         if expiry < datetime.datetime.now():
-            raise SSLInternalError("SSL certificate expired")
+            raise SSLCertificateError("SSL certificate expired")
 
 
 def test_ssl_tls(
@@ -82,6 +88,7 @@ def test_ssl_tls(
     result: Dict[str, Any] = {
         "port": port,
         "error": None,
+        "warning": None,
     }
 
     context = ssl.create_default_context()
@@ -134,13 +141,15 @@ def test_ssl_tls(
 
     except ssl.SSLCertVerificationError as e:
         result["connected"] = True
-        result["error"] = f"Certificate error: {e.verify_message}"
+        result["warning"] = f"Certificate error: {e.verify_message}"
     except ConnectionRefusedError:
         if not parked:
             # ECONNREFUSED is OK for parked domains
             result["error"] = "Connection refused"
     except SSLInternalError as e:
         result["error"] = str(e)
+    except SSLCertificateError as e:
+        result["warning"] = str(e)
     except TimeoutError:
         result["error"] = "Connection timed out"
     except Exception as e:
@@ -172,7 +181,9 @@ def validate_ssl(host: str, nameservers: Optional[List[str]], timeout: float, pa
             timeout=timeout,
             parked=parked,
         )
-        return SSLMXScanResult(preference=preference, mx=mx, port=result_mx["port"], error=result_mx["error"])
+        return SSLMXScanResult(
+            preference=preference, mx=mx, port=result_mx["port"], error=result_mx["error"], warning=result_mx["warning"]
+        )
 
     results = []
 
@@ -216,5 +227,6 @@ def validate_ssl(host: str, nameservers: Optional[List[str]], timeout: float, pa
 
     return SSLScanResult(
         valid=all(item.error is None for item in results),
+        warnings=not all(item.warning is None for item in results),
         results=results,
     )

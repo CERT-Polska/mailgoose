@@ -45,6 +45,7 @@ class APITestCase(BaseTestCase):
                                     "mx": "starts-with-whitespace.dmarc.test.mailgoose.cert.pl",
                                 }
                             ],
+                            "warnings": False,
                             "valid": False,
                         },
                     },

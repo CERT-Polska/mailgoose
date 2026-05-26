@@ -22,7 +22,7 @@ msgstr "Sprawdź domenę"
 #: app/templates/check_domain.html:12 app/templates/check_results.html:74
 #: app/templates/check_results.html:76 app/templates/check_results.html:78
 #: app/templates/check_results.html:199 app/templates/check_results.html:239
-#: app/templates/check_results.html:324
+#: app/templates/check_results.html:326
 msgid "Domain"
 msgstr "Domena"
 
@@ -243,19 +243,19 @@ msgid "Records"
 msgstr "Rekordy"
 
 #: app/templates/check_results.html:219 app/templates/check_results.html:259
-#: app/templates/check_results.html:329
+#: app/templates/check_results.html:331
 msgid "Warnings"
 msgstr "Ostrzeżenia"
 
 #: app/templates/check_results.html:220 app/templates/check_results.html:224
 #: app/templates/check_results.html:260 app/templates/check_results.html:264
-#: app/templates/check_results.html:272 app/templates/check_results.html:330
-#: app/templates/check_results.html:334
+#: app/templates/check_results.html:272 app/templates/check_results.html:332
+#: app/templates/check_results.html:336
 msgid "none"
 msgstr "brak"
 
 #: app/templates/check_results.html:223 app/templates/check_results.html:263
-#: app/templates/check_results.html:333
+#: app/templates/check_results.html:335
 msgid "Errors"
 msgstr "Błędy"
 
@@ -279,11 +279,11 @@ msgstr "Port"
 msgid "Result"
 msgstr "Wynik"
 
-#: app/templates/check_results.html:306
+#: app/templates/check_results.html:308
 msgid "Configuration valid"
 msgstr "Konfiguracja prawidłowa"
 
-#: app/templates/check_results.html:346
+#: app/templates/check_results.html:348
 msgid ""
 "To increase the chance that your configuration is interpreted by all "
 "e-mail servers correctly, we recommend fixing all errors and warnings."
@@ -292,7 +292,7 @@ msgstr ""
 "zinterpretowana przez wszystkie serwery, rekomendujemy poprawę zarówno "
 "błędów, jak i ostrzeżeń."
 
-#: app/templates/check_results.html:354
+#: app/templates/check_results.html:356
 msgid ""
 "After fixing the issues, please rerun the scan - some problems can be "
 "detected only if earlier checks complete successfully."
