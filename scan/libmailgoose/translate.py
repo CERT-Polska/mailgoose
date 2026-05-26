@@ -480,6 +480,12 @@ TRANSLATIONS = {
             f"Rekord SPF dla domen niesłużących do wysyłki poczty powinien mieć wartość  {PLACEHOLDER}, nie {PLACEHOLDER}",
         ),
         (
+            f"{PLACEHOLDER}: An SPF record does not exist.",
+            f"{PLACEHOLDER}: Nie znaleziono poprawnego rekordu SPF. Rekomendujemy używanie wszystkich trzech mechanizmów: "
+            "SPF, DKIM i DMARC, aby zmniejszyć szansę, że sfałszowana wiadomość zostanie zaakceptowana "
+            "przez serwer odbiorcy.",
+        ),
+        (
             "Valid SPF record not found. We recommend using all three mechanisms: SPF, DKIM and DMARC "
             "to decrease the possibility of successful e-mail message spoofing.",
             "Nie znaleziono poprawnego rekordu SPF. Rekomendujemy używanie wszystkich trzech mechanizmów: "
@@ -1429,6 +1435,8 @@ def _translate_domain_result(
     for result in new_domain_result.ssl.results:
         if result.error:
             result.error = translate(result.error, language, nonexistent_translation_handler)
+        if result.warning:
+            result.warning = translate(result.error, language, nonexistent_translation_handler)
 
     new_domain_result.warnings = [
         translate(warning, language, nonexistent_translation_handler) for warning in new_domain_result.warnings

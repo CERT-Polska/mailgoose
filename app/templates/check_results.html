@@ -302,6 +302,8 @@
                                                 <td class="d-none d-sm-table-cell">{% if item.port %}{{ item.port }}{% else %}-{% endif %}</td>
                                                 {% if item.error %}
                                                     <td class="text-danger">{{ item.error }}</td>
+                                                {% elif item.warning %}
+                                                    <td class="text-warning-dark">{{ item.warning }}</td>
                                                 {% else %}
                                                     <td class="text-success">{% trans %}Configuration valid{% endtrans %}</td>
                                                 {% endif %}
