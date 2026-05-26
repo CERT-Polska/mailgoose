@@ -1336,6 +1336,10 @@ TRANSLATIONS = {
             "[Errno 97] Address family not supported by protocol",
             "Połączenie wykonane przez nieobsługiwaną rodzinę adresu",
         ),
+        (
+            "[SSL: DH_KEY_TOO_SMALL] dh key too small (_ssl.c:1028)",
+            "Błąd SSL: zbyt mały klucz DH (DH_KEY_TOO_SMALL)",
+        ),
     ],
 }
 
