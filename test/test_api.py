@@ -6,6 +6,7 @@ class APITestCase(BaseTestCase):
     def test_dmarc_starts_with_whitespace(self) -> None:
         result = self.check_domain_api_v1("starts-with-whitespace.dmarc." + TEST_DOMAIN)
         del result["result"]["timestamp"]
+        self.maxDiff = None
         self.assertEqual(
             result,
             {
@@ -46,6 +47,7 @@ class APITestCase(BaseTestCase):
                                     "mx": "starts-with-whitespace.dmarc.test.mailgoose.cert.pl",
                                 }
                             ],
+                            "warnings": False,
                             "valid": False,
                         },
                     },

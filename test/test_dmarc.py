@@ -62,7 +62,7 @@ class DMARCTestCase(BaseTestCase):
     def test_syntax_error_policy_location(self) -> None:
         result = self.check_domain("syntax-error-policy-location.dmarc." + TEST_DOMAIN)
         assert re.search(INCORRECT_CONFIG_REGEX, result)
-        assert not re.search(CORRECT_CONFIG_REGEX, result)
+        assert re.search(WARNING_REGEX, result)
         assert ("The p tag does not immediately follow the v tag.") in result
 
     def test_rua_no_mailto(self) -> None:
