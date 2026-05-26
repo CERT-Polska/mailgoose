@@ -530,8 +530,8 @@ TRANSLATIONS = {
             "obciążenia serwerów DNS.",
         ),
         (
-            "{PLACEHOLDER}: The ptr mechanism should not be used - (RFC 7208 § 5.5)",
-            "{PLACEHOLDER}: Zgodnie ze specyfikacją SPF, nie należy używać mechanizmu 'ptr'. Pod adresem "
+            f"{PLACEHOLDER}: The ptr mechanism should not be used - (RFC 7208 § 5.5)",
+            f"{PLACEHOLDER}: Zgodnie ze specyfikacją SPF, nie należy używać mechanizmu 'ptr'. Pod adresem "
             "https://tools.ietf.org/html/rfc7208#section-5.5 można znaleźć uzasadnienie tej rekomendacji.",
         ),
         (
