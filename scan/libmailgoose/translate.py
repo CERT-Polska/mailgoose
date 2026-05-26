@@ -621,6 +621,11 @@ TRANSLATIONS = {
             "niesłużących do wysyłki poczty - serwer odbiorcy powinien odrzucać wiadomości z takich domen.",
         ),
         (
+            "Policy (p=) should be reject for parked domains.",
+            "Polityka (p=) powinna być ustawiona na 'reject' dla domen niesłużących "
+            "do wysyłki poczty - serwer odbiorcy powinien odrzucać wiadomości z takich domen.",
+        ),
+        (
             "Policy (p=) should be reject for parked domains",
             "Polityka (p=) powinna być ustawiona na 'reject' dla domen niesłużących "
             "do wysyłki poczty - serwer odbiorcy powinien odrzucać wiadomości z takich domen.",
@@ -1327,6 +1332,10 @@ TRANSLATIONS = {
             "Błąd certyfikatu: certyfikat podpisany samodzielnie (self-signed certificate)",
         ),
         (
+            "No welcome banner received on implicit TLS connection",
+            "Nie otrzymano banera powitalnego przy połączeniu TLS",
+        ),
+        (
             "Certificate error: certificate has expired",
             "Błąd certyfikatu: certyfikat wygasł",
         ),
@@ -1345,6 +1354,10 @@ TRANSLATIONS = {
         (
             "[SSL: DH_KEY_TOO_SMALL] dh key too small (_ssl.c:1028)",
             "Błąd SSL: zbyt mały klucz DH (DH_KEY_TOO_SMALL)",
+        ),
+        (
+            "[SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1028)",
+            "Błąd SSL: niepoprawny numer wersji (WRONG_VERSION_NUMBER)",
         ),
     ],
 }
