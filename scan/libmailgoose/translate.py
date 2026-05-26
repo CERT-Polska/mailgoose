@@ -530,6 +530,11 @@ TRANSLATIONS = {
             "obciążenia serwerów DNS.",
         ),
         (
+            "{PLACEHOLDER}: The ptr mechanism should not be used - (RFC 7208 § 5.5)",
+            "{PLACEHOLDER}: Zgodnie ze specyfikacją SPF, nie należy używać mechanizmu 'ptr'. Pod adresem "
+            "https://tools.ietf.org/html/rfc7208#section-5.5 można znaleźć uzasadnienie tej rekomendacji.",
+        ),
+        (
             "The ptr mechanism should not be used - https://tools.ietf.org/html/rfc7208#section-5.5",
             "Zgodnie ze specyfikacją SPF, nie należy używać mechanizmu 'ptr'. Pod adresem "
             "https://tools.ietf.org/html/rfc7208#section-5.5 można znaleźć uzasadnienie tej rekomendacji.",
@@ -916,6 +921,11 @@ TRANSLATIONS = {
             "usunięcie, ponieważ niektóre serwery pocztowe mogą nie zinterpretować takiego rekordu poprawnie.",
         ),
         (
+            f"{PLACEHOLDER}: An mx mechanism points to {PLACEHOLDER}, but that domain/subdomain does not have any MX records.",
+            f"{PLACEHOLDER}: Rekord SPF w domenie {PLACEHOLDER} korzysta z dyrektywy SPF 'mx', lecz nie wykryto rekordów MX, w związku "
+            "z czym ta dyrektywa nie zadziała poprawnie.",
+        ),
+        (
             f"An mx mechanism points to {PLACEHOLDER}, but that domain/subdomain does not have any MX records.",
             f"Rekord SPF w domenie {PLACEHOLDER} korzysta z dyrektywy SPF 'mx', lecz nie wykryto rekordów MX, w związku "
             "z czym ta dyrektywa nie zadziała poprawnie.",
@@ -997,6 +1007,14 @@ TRANSLATIONS = {
         (
             f"{PLACEHOLDER} is not a valid ipv6 value{PLACEHOLDER}",
             f"{PLACEHOLDER} nie jest poprawnym adresem IPv6.",
+        ),
+        (
+            "Support for the rf tag was removed in RFC 9989",
+            "Wsparcie dla tagu `rf` zostało usunięte w RFC 9989.",
+        ),
+        (
+            "Support for the ri tag was removed in RFC 9989",
+            "Wsparcie dla tagu `ri` zostało usunięte w RFC 9989.",
         ),
         (
             "Support for the pct tag was removed in RFC 9989",
@@ -1295,6 +1313,10 @@ TRANSLATIONS = {
             "Połączenie odrzucone",
         ),
         (
+            "Certificate error: self-signed certificate in certificate chain",
+            "Błąd certyfikatu: certyfikat podpisany samodzielnie (self-signed certificate) w łańcuchu certyfikatów",
+        ),
+        (
             "Certificate error: self-signed certificate",
             "Błąd certyfikatu: certyfikat podpisany samodzielnie (self-signed certificate)",
         ),
@@ -1313,6 +1335,10 @@ TRANSLATIONS = {
         (
             "[Errno 97] Address family not supported by protocol",
             "Połączenie wykonane przez nieobsługiwaną rodzinę adresu",
+        ),
+        (
+            "[SSL: DH_KEY_TOO_SMALL] dh key too small (_ssl.c:1028)",
+            "Błąd SSL: zbyt mały klucz DH (DH_KEY_TOO_SMALL)",
         ),
     ],
 }
