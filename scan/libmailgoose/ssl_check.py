@@ -181,7 +181,9 @@ def validate_ssl(host: str, nameservers: Optional[List[str]], timeout: float, pa
             timeout=timeout,
             parked=parked,
         )
-        return SSLMXScanResult(preference=preference, mx=mx, port=result_mx["port"], error=result_mx["error"], warning=result_mx["warning"])
+        return SSLMXScanResult(
+            preference=preference, mx=mx, port=result_mx["port"], error=result_mx["error"], warning=result_mx["warning"]
+        )
 
     results = []
 
@@ -225,6 +227,6 @@ def validate_ssl(host: str, nameservers: Optional[List[str]], timeout: float, pa
 
     return SSLScanResult(
         valid=all(item.error is None for item in results),
-        warnings=not  all(item.warning is None for item in results),
+        warnings=not all(item.warning is None for item in results),
         results=results,
     )
