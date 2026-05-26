@@ -1436,7 +1436,7 @@ def _translate_domain_result(
         if result.error:
             result.error = translate(result.error, language, nonexistent_translation_handler)
         if result.warning:
-            result.warning = translate(result.error, language, nonexistent_translation_handler)
+            result.warning = translate(result.warning, language, nonexistent_translation_handler)
 
     new_domain_result.warnings = [
         translate(warning, language, nonexistent_translation_handler) for warning in new_domain_result.warnings
