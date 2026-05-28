@@ -994,6 +994,10 @@ TRANSLATIONS = {
             f"Nie udało się odczytać rekordów MX domeny adresu e-mail w dyrektywie {PLACEHOLDER}: {PLACEHOLDER} - serwery nazw nie odpowiedziały poprawnie na zapytanie.",
         ),
         (
+            f"{PLACEHOLDER}: All nameservers failed to answer the query {PLACEHOLDER}",
+            f"{PLACEHOLDER}: Żaden z przypisanych serwerów nazw domen nie odpowiedział na zapytanie {PLACEHOLDER}.",
+        ),
+        (
             f"All nameservers failed to answer the query {PLACEHOLDER}. IN {PLACEHOLDER}",
             f"Żaden z przypisanych serwerów nazw domen nie odpowiedział na zapytanie dotyczące domeny {PLACEHOLDER}.",
         ),
@@ -1358,6 +1362,39 @@ TRANSLATIONS = {
         (
             "[SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1028)",
             "Błąd SSL: niepoprawny numer wersji (WRONG_VERSION_NUMBER)",
+        ),
+        (
+            "Unexpected response to STARTTLS on implicit TLS connection (on implicit TLS connection, "
+            "the STARTTLS command should fail, as the connection is already encrypted, so the server "
+            "should respond with an error message)",
+            "Nieoczekiwana odpowiedź na STARTTLS przy połączeniu TLS (przy połączeniu TLS, polecenie "
+            "STARTTLS nie powinno się udać, bo połączenie jest już zaszyfrowane, więc serwer powinien"
+            "odpowiedzieć komunikatem o błędzie) ",
+        ),
+        (
+            "Unexpected response to STARTTLS on implicit TLS connection",
+            "Nieoczekiwana odpowiedź na STARTTLS przy połączeniu TLS (przy połączeniu TLS, polecenie "
+            "STARTTLS nie powinno się udać, bo połączenie jest już zaszyfrowane, więc serwer powinien"
+            "odpowiedzieć komunikatem o błędzie) ",
+        ),
+        (
+            f"{PLACEHOLDER}: Duplicate include: {PLACEHOLDER}",
+            f"{PLACEHOLDER}: Domena {PLACEHOLDER} występuje wielokrotnie w tagu 'include'.",
+        ),
+        (
+            "[SSL: TLSV1_UNRECOGNIZED_NAME] tlsv1 unrecognized name (_ssl.c:1028)",
+            "Błąd SSL: nieznana nazwa (TLSV1_UNRECOGNIZED_NAME)",
+        ),
+        (
+            "Connection unexpectedly closed: timed out",
+            "Połączenie niespodziewanie zamknięte: przekroczono czas oczekiwania",
+        ),
+        ("[Errno 113] Host is unreachable", "Nie można nawiązać połączenia: host jest nieosiągalny (errno 113)"),
+        (
+            f"The SPF record for {PLACEHOLDER} appears to be a single {PLACEHOLDER}-character string; a single TXT character-string "
+            "should be ≤ 255 characters (RFC 7208 § 3.3). Consider splitting it into multiple quoted strings.",
+            f"Rekord SPF dla domeny {PLACEHOLDER} wydaje się być pojedynczym ciągiem znaków o długości {PLACEHOLDER}; pojedynczy ciąg znaków "
+            "w rekordzie TXT powinien mieć ≤ 255 znaków (RFC 7208 § 3.3). Rekomendujemy podzielenie rekordu na kilka ciągów znaków ujętych w cudzysłowy.",
         ),
     ],
 }
