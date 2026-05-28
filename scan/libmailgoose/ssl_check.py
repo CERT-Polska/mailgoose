@@ -115,7 +115,11 @@ def test_ssl_tls(
                     starttls_response = tls_sock.recv(1024).decode()
                     # should trigger an error since STARTTLS is not expected on implicit TLS ports
                     if "220" in starttls_response:
-                        raise SSLInternalError("Unexpected response to STARTTLS on implicit TLS connection")
+                        raise SSLInternalError(
+                            "Unexpected response to STARTTLS on implicit TLS connection (on implicit TLS connection, "
+                            "the STARTTLS command should fail, as the connection is already encrypted, so the server "
+                            "should respond with an error message)"
+                        )
         else:
             # STARTTLS — connect plain, then upgrade
             with smtplib.SMTP(hostname, port, timeout=timeout) as smtp:

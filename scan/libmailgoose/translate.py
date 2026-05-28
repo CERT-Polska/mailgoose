@@ -1364,8 +1364,18 @@ TRANSLATIONS = {
             "Błąd SSL: niepoprawny numer wersji (WRONG_VERSION_NUMBER)",
         ),
         (
+            "Unexpected response to STARTTLS on implicit TLS connection (on implicit TLS connection, "
+            "the STARTTLS command should fail, as the connection is already encrypted, so the server "
+            "should respond with an error message)",
+            "Nieoczekiwana odpowiedź na STARTTLS przy połączeniu TLS (przy połączeniu TLS, polecenie "
+            "STARTTLS nie powinno się udać, bo połączenie jest już zaszyfrowane, więc serwer powinien"
+            "odpowiedzieć komunikatem o błędzie) ",
+        ),
+        (
             "Unexpected response to STARTTLS on implicit TLS connection",
-            "Nieoczekiwana odpowiedź na STARTTLS przy połączeniu TLS",
+            "Nieoczekiwana odpowiedź na STARTTLS przy połączeniu TLS (przy połączeniu TLS, polecenie "
+            "STARTTLS nie powinno się udać, bo połączenie jest już zaszyfrowane, więc serwer powinien"
+            "odpowiedzieć komunikatem o błędzie) ",
         ),
         (
             f"{PLACEHOLDER}: Duplicate include: {PLACEHOLDER}",
