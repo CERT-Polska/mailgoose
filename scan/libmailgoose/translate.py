@@ -110,6 +110,10 @@ TRANSLATIONS = {
             "Subdomenų politika (sp=) turėtų būti nustatyta kaip reject parked domenams.",
         ),
         (
+            "Subdomain policy (sp=) should be reject for parked domains.",
+            "Subdomenų politika (sp=) turėtų būti nustatyta kaip reject parked domenams.",
+        ),
+        (
             "Policy (p=) should be reject for parked domains",
             "Politika (p=) turėtų būti nustatyta kaip reject nepanaudotiems domenams.",
         ),
@@ -616,6 +620,11 @@ TRANSLATIONS = {
             "Adres raportów DMARC nie wskazuje, że przyjmuje raporty z tej domeny.",
         ),
         (
+            "Subdomain policy (sp=) should be reject for parked domains.",
+            "Polityka subdomen (sp=) powinna być ustawiona na 'reject' dla domen "
+            "niesłużących do wysyłki poczty - serwer odbiorcy powinien odrzucać wiadomości z takich domen.",
+        ),
+        (
             "Subdomain policy (sp=) should be reject for parked domains",
             "Polityka subdomen (sp=) powinna być ustawiona na 'reject' dla domen "
             "niesłużących do wysyłki poczty - serwer odbiorcy powinien odrzucać wiadomości z takich domen.",
@@ -930,6 +939,11 @@ TRANSLATIONS = {
             "implementations may not process it correctly.",
             "Wykryto rekord DMARC zaczynający się od spacji lub innych białych znaków. Rekomendujemy ich "
             "usunięcie, ponieważ niektóre serwery pocztowe mogą nie zinterpretować takiego rekordu poprawnie.",
+        ),
+        (
+            f"{PLACEHOLDER}: An a mechanism points to {PLACEHOLDER}, but that domain/subdomain does not have any A/AAAA records.",
+            f"{PLACEHOLDER}: Rekord SPF w domenie {PLACEHOLDER} korzysta z dyrektywy SPF 'a', lecz nie wykryto rekordów A/AAAA, w związku "
+            "z czym ta dyrektywa nie zadziała poprawnie.",
         ),
         (
             f"{PLACEHOLDER}: An mx mechanism points to {PLACEHOLDER}, but that domain/subdomain does not have any MX records.",
@@ -1395,6 +1409,18 @@ TRANSLATIONS = {
             "should be ≤ 255 characters (RFC 7208 § 3.3). Consider splitting it into multiple quoted strings.",
             f"Rekord SPF dla domeny {PLACEHOLDER} wydaje się być pojedynczym ciągiem znaków o długości {PLACEHOLDER}; pojedynczy ciąg znaków "
             "w rekordzie TXT powinien mieć ≤ 255 znaków (RFC 7208 § 3.3). Rekomendujemy podzielenie rekordu na kilka ciągów znaków ujętych w cudzysłowy.",
+        ),
+        (
+            f"The SPF record for {PLACEHOLDER} is {PLACEHOLDER} bytes. RFC 7208 § 3.4 recommends keeping answers under ~450 bytes so the whole DNS message fits in 512 bytes.",
+            f"Rekord SPF dla domeny {PLACEHOLDER} ma {PLACEHOLDER} bajtów. RFC 7208 § 3.4 zaleca, aby odpowiedzi miały mniej niż ~450 bajtów, aby cały komunikat DNS mieścił się w 512 bajtach.",
+        ),
+        (
+            "Certificate error: EE certificate key too weak",
+            "Błąd certyfikatu: zbyt słaby klucz certyfikatu EE",
+        ),
+        (
+            "A missing p tag is equivalent to p=none in RFC 9989, but a p tag is required in older versions of DMARC.",
+            "Brak tagu p jest równoważny z p=none w RFC 9989, ale tag p jest wymagany w starszych wersjach DMARC.",
         ),
     ],
 }
