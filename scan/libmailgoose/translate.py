@@ -1437,7 +1437,11 @@ TRANSLATIONS = {
         (
             "Duplicate rua tags are not permitted",
             "Nie można użyć wielu tagów 'rua' w rekordzie DMARC.",
-            ),
+        ),
+        (
+            "SSL: WRONG_SIGNATURE_TYPE] wrong signature type (_ssl.c:1028)",
+            "Błąd SSL: niepoprawny typ podpisu (WRONG_SIGNATURE_TYPE)",
+        ),
     ],
 }
 
