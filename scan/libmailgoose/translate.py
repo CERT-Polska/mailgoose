@@ -1430,6 +1430,14 @@ TRANSLATIONS = {
             f"The size limit (`!size`) on ruf URI for {PLACEHOLDER} is obsolete in RFC 9989 (reporters MUST ignore it); pre-9989 readers may still honor it and produce incomplete reports.",
             f"Ograniczenie rozmiaru (`!size`) dla odbiorcy ruf {PLACEHOLDER} jest przestarzałe w RFC 9989 (implementacje zgodne z RFC 9989 powinny je ignorować), ale starsze implementacje mogą nadal honorować to ograniczenie, co może prowadzić do niekompletnych raportów.",
         ),
+        (
+            "[SSL: UNSAFE_LEGACY_RENEGOTIATION_DISABLED] unsafe legacy renegotiation disabled (_ssl.c:1028)",
+            "Błąd SSL: niebezpieczna renegocjacja została wyłączona (UNSAFE_LEGACY_RENEGOTIATION_DISABLED)",
+        ),
+        (
+            "Duplicate rua tags are not permitted",
+            "Nie można użyć wielu tagów 'rua' w rekordzie DMARC.",
+            ),
     ],
 }
 
