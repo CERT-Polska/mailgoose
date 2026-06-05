@@ -1405,9 +1405,9 @@ TRANSLATIONS = {
         ),
         ("[Errno 113] Host is unreachable", "Nie można nawiązać połączenia: host jest nieosiągalny (errno 113)"),
         (
-            f"The SPF record for {PLACEHOLDER} appears to be a single {PLACEHOLDER}-character string; a single TXT character-string "
-            "should be ≤ 255 characters (RFC 7208 § 3.3). Consider splitting it into multiple quoted strings.",
-            f"Rekord SPF dla domeny {PLACEHOLDER} wydaje się być pojedynczym ciągiem znaków o długości {PLACEHOLDER}; pojedynczy ciąg znaków "
+            f" The SPF record for {PLACEHOLDER} appears to be a single {PLACEHOLDER}-character string; a single TXT character-string "
+            "should be ≤ 255 characters (RFC 7208 § 3.3). Consider splitting it into multiple quoted strings.",  # yes, there's a space here
+            f"Rekord SPF dla domeny {PLACEHOLDER} jest pojedynczym ciągiem znaków o długości {PLACEHOLDER}; pojedynczy ciąg znaków "
             "w rekordzie TXT powinien mieć ≤ 255 znaków (RFC 7208 § 3.3). Rekomendujemy podzielenie rekordu na kilka ciągów znaków ujętych w cudzysłowy.",
         ),
         (
