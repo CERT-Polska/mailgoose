@@ -1422,6 +1422,26 @@ TRANSLATIONS = {
             "A missing p tag is equivalent to p=none in RFC 9989, but a p tag is required in older versions of DMARC.",
             "Brak tagu p jest równoważny z p=none w RFC 9989, ale tag p jest wymagany w starszych wersjach DMARC.",
         ),
+        (
+            "The all mechanism can only be used once.",
+            "Mechanizm 'all' może być użyty tylko raz.",
+        ),
+        (
+            f"The size limit (`!size`) on ruf URI for {PLACEHOLDER} is obsolete in RFC 9989 (reporters MUST ignore it); pre-9989 readers may still honor it and produce incomplete reports.",
+            f"Ograniczenie rozmiaru (`!size`) dla odbiorcy ruf {PLACEHOLDER} jest przestarzałe w RFC 9989 (implementacje zgodne z RFC 9989 powinny je ignorować), ale starsze implementacje mogą nadal honorować to ograniczenie, co może prowadzić do niekompletnych raportów.",
+        ),
+        (
+            "[SSL: UNSAFE_LEGACY_RENEGOTIATION_DISABLED] unsafe legacy renegotiation disabled (_ssl.c:1028)",
+            "Błąd SSL: niebezpieczna renegocjacja została wyłączona (UNSAFE_LEGACY_RENEGOTIATION_DISABLED)",
+        ),
+        (
+            "Duplicate rua tags are not permitted",
+            "Nie można użyć wielu tagów 'rua' w rekordzie DMARC.",
+        ),
+        (
+            "SSL: WRONG_SIGNATURE_TYPE] wrong signature type (_ssl.c:1028)",
+            "Błąd SSL: niepoprawny typ podpisu (WRONG_SIGNATURE_TYPE)",
+        ),
     ],
 }
 
