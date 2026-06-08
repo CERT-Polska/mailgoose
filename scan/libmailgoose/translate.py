@@ -1452,7 +1452,7 @@ TRANSLATIONS = {
         ),
         (
             f"The SPF record for {PLACEHOLDER} is > 512 bytes ({PLACEHOLDER} bytes). This likely exceeds the reliable UDP response size; some verifiers may ignore or fail it (RFC 7208 § 3.4).",
-                f"Rekord SPF dla domeny {PLACEHOLDER} ma więcej niż 512 bajtów ({PLACEHOLDER} bajtów). To prawdopodobnie przekracza rozmiar odpowiedzi UDP, który można bezpiecznie obsłużyć; niektóre implementacje mogą go zignorować lub niepoprawnie przetworzyć (RFC 7208 § 3.4).",
+            f"Rekord SPF dla domeny {PLACEHOLDER} ma więcej niż 512 bajtów ({PLACEHOLDER} bajtów). To prawdopodobnie przekracza rozmiar odpowiedzi UDP, który można bezpiecznie obsłużyć; niektóre implementacje mogą go zignorować lub niepoprawnie przetworzyć (RFC 7208 § 3.4).",
         ),
     ],
 }
