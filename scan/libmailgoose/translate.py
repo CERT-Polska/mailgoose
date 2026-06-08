@@ -1427,8 +1427,8 @@ TRANSLATIONS = {
             "Mechanizm 'all' może być użyty tylko raz.",
         ),
         (
-            f"The size limit (`!size`) on ruf URI for {PLACEHOLDER} is obsolete in RFC 9989 (reporters MUST ignore it); pre-9989 readers may still honor it and produce incomplete reports.",
-            f"Ograniczenie rozmiaru (`!size`) dla odbiorcy ruf {PLACEHOLDER} jest przestarzałe w RFC 9989 (implementacje zgodne z RFC 9989 powinny je ignorować), ale starsze implementacje mogą nadal honorować to ograniczenie, co może prowadzić do niekompletnych raportów.",
+            f"The size limit (`!size`) on {PLACEHOLDER} URI for {PLACEHOLDER} is obsolete in RFC 9989 (reporters MUST ignore it); pre-9989 readers may still honor it and produce incomplete reports.",
+            f"Ograniczenie rozmiaru (`!size`) dla odbiorcy {PLACEHOLDER} {PLACEHOLDER} jest przestarzałe w RFC 9989 (implementacje zgodne z RFC 9989 powinny je ignorować), ale starsze implementacje mogą nadal honorować to ograniczenie, co może prowadzić do niekompletnych raportów.",
         ),
         (
             "[SSL: UNSAFE_LEGACY_RENEGOTIATION_DISABLED] unsafe legacy renegotiation disabled (_ssl.c:1028)",
@@ -1441,6 +1441,18 @@ TRANSLATIONS = {
         (
             "SSL: WRONG_SIGNATURE_TYPE] wrong signature type (_ssl.c:1028)",
             "Błąd SSL: niepoprawny typ podpisu (WRONG_SIGNATURE_TYPE)",
+        ),
+        (
+            "Duplicate v tags are not permitted",
+            "Nie można użyć wielu tagów 'v' w rekordzie DMARC.",
+        ),
+        (
+            "[SSL: WRONG_SIGNATURE_TYPE] wrong signature type (_ssl.c:1028)",
+            "Błąd SSL: niepoprawny typ podpisu (WRONG_SIGNATURE_TYPE)",
+        ),
+        (
+            f"The SPF record for {PLACEHOLDER} is > 512 bytes ({PLACEHOLDER} bytes). This likely exceeds the reliable UDP response size; some verifiers may ignore or fail it (RFC 7208 § 3.4).",
+                f"Rekord SPF dla domeny {PLACEHOLDER} ma więcej niż 512 bajtów ({PLACEHOLDER} bajtów). To prawdopodobnie przekracza rozmiar odpowiedzi UDP, który można bezpiecznie obsłużyć; niektóre implementacje mogą go zignorować lub niepoprawnie przetworzyć (RFC 7208 § 3.4).",
         ),
     ],
 }
