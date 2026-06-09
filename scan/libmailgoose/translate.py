@@ -1000,6 +1000,10 @@ TRANSLATIONS = {
             f"{PLACEHOLDER} Domena nie istnieje.",
         ),
         (
+            f"Error when processing {PLACEHOLDER}: The domain {PLACEHOLDER} does not exist.",
+            f"Błąd przy przetwarzaniu {PLACEHOLDER}: Domena {PLACEHOLDER} nie istnieje.",
+        ),
+        (
             f"Setting a size limit on {PLACEHOLDER} reports sent to {PLACEHOLDER} could cause incomplete reporting.",
             f"Ustawienie ograniczenia rozmiaru raportów {PLACEHOLDER} wysyłanych do {PLACEHOLDER} może doprowadzić do pominięcia części z nich.",
         ),
