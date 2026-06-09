@@ -222,6 +222,7 @@ def scan_domain(
     include_dmarc_tag_descriptions: bool = False,
     timeout: float = 10.0,
     ignore_void_dns_lookups: bool = False,
+    fallback_to_hostname_as_mx_in_ssl_check: bool = True,
 ) -> DomainScanResult:
     envelope_domain = validate_and_sanitize_domain(envelope_domain)
     from_domain = validate_and_sanitize_domain(from_domain)
@@ -274,7 +275,13 @@ def scan_domain(
             warnings=[],
             additional_info=[],
         ),
-        ssl=ssl_check.validate_ssl(from_domain, nameservers=nameservers, timeout=timeout, parked=parked),
+        ssl=ssl_check.validate_ssl(
+            from_domain,
+            nameservers=nameservers,
+            timeout=timeout,
+            parked=parked,
+            fallback_to_hostname=fallback_to_hostname_as_mx_in_ssl_check,
+        ),
         domain=domain,
         base_domain=checkdmarc.get_base_domain(domain),
         domain_does_not_exist=False,

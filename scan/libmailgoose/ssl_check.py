@@ -162,7 +162,9 @@ def test_ssl_tls(
     return result
 
 
-def validate_ssl(host: str, nameservers: Optional[List[str]], timeout: float, parked: bool) -> SSLScanResult:
+def validate_ssl(
+    host: str, nameservers: Optional[List[str]], timeout: float, parked: bool, fallback_to_hostname: bool
+) -> SSLScanResult:
     ports = {
         25: SSLEnum.STARTTLS,
         465: SSLEnum.IMPLICIT,
@@ -170,7 +172,7 @@ def validate_ssl(host: str, nameservers: Optional[List[str]], timeout: float, pa
     }
 
     mx_records: List[Tuple[Optional[int], str]] = retrieve_MX_records(host, nameservers=nameservers)
-    if not mx_records:
+    if not mx_records and fallback_to_hostname:
         mx_records = [(None, host)]
 
     results: List[SSLMXScanResult] = []
