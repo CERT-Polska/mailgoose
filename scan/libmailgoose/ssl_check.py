@@ -175,6 +175,13 @@ def validate_ssl(
     if not mx_records and fallback_to_hostname:
         mx_records = [(None, host)]
 
+    if not mx_records:
+        return SSLScanResult(
+            valid=True,
+            warnings=False,
+            results=[],
+        )
+
     results: List[SSLMXScanResult] = []
 
     def scan_mx(preference: Optional[int], port: int, ssl_type: SSLEnum, mx: str, ip: str) -> SSLMXScanResult:
