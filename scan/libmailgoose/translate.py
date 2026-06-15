@@ -1470,6 +1470,10 @@ TRANSLATIONS = {
             "include must have a value",
             "Mechanizm 'include' musi mieć wartość",
         ),
+        (
+            "Duplicate pct tags are not permitted",
+            "Wielokrotne użycie tagu 'pct' nie jest dozwolone.",
+        ),
     ],
 }
 
