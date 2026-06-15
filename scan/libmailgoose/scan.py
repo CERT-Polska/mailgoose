@@ -543,6 +543,8 @@ def scan_domain(
             "The domain of the email address in a DMARC report URI is missing MX records. That means, that this domain "
             "may not receive DMARC reports."
         ]
+    except checkdmarc.dmarc.DMARCError as e:
+        domain_result.dmarc.errors = [e.message]
 
     # If policy is none, it will be saved as a separate error. If policy is quarantine or reject, this is
     # optional as the messages that don't pass dmarc are blocked or quarantined.
