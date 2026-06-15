@@ -71,7 +71,7 @@ def load_check_results(token: str) -> Optional[Dict[str, Any]]:
             result["result"]["message_timestamp"] = datetime.datetime.fromisoformat(
                 result["result"]["message_timestamp"]
             )
-        if "dkim" in result["result"]:
+        if "dkim" in result["result"] and result["result"]["dkim"]:
             if "selector" not in result["result"]["dkim"]:
                 result["result"]["dkim"]["selector"] = ""
             if "record" not in result["result"]["dkim"]:
