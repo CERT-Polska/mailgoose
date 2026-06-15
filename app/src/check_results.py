@@ -71,10 +71,11 @@ def load_check_results(token: str) -> Optional[Dict[str, Any]]:
             result["result"]["message_timestamp"] = datetime.datetime.fromisoformat(
                 result["result"]["message_timestamp"]
             )
-        if "dkim" in result["result"] and "selector" not in result["result"]["dkim"]:
-            result["result"]["dkim"]["selector"] = ""
-        if "dkim" in result["result"] and "record" not in result["result"]["dkim"]:
-            result["result"]["dkim"]["record"] = ""
+        if "dkim" in result["result"]:
+            if "selector" not in result["result"]["dkim"]:
+                result["result"]["dkim"]["selector"] = ""
+            if "record" not in result["result"]["dkim"]:
+                result["result"]["dkim"]["record"] = ""
         if not result["result"]["domain"].get("domain_does_not_exist"):
             result["result"]["domain"]["domain_does_not_exist"] = False
         if not result["result"]["domain"].get("ssl"):
