@@ -7,6 +7,9 @@ services:
     build:
       context: .
       dockerfile: app/docker/Dockerfile
+    depends_on:
+      - db
+      - redis
     environment:
       DB_URL: postgresql+psycopg2://postgres:postgres@db:5432/mailgoose
       FORWARDED_ALLOW_IPS: "*"
@@ -22,6 +25,10 @@ services:
     build:
       context: .
       dockerfile: app/docker/Dockerfile
+    depends_on:
+      - bind9
+      - db
+      - redis
     environment:
       DB_URL: postgresql+psycopg2://postgres:postgres@db:5432/mailgoose
       REDIS_URL: redis://redis:6379/0
@@ -34,6 +41,10 @@ services:
     build:
       context: .
       dockerfile: app/docker/Dockerfile
+    depends_on:
+      - bind9
+      - db
+      - redis
     environment:
       DB_URL: postgresql+psycopg2://postgres:postgres@db:5432/mailgoose
       REDIS_URL: redis://redis:6379/0
@@ -47,6 +58,8 @@ services:
       context: .
       dockerfile: mail_receiver/Dockerfile
     command: python3 /opt/server.py
+    depends_on:
+      - redis
     environment:
       REDIS_URL: redis://redis:6379/0
     env_file:

@@ -5,6 +5,9 @@ services:
     build:
       context: .
       dockerfile: app/docker/Dockerfile
+    depends_on:
+      - db-test
+      - redis-test
     environment:
       APP_DOMAIN: "app"
       DB_URL: postgresql+psycopg2://postgres:postgres@db-test:5432/mailgoose
@@ -17,6 +20,10 @@ services:
     build:
       context: .
       dockerfile: app/docker/Dockerfile
+    depends_on:
+      - bind9
+      - db-test
+      - redis-test
     environment:
       APP_DOMAIN: "app"
       DB_URL: postgresql+psycopg2://postgres:postgres@db-test:5432/mailgoose
@@ -41,6 +48,8 @@ services:
     build:
       context: .
       dockerfile: test/Dockerfile
+    depends_on:
+      - app
     command: bash -c "/wait-for-it.sh app:8000 -- python -m unittest discover"
   mailserver:
     image: ghcr.io/docker-mailserver/docker-mailserver:latest
