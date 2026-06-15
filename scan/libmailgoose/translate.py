@@ -1466,6 +1466,10 @@ TRANSLATIONS = {
             "Any text after the all mechanism other than an exp modifier is ignored.",
             "Każdy tekst po mechanizmie 'all' inny niż modyfikator 'exp' jest ignorowany.",
         ),
+        (
+            "include must have a value",
+            "Mechanizm 'include' musi mieć wartość",
+        ),
     ],
 }
 
