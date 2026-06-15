@@ -1462,6 +1462,10 @@ TRANSLATIONS = {
             "No EHLO response received on implicit TLS connection",
             "Nie otrzymano odpowiedzi EHLO przy połączeniu TLS",
         ),
+        (
+            "Any text after the all mechanism other than an exp modifier is ignored.",
+            "Każdy tekst po mechanizmie 'all' inny niż modyfikator 'exp' jest ignorowany.",
+        ),
     ],
 }
 
