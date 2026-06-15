@@ -213,6 +213,7 @@ msgstr ""
 
 #: app/templates/check_results.html:205 app/templates/check_results.html:210
 #: app/templates/check_results.html:245 app/templates/check_results.html:250
+#: app/templates/check_results.html:338
 msgid "Record"
 msgstr ""
 
@@ -221,19 +222,19 @@ msgid "Records"
 msgstr ""
 
 #: app/templates/check_results.html:219 app/templates/check_results.html:259
-#: app/templates/check_results.html:331
+#: app/templates/check_results.html:343
 msgid "Warnings"
 msgstr ""
 
 #: app/templates/check_results.html:220 app/templates/check_results.html:224
 #: app/templates/check_results.html:260 app/templates/check_results.html:264
-#: app/templates/check_results.html:272 app/templates/check_results.html:332
-#: app/templates/check_results.html:336
+#: app/templates/check_results.html:272 app/templates/check_results.html:344
+#: app/templates/check_results.html:348
 msgid "none"
 msgstr ""
 
 #: app/templates/check_results.html:223 app/templates/check_results.html:263
-#: app/templates/check_results.html:335
+#: app/templates/check_results.html:347
 msgid "Errors"
 msgstr ""
 
@@ -261,13 +262,17 @@ msgstr ""
 msgid "Configuration valid"
 msgstr ""
 
-#: app/templates/check_results.html:348
+#: app/templates/check_results.html:332
+msgid "Selector"
+msgstr ""
+
+#: app/templates/check_results.html:360
 msgid ""
 "To increase the chance that your configuration is interpreted by all "
 "e-mail servers correctly, we recommend fixing all errors and warnings."
 msgstr ""
 
-#: app/templates/check_results.html:356
+#: app/templates/check_results.html:368
 msgid ""
 "After fixing the issues, please rerun the scan - some problems can be "
 "detected only if earlier checks complete successfully."

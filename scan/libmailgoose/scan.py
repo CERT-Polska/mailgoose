@@ -93,6 +93,8 @@ class DomainScanResult:
 
 @dataclass
 class DKIMScanResult:
+    selector: Optional[str]
+    record: Optional[str]
     valid: bool
     errors: List[str]
     warnings: List[str]
@@ -210,6 +212,13 @@ def contains_spf_all_fail(parsed: Dict[str, Any]) -> bool:
     if "redirect" in parsed and parsed["redirect"]:
         return contains_spf_all_fail(parsed["redirect"]["parsed"])
     return False
+
+
+def _safe_decode_bytes(b: Optional[bytes]) -> Optional[str]:
+    if b is not None:
+        return b.decode("ascii", errors="replace")
+    else:
+        return None
 
 
 def scan_domain(
@@ -594,12 +603,17 @@ def scan_dkim(
 ) -> DKIMScanResult:
     if "dkim-signature" not in message_parsed:
         return DKIMScanResult(
+            selector=None,
+            record=None,
             valid=False,
             errors=["No DKIM signature found"],
             warnings=[],
         )
 
     opendkim_valid = subprocess.run(["opendkim-testmsg"], input=message).returncode == 0
+
+    selector_full_name = None
+    dkim_record_raw = None
 
     try:
         # We don't call dkim.verify() directly because it would catch dkim.DKIMException
@@ -617,17 +631,17 @@ def scan_dkim(
         else:
             warnings = []
 
-        selector_full_name = signature_tags[b"s"] + b"._domainkey." + signature_tags[b"d"] + b"."
-        if dkim_record_raw := dkim.dnsplug.get_txt(selector_full_name):
+        selector_full_name = signature_tags[b"s"] + b"._domainkey." + signature_tags[b"d"]
+        if dkim_record_raw := dkim.dnsplug.get_txt(selector_full_name + b"."):
             try:
                 dkim_record_tags = dkim.util.parse_tag_value(dkim_record_raw)
             except dkim.util.InvalidTagSpec as e:
                 raise dkim.DKIMException(
-                    "The DKIM DNS record contains an invalid tag: " + e.args[0].decode("ascii", errors="replace")
+                    f"The DKIM DNS record contains an invalid tag: {_safe_decode_bytes(e.args[0])}"
                 )
             except dkim.util.DuplicateTag as e:
                 raise dkim.DKIMException(
-                    "The DKIM DNS record contains an duplicate tag: " + e.args[0].decode("ascii", errors="replace")
+                    f"The DKIM DNS record contains an duplicate tag: {_safe_decode_bytes(e.args[0])}"
                 )
             if acceptable_hash_algorithms_raw := dkim_record_tags.get(b"h"):
                 acceptable_hash_algorithms: List[bytes] = acceptable_hash_algorithms_raw.split(b",")
@@ -650,12 +664,16 @@ def scan_dkim(
 
         if dkimpy_valid:
             return DKIMScanResult(
+                selector=_safe_decode_bytes(selector_full_name),
+                record=_safe_decode_bytes(dkim_record_raw),
                 valid=True,
                 errors=[],
                 warnings=warnings,
             )
         else:
             return DKIMScanResult(
+                selector=_safe_decode_bytes(selector_full_name),
+                record=_safe_decode_bytes(dkim_record_raw),
                 valid=False,
                 errors=["Found an invalid DKIM signature"],
                 warnings=warnings,
@@ -670,6 +688,8 @@ def scan_dkim(
 
         if e.args[0]:
             return DKIMScanResult(
+                selector=_safe_decode_bytes(selector_full_name),
+                record=_safe_decode_bytes(dkim_record_raw),
                 valid=False,
                 errors=[e.args[0]],
                 warnings=[],
@@ -678,6 +698,8 @@ def scan_dkim(
             LOGGER.exception("Error during DKIM signature validation")
 
             return DKIMScanResult(
+                selector=_safe_decode_bytes(selector_full_name),
+                record=_safe_decode_bytes(dkim_record_raw),
                 valid=False,
                 errors=["An unknown error occured during DKIM signature validation."],
                 warnings=[],

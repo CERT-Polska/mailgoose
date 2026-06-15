@@ -327,6 +327,18 @@
                                                 <td><code>{{ dkim_domain }}</code></td>
                                             </tr>
                                         {% endif %}
+                                        {% if result.dkim.selector %}
+                                            <tr>
+                                                <td class="label">{% trans %}Selector{% endtrans %}</td>
+                                                <td><code>{{ result.dkim.selector }}</code></td>
+                                            </tr>
+                                        {% endif %}
+                                        {% if result.dkim.record %}
+                                            <tr>
+                                                <td class="label">{% trans %}Record{% endtrans %}</td>
+                                                <td><code>{{ result.dkim.record }}</code></td>
+                                            </tr>
+                                        {% endif %}
                                         <tr>
                                             <td class="label">{% trans %}Warnings{% endtrans %}</td>
                                             <td>{% if result.dkim.warnings %}{{ render_problems(result.dkim.warnings) }}{% else %}{% trans %}none{% endtrans %}{% endif %}</td>
