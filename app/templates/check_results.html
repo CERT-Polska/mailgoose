@@ -346,6 +346,7 @@
                                         <tr>
                                             <td class="label">{% trans %}Errors{% endtrans %}</td>
                                             <td>{% if result.dkim.errors %}{{ render_problems(result.dkim.errors) }}{% else %}{% trans %}none{% endtrans %}{% endif %}</td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
