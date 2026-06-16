@@ -1190,6 +1190,10 @@ TRANSLATIONS = {
             f"Tag 'h' w rekordzie DNS, oznaczający akceptowane algorytmy haszujące, zawiera niewspierany algorytm: {PLACEHOLDER}",
         ),
         (
+            "Test mode is enabled for DKIM in the DNS record (t=y)",
+            "Włączony jest tryb testowy DKIM, sygnalizowany flagą 't=y' w rekordzie DNS",
+        ),
+        (
             f"The DKIM DNS record contains an invalid tag: {PLACEHOLDER}",
             f"Rekord DKIM w DNS zawiera nieprawidłowy tag: {PLACEHOLDER}",
         ),

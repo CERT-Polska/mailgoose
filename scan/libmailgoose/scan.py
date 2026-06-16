@@ -654,6 +654,11 @@ def scan_dkim(
                             "algorithm: " + acceptable_hash_algorithm.decode()
                         )
 
+            if dkim_flags_raw := dkim_record_tags.get(b"t"):
+                dkim_flags: List[bytes] = dkim_flags_raw.split(b":")
+                if b"y" in dkim_flags:
+                    warnings.append("Test mode is enabled for DKIM in the DNS record (t=y)")
+
         dkimpy_valid = d.verify()
 
         LOGGER.info(
