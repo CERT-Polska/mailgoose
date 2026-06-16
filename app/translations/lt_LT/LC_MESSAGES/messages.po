@@ -285,7 +285,7 @@ msgstr ""
 msgid "Selector"
 msgstr ""
 
-#: app/templates/check_results.html:360
+#: app/templates/check_results.html:361
 msgid ""
 "To increase the chance that your configuration is interpreted by all "
 "e-mail servers correctly, we recommend fixing all errors and warnings."
@@ -294,7 +294,7 @@ msgstr ""
 "interpretuojama visų el. pašto serverių, mes rekomenduojame ištaisyti "
 "visas klaidas ir perspėjimus. "
 
-#: app/templates/check_results.html:368
+#: app/templates/check_results.html:369
 msgid ""
 "After fixing the issues, please rerun the scan - some problems can be "
 "detected only if earlier checks complete successfully."
