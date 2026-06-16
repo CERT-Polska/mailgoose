@@ -1466,6 +1466,18 @@ TRANSLATIONS = {
             "Any text after the all mechanism other than an exp modifier is ignored.",
             "Każdy tekst po mechanizmie 'all' inny niż modyfikator 'exp' jest ignorowany.",
         ),
+        (
+            "include must have a value",
+            "Mechanizm 'include' musi mieć wartość",
+        ),
+        (
+            "Duplicate pct tags are not permitted",
+            "Wielokrotne użycie tagu 'pct' nie jest dozwolone.",
+        ),
+        (
+            f"Unknown DMARC tag '{PLACEHOLDER}' was ignored (RFC 9989 requires unknown tags to be ignored).",
+            f"Nieznany tag DMARC '{PLACEHOLDER}' został zignorowany (RFC 9989 wymaga, aby nieznane tagi były ignorowane).",
+        ),
     ],
 }
 
