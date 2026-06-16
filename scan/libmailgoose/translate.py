@@ -1475,7 +1475,7 @@ TRANSLATIONS = {
             "Wielokrotne użycie tagu 'pct' nie jest dozwolone.",
         ),
         (
-            f"Unknown DMARC tag \'{PLACEHOLDER}\' was ignored (RFC 9989 requires unknown tags to be ignored).",
+            f"Unknown DMARC tag '{PLACEHOLDER}' was ignored (RFC 9989 requires unknown tags to be ignored).",
             f"Nieznany tag DMARC '{PLACEHOLDER}' został zignorowany (RFC 9989 wymaga, aby nieznane tagi były ignorowane).",
         ),
     ],
