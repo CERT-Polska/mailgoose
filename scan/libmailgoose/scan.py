@@ -98,6 +98,7 @@ class DKIMScanResult:
     valid: bool
     errors: List[str]
     warnings: List[str]
+    additional_info: List[str]
 
 
 @dataclass
@@ -610,6 +611,7 @@ def scan_dkim(
             valid=False,
             errors=["No DKIM signature found"],
             warnings=[],
+            additional_info=[],
         )
 
     opendkim_valid = subprocess.run(["opendkim-testmsg"], input=message).returncode == 0
@@ -632,6 +634,8 @@ def scan_dkim(
             ]
         else:
             warnings = []
+
+        additional_info = []
 
         selector_full_name = signature_tags[b"s"] + b"._domainkey." + signature_tags[b"d"]
         if dkim_record_raw := dkim.dnsplug.get_txt(selector_full_name + b"."):
@@ -659,6 +663,16 @@ def scan_dkim(
                 if b"y" in dkim_flags:
                     warnings.append("Test mode is enabled for DKIM in the DNS record (t=y)")
 
+            try:
+                _, keysize, keytype, _ = dkim.evaluate_pk(selector_full_name, dkim_record_raw)
+            except Exception:
+                keysize, keytype = None, None
+
+            if keytype == b"rsa":
+                additional_info.append(f"The public key used is a {keysize}-bit RSA key.")
+            elif keytype == b"ed25519":
+                additional_info.append("The public key used is an Ed25519 (elliptic curve) key.")
+
         dkimpy_valid = d.verify()
 
         LOGGER.info(
@@ -676,6 +690,7 @@ def scan_dkim(
                 valid=True,
                 errors=[],
                 warnings=warnings,
+                additional_info=additional_info,
             )
         else:
             return DKIMScanResult(
@@ -684,6 +699,7 @@ def scan_dkim(
                 valid=False,
                 errors=["Found an invalid DKIM signature"],
                 warnings=warnings,
+                additional_info=additional_info,
             )
     except (dkim.DKIMException, dns.exception.DNSException) as e:
         LOGGER.info(
@@ -700,6 +716,7 @@ def scan_dkim(
                 valid=False,
                 errors=[e.args[0]],
                 warnings=[],
+                additional_info=[],
             )
         else:
             LOGGER.exception("Error during DKIM signature validation")
@@ -710,6 +727,7 @@ def scan_dkim(
                 valid=False,
                 errors=["An unknown error occured during DKIM signature validation."],
                 warnings=[],
+                additional_info=[],
             )
 
 
