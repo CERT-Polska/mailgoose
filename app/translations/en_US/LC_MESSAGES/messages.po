@@ -292,8 +292,8 @@ msgstr ""
 
 #: app/templates/root.html:9
 msgid ""
-"Verify your <b>DKIM</b>, <b>DMARC</b>, and <b>SPF</b> settings by sending"
-" a test e-mail."
+"Verify your <b>DKIM</b>, <b>DMARC</b>, <b>SPF</b>, and <b>SSL</b> "
+"settings by sending a test e-mail."
 msgstr ""
 
 #: app/templates/root.html:15
@@ -309,6 +309,6 @@ msgstr ""
 #: app/templates/root.html:32
 msgid ""
 "Verify your SPF and DMARC settings by providing a domain. Note: only the "
-"<b>SPF</b> and <b>DMARC</b> mechanisms will be checked. To check DKIM, "
-"you need to send a test e-mail."
+"<b>SPF</b> <b>DMARC</b> and <b>SSL</b> mechanisms will be checked. To "
+"check DKIM, you need to send a test e-mail."
 msgstr ""
