@@ -3,7 +3,11 @@ import traceback
 from typing import Optional
 
 from libmailgoose.language import Language
-from libmailgoose.scan import DomainValidationException, ScanningException
+from libmailgoose.scan import (
+    DomainValidationException,
+    IncomingTLSStatus,
+    ScanningException,
+)
 from libmailgoose.translate import translate
 from redis import Redis
 
@@ -21,6 +25,15 @@ REDIS = Redis.from_url(Config.Data.REDIS_URL)
 setup_resolver()
 
 
+def _decode_tls_flag(raw: Optional[bytes]) -> Optional[IncomingTLSStatus]:
+    if raw is None:
+        return None
+    try:
+        return IncomingTLSStatus(raw.decode("ascii"))
+    except (UnicodeDecodeError, ValueError):
+        return None
+
+
 def scan_domain_job(
     client_ip: Optional[str],
     client_user_agent: Optional[str],
@@ -36,6 +49,7 @@ def scan_domain_job(
             message=None,
             message_sender_ip=None,
             message_timestamp=None,
+            incoming_tls_status=None,
             nameservers=Config.Network.NAMESERVERS,
             language=Language(Config.UI.LANGUAGE),
             client_ip=client_ip,
@@ -78,11 +92,13 @@ def scan_message_and_domain_job(
     message_data = REDIS.get(message_key)
     message_sender_ip = REDIS.get(message_key + b"-sender_ip")
     message_timestamp_raw = REDIS.get(message_key + b"-timestamp")
+    message_tls_raw = REDIS.get(message_key + b"-tls")
 
     if not message_data or not message_sender_ip or not message_timestamp_raw:
         raise RuntimeError("Worker coudn't access message data")
 
     message_timestamp = datetime.datetime.fromisoformat(message_timestamp_raw.decode("ascii"))
+    incoming_tls_status = _decode_tls_flag(message_tls_raw)
 
     from_domain, dkim_domain = get_from_and_dkim_domain(message_data)
     if not from_domain:
@@ -98,6 +114,7 @@ def scan_message_and_domain_job(
                 message=message_data,
                 message_sender_ip=message_sender_ip,
                 message_timestamp=message_timestamp,
+                incoming_tls_status=incoming_tls_status,
                 nameservers=Config.Network.NAMESERVERS,
                 language=Language(Config.UI.LANGUAGE),
                 client_ip=client_ip,

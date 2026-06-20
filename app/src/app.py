@@ -206,6 +206,7 @@ async def check_domain_api(request: Request, domain: str) -> ScanAPICallResult:
             message=None,
             message_sender_ip=None,
             message_timestamp=None,
+            incoming_tls_status=None,
             nameservers=Config.Network.NAMESERVERS,
             language=Language(Config.UI.LANGUAGE),
             client_ip=client_ip,

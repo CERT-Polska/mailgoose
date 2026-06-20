@@ -4,7 +4,7 @@ import json
 from typing import Any, Dict, Optional
 
 import dacite
-from libmailgoose.scan import ScanResult
+from libmailgoose.scan import IncomingTLSStatus, ScanResult
 from redis import Redis
 
 from common.config import Config
@@ -94,6 +94,7 @@ def load_check_results(token: str) -> Optional[Dict[str, Any]]:
             dacite.from_dict(
                 data_class=ScanResult,
                 data=result["result"],
+                config=dacite.Config(cast=[IncomingTLSStatus]),
             )
         except dacite.WrongTypeError:
             LOGGER.exception("Wrong type detected when deserializing")
@@ -103,7 +104,7 @@ def load_check_results(token: str) -> Optional[Dict[str, Any]]:
         result["result"] = dacite.from_dict(
             data_class=ScanResult,
             data=result["result"],
-            config=dacite.Config(check_types=False),
+            config=dacite.Config(check_types=False, cast=[IncomingTLSStatus]),
         )
 
     result["age_threshold_minutes"] = Config.UI.OLD_CHECK_RESULTS_AGE_MINUTES
