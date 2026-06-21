@@ -1482,6 +1482,10 @@ TRANSLATIONS = {
             f"Unknown DMARC tag '{PLACEHOLDER}' was ignored (RFC 9989 requires unknown tags to be ignored).",
             f"Nieznany tag DMARC '{PLACEHOLDER}' został zignorowany (RFC 9989 wymaga, aby nieznane tagi były ignorowane).",
         ),
+        (
+            f"{PLACEHOLDER}: A ptr mechanism points to {PLACEHOLDER}, but that domain/subdomain does not have any A/AAAA records.",
+            f"{PLACEHOLDER}: Mechanizm ptr wskazuje na {PLACEHOLDER}, ale ta domena/subdomena nie ma rekordów A/AAAA.",
+        ),
     ],
 }
 
