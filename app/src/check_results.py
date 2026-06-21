@@ -76,6 +76,8 @@ def load_check_results(token: str) -> Optional[Dict[str, Any]]:
                 result["result"]["dkim"]["selector"] = ""
             if "record" not in result["result"]["dkim"]:
                 result["result"]["dkim"]["record"] = ""
+            if not result["result"]["dkim"].get("additional_info"):
+                result["result"]["dkim"]["additional_info"] = []
         if not result["result"]["domain"].get("domain_does_not_exist"):
             result["result"]["domain"]["domain_does_not_exist"] = False
         if not result["result"]["domain"].get("ssl"):

@@ -1201,6 +1201,14 @@ TRANSLATIONS = {
             f"The DKIM DNS record contains an duplicate tag: {PLACEHOLDER}",
             f"Rekord DKIM w DNS zawiera zduplikowany tag: {PLACEHOLDER}",
         ),
+        (
+            f"The public key used is a {PLACEHOLDER}-bit RSA key.",
+            f"Wykorzystywany jest klucz publiczny RSA o rozmiarze {PLACEHOLDER} bitów.",
+        ),
+        (
+            "The public key used is an Ed25519 (elliptic curve) key.",
+            "Wykorzystywany jest klucz publiczny typu Ed25519 (kryptografia krzywych eliptycznych).",
+        ),
         # dkimpy messages
         (
             "Using the DKIM body length tag (l=) is not recommended, as it may allow an attacker to add own content to "
@@ -1591,6 +1599,9 @@ def _translate_dkim_result(
     ]
     new_dkim_result.warnings = [
         translate(warning, language, nonexistent_translation_handler) for warning in dkim_result.warnings
+    ]
+    new_dkim_result.additional_info = [
+        translate(info, language, nonexistent_translation_handler) for info in dkim_result.additional_info
     ]
     return new_dkim_result
 
