@@ -1,4 +1,5 @@
 import datetime
+import enum
 import io
 import string
 import subprocess
@@ -101,12 +102,19 @@ class DKIMScanResult:
     additional_info: List[str]
 
 
+class IncomingTLSStatus(str, enum.Enum):
+    USED = "used"
+    NOT_USED = "not_used"
+    NOT_TESTABLE = "not_testable"
+
+
 @dataclass
 class ScanResult:
     domain: Optional[DomainScanResult]
     dkim: Optional[DKIMScanResult]
     timestamp: Optional[datetime.datetime]
     message_timestamp: Optional[datetime.datetime]
+    incoming_tls_status: Optional[IncomingTLSStatus] = None
 
     @property
     def num_checked_mechanisms(self) -> int:
@@ -738,6 +746,7 @@ def scan(
     message: Optional[bytes],
     message_sender_ip: Optional[bytes],
     message_timestamp: Optional[datetime.datetime],
+    incoming_tls_status: Optional[IncomingTLSStatus] = None,
     nameservers: Optional[List[str]] = None,
     dkim_implementation_mismatch_callback: Optional[Callable[[bytes, bool, bool], None]] = None,
 ) -> ScanResult:
@@ -766,4 +775,5 @@ def scan(
         ),
         timestamp=datetime.datetime.now(),
         message_timestamp=message_timestamp,
+        incoming_tls_status=incoming_tls_status,
     )

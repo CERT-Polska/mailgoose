@@ -10,7 +10,7 @@ from typing import List, Optional, Tuple
 import dkim.util
 from email_validator import EmailNotValidError, validate_email
 from libmailgoose.language import Language
-from libmailgoose.scan import ScanResult, scan
+from libmailgoose.scan import IncomingTLSStatus, ScanResult, scan
 from libmailgoose.translate import translate_scan_result
 
 from common.config import Config
@@ -76,6 +76,7 @@ def scan_and_log(
     message: Optional[bytes],
     message_sender_ip: Optional[bytes],
     message_timestamp: Optional[datetime.datetime],
+    incoming_tls_status: Optional[IncomingTLSStatus],
     nameservers: List[str],
     language: Language,
     client_ip: Optional[str],
@@ -98,6 +99,7 @@ def scan_and_log(
         dkim=None,
         timestamp=datetime.datetime.now(),
         message_timestamp=message_timestamp,
+        incoming_tls_status=incoming_tls_status,
     )
 
     try:
@@ -109,6 +111,7 @@ def scan_and_log(
                 message=message,
                 message_sender_ip=message_sender_ip,
                 message_timestamp=message_timestamp,
+                incoming_tls_status=incoming_tls_status,
                 nameservers=nameservers,
                 dkim_implementation_mismatch_callback=dkim_implementation_mismatch_callback,
             ),

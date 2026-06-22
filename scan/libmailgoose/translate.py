@@ -1628,4 +1628,5 @@ def translate_scan_result(
         ),
         timestamp=scan_result.timestamp,
         message_timestamp=scan_result.message_timestamp,
+        incoming_tls_status=scan_result.incoming_tls_status,
     )

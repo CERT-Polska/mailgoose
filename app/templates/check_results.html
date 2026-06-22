@@ -27,7 +27,7 @@
     <div class="card-header
             {% if not data.valid %}
                 text-danger
-            {% elif data.record_could_not_be_fully_validated %}
+            {% elif data.record_could_not_be_fully_validated or data.could_not_be_tested %}
                 text-disabled
             {% elif data.warnings %}
                 text-warning-dark
@@ -37,7 +37,7 @@
 
         {% if not data.valid %}
             <i class="bi bi-x-square"></i>
-        {% elif data.record_could_not_be_fully_validated %}
+        {% elif data.record_could_not_be_fully_validated or data.could_not_be_tested %}
             <i class="bi bi-question-circle"></i>
         {% elif data.warnings %}
             <i class="bi bi-exclamation-triangle"></i>
@@ -49,6 +49,8 @@
             {% trans %}incorrect configuration{% endtrans %}
         {% elif data.record_could_not_be_fully_validated %}
             {% trans %}record couldn't be fully verified{% endtrans %}
+        {% elif data.could_not_be_tested %}
+            {% trans %}couldn't be tested{% endtrans %}
         {% elif data.warnings %}
             {% trans %}configuration warnings{% endtrans %}
         {% else %}
@@ -281,36 +283,62 @@
 
                     {% if result.domain.ssl %}
                         <div class="card p-1 bg-light border rounded-3 mb-3">
-                            {{ card_header("SSL/TLS", result.domain.ssl) }}
+                            {{ card_header("SSL/TLS", {
+                                "valid": result.domain.ssl.valid and result.incoming_tls_status != 'not_used',
+                                "warnings": result.domain.ssl.warnings,
+                            }) }}
                             <div class="card-body">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th class="d-none d-sm-table-cell">{% trans %}Preference{% endtrans %}</th>
-                                            <th class="d-table-cell d-sm-none">&nbsp;</th>
-                                            <th class="d-none d-sm-table-cell">{% trans %}Server{% endtrans %}</th>
-                                            <th class="d-none d-sm-table-cell">{% trans %}Port{% endtrans %}</th>
-                                            <th>{% trans %}Result{% endtrans %}</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for item in result.domain.ssl.results %}
-                                            <tr>
-                                                <td class="d-none d-sm-table-cell">{% if item.preference is not none %}{{ item.preference }}{% else %}-{% endif %}</td>
-                                                <td class="d-table-cell d-sm-none">{{ item.mx }}:{% if item.port %}{{ item.port }}{% else %}-{% endif %}</td>
-                                                <td class="d-none d-sm-table-cell">{{ item.mx }}</td>
-                                                <td class="d-none d-sm-table-cell">{% if item.port %}{{ item.port }}{% else %}-{% endif %}</td>
-                                                {% if item.error %}
-                                                    <td class="text-danger">{{ item.error }}</td>
-                                                {% elif item.warning %}
-                                                    <td class="text-warning-dark">{{ item.warning }}</td>
-                                                {% else %}
-                                                    <td class="text-success">{% trans %}Configuration valid{% endtrans %}</td>
-                                                {% endif %}
-                                            </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
+                                <div class="card border rounded-3 mb-3">
+                                    {{ card_header(gettext("Incoming mail"), result.domain.ssl) }}
+                                    <div class="card-body">
+                                        <table class="table mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th class="d-none d-sm-table-cell">{% trans %}Preference{% endtrans %}</th>
+                                                    <th class="d-table-cell d-sm-none">&nbsp;</th>
+                                                    <th class="d-none d-sm-table-cell">{% trans %}Server{% endtrans %}</th>
+                                                    <th class="d-none d-sm-table-cell">{% trans %}Port{% endtrans %}</th>
+                                                    <th>{% trans %}Result{% endtrans %}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for item in result.domain.ssl.results %}
+                                                    <tr>
+                                                        <td class="d-none d-sm-table-cell">{% if item.preference is not none %}{{ item.preference }}{% else %}-{% endif %}</td>
+                                                        <td class="d-table-cell d-sm-none">{{ item.mx }}:{% if item.port %}{{ item.port }}{% else %}-{% endif %}</td>
+                                                        <td class="d-none d-sm-table-cell">{{ item.mx }}</td>
+                                                        <td class="d-none d-sm-table-cell">{% if item.port %}{{ item.port }}{% else %}-{% endif %}</td>
+                                                        {% if item.error %}
+                                                            <td class="text-danger">{{ item.error }}</td>
+                                                        {% elif item.warning %}
+                                                            <td class="text-warning-dark">{{ item.warning }}</td>
+                                                        {% else %}
+                                                            <td class="text-success">{% trans %}Configuration valid{% endtrans %}</td>
+                                                        {% endif %}
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                {% if result.incoming_tls_status %}
+                                    <div class="card border rounded-3 mb-0">
+                                        {{ card_header(gettext("Outgoing mail"), {
+                                            "valid": result.incoming_tls_status != 'not_used',
+                                            "could_not_be_tested": result.incoming_tls_status == 'not_testable',
+                                        }) }}
+                                        <div class="card-body">
+                                            {% if result.incoming_tls_status == 'used' %}
+                                                {% trans %}Your mail server delivered the test message over TLS.{% endtrans %}
+                                            {% elif result.incoming_tls_status == 'not_used' %}
+                                                {% trans %}Your mail server delivered the test message without TLS.{% endtrans %}
+                                            {% elif result.incoming_tls_status == 'not_testable' %}
+                                                {% trans %}TLS support couldn't be tested - this instance is not configured with a TLS certificate, so the sender couldn't have used TLS even if they wanted to.{% endtrans %}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                {% endif %}
                             </div>
                         </div>
                     {% endif %}
