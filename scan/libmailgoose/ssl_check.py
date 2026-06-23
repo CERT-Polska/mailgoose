@@ -39,7 +39,9 @@ class SSLInternalError(Exception):
 class SSLCertificateError(Exception):
     pass
 
+
 ssl_certificate_description = "SSL/TLS certificate is used for establishing secure connections between servers. It ensures that the communication is encrypted and verifies the identity of the server. Yet they are not necessarily required for email delivery, as some servers may accept connections without a valid certificate. However, having a valid SSL/TLS certificate is considered a best practice for secure email communication."
+
 
 def retrieve_MX_records(domain: str, nameservers: Optional[List[str]] = None) -> List[Tuple[Optional[int], str]]:
     resolver = dns.resolver.Resolver()
@@ -203,7 +205,12 @@ def validate_ssl(
             parked=parked,
         )
         return SSLMXScanResult(
-            preference=preference, mx=mx, port=result_mx["port"], error=result_mx["error"], warning=result_mx["warning"], additional_info=result_mx.get("additional_info")
+            preference=preference,
+            mx=mx,
+            port=result_mx["port"],
+            error=result_mx["error"],
+            warning=result_mx["warning"],
+            additional_info=result_mx.get("additional_info"),
         )
 
     results = []
