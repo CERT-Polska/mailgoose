@@ -301,9 +301,17 @@
                                                 <td class="d-none d-sm-table-cell">{{ item.mx }}</td>
                                                 <td class="d-none d-sm-table-cell">{% if item.port %}{{ item.port }}{% else %}-{% endif %}</td>
                                                 {% if item.error %}
-                                                    <td class="text-danger">{{ item.error }}</td>
+                                                    <td class="text-danger">{{ item.error }}
+                                                    {% if item.additional_info %}
+                                                        <p>{{ item.additional_info }}</p>
+                                                    {% endif %}
+                                                    </td>
                                                 {% elif item.warning %}
-                                                    <td class="text-warning-dark">{{ item.warning }}</td>
+                                                    <td class="text-warning-dark">{{ item.warning }}
+                                                    {% if item.additional_info %}
+                                                        <p>{{ item.additional_info }}</p>
+                                                    {% endif %}
+                                                    </td>
                                                 {% else %}
                                                     <td class="text-success">{% trans %}Configuration valid{% endtrans %}</td>
                                                 {% endif %}

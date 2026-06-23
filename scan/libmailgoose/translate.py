@@ -1350,8 +1350,8 @@ TRANSLATIONS = {
             "nie można zweryfikować, czy certyfikat jest zaufany",
         ),
         (
-            "Certificate error: unable to get local issuer certificate",
-            "Błąd certyfikatu: nie można zweryfikować, czy certyfikat jest zaufany",
+            "Certificate error: unable to get local issuer certificate, possibly due to missing intermediate certificates or untrusted root CA in the certificate chain",
+            "Błąd certyfikatu: nie można zweryfikować, czy certyfikat jest zaufany, możliwe przyczyny: brakujące certyfikaty pośrednie lub niezaufany certyfikat CA w łańcuchu certyfikatów",
         ),
         (
             "Connection refused",
@@ -1494,6 +1494,10 @@ TRANSLATIONS = {
             f"{PLACEHOLDER}: A ptr mechanism points to {PLACEHOLDER}, but that domain/subdomain does not have any A/AAAA records.",
             f"{PLACEHOLDER}: Mechanizm ptr wskazuje na {PLACEHOLDER}, ale ta domena/subdomena nie ma rekordów A/AAAA.",
         ),
+        (
+            "SSL/TLS certificate is used for establishing secure connections between servers. It ensures that the communication is encrypted and verifies the identity of the server. Yet they are not necessarily required for email delivery, as some servers may accept connections without a valid certificate. However, having a valid SSL/TLS certificate is considered a best practice for secure email communication.",
+            "Certyfikat SSL/TLS jest używany do nawiązywania bezpiecznych połączeń między serwerami. Zapewnia szyfrowanie komunikacji i weryfikuje tożsamość serwera. Nie jest jednak konieczny do dostarczania wiadomości e-mail, ponieważ niektóre serwery mogą akceptować połączenia bez poprawnego certyfikatu. Niemniej posiadanie prawidłowego certyfikatu SSL/TLS jest uważane za najlepszą praktykę w zakresie bezpiecznej komunikacji e-mailowej.",
+        )
     ],
 }
 
@@ -1585,6 +1589,8 @@ def _translate_domain_result(
             result.error = translate(result.error, language, nonexistent_translation_handler)
         if result.warning:
             result.warning = translate(result.warning, language, nonexistent_translation_handler)
+        if result.additional_info:
+            result.additional_info = translate(result.additional_info, language, nonexistent_translation_handler)
 
     new_domain_result.warnings = [
         translate(warning, language, nonexistent_translation_handler) for warning in new_domain_result.warnings
