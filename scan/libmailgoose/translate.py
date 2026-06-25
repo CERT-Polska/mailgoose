@@ -1504,7 +1504,7 @@ TRANSLATIONS = {
             "Pomyślne załadowanie strony internetowej w przeglądarce nie gwarantuje, że certyfikat serwera pocztowego jest ważny, "
             "ponieważ usługi internetowe i pocztowe zazwyczaj korzystają z oddzielnych certyfikatów, które są konfigurowane niezależnie. "
             "Chociaż prawidłowy certyfikat SSL/TLS nie zawsze jest wymagany do dostarczania wiadomości e-mail, "
-            "uznaje się go za najlepszą praktykę zapewniającą bezpieczną komunikację e-mailową."
+            "uznaje się go za najlepszą praktykę zapewniającą bezpieczną komunikację e-mailową.",
         ),
     ],
 }
