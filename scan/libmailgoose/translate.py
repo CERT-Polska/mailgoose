@@ -1350,8 +1350,8 @@ TRANSLATIONS = {
             "nie można zweryfikować, czy certyfikat jest zaufany",
         ),
         (
-            "Certificate error: unable to get local issuer certificate",
-            "Błąd certyfikatu: nie można zweryfikować, czy certyfikat jest zaufany",
+            "Certificate error: unable to get local issuer certificate, possibly due to missing intermediate certificates or untrusted root CA in the certificate chain",
+            "Błąd certyfikatu: nie można zweryfikować, czy certyfikat jest zaufany, możliwe przyczyny: brakujące certyfikaty pośrednie lub niezaufany certyfikat CA w łańcuchu certyfikatów",
         ),
         (
             "Connection refused",
@@ -1494,6 +1494,18 @@ TRANSLATIONS = {
             f"{PLACEHOLDER}: A ptr mechanism points to {PLACEHOLDER}, but that domain/subdomain does not have any A/AAAA records.",
             f"{PLACEHOLDER}: Mechanizm ptr wskazuje na {PLACEHOLDER}, ale ta domena/subdomena nie ma rekordów A/AAAA.",
         ),
+        (
+            "An SSL/TLS certificate encrypts communication between servers while verifying the server's identity. "
+            "A website loading successfully in a browser does not guarantee that the mail server certificate is valid,  "
+            "as web and mail services typically use separate certificates that are configured independently. "
+            "Although a valid SSL/TLS certificate is not necessarily required for email delivery, "
+            "it is considered a best practice for ensuring secure email communication.",
+            "Certyfikat SSL/TLS zabezpiecza i szyfruje komunikację między serwerami, jednocześnie weryfikując tożsamość serwera. "
+            "Pomyślne załadowanie strony internetowej w przeglądarce nie gwarantuje, że certyfikat serwera pocztowego jest ważny, "
+            "ponieważ usługi internetowe i pocztowe zazwyczaj korzystają z oddzielnych certyfikatów, które są konfigurowane niezależnie. "
+            "Chociaż prawidłowy certyfikat SSL/TLS nie zawsze jest wymagany do dostarczania wiadomości e-mail, "
+            "uznaje się go za najlepszą praktykę zapewniającą bezpieczną komunikację e-mailową.",
+        ),
     ],
 }
 
@@ -1585,6 +1597,8 @@ def _translate_domain_result(
             result.error = translate(result.error, language, nonexistent_translation_handler)
         if result.warning:
             result.warning = translate(result.warning, language, nonexistent_translation_handler)
+        if result.additional_info:
+            result.additional_info = translate(result.additional_info, language, nonexistent_translation_handler)
 
     new_domain_result.warnings = [
         translate(warning, language, nonexistent_translation_handler) for warning in new_domain_result.warnings

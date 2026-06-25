@@ -22,6 +22,7 @@ class SSLMXScanResult:
     port: Optional[int]
     error: Optional[str] = None
     warning: Optional[str] = None
+    additional_info: Optional[str] = None
 
 
 @dataclasses.dataclass
@@ -37,6 +38,15 @@ class SSLInternalError(Exception):
 
 class SSLCertificateError(Exception):
     pass
+
+
+ssl_certificate_description = (
+    "An SSL/TLS certificate encrypts communication between servers while verifying the server's identity. "
+    "A website loading successfully in a browser does not guarantee that the mail server certificate is valid,  "
+    "as web and mail services typically use separate certificates that are configured independently. "
+    "Although a valid SSL/TLS certificate is not necessarily required for email delivery, "
+    "it is considered a best practice for ensuring secure email communication."
+)
 
 
 def retrieve_MX_records(domain: str, nameservers: Optional[List[str]] = None) -> List[Tuple[Optional[int], str]]:
@@ -145,15 +155,21 @@ def test_ssl_tls(
 
     except ssl.SSLCertVerificationError as e:
         result["connected"] = True
-        result["warning"] = f"Certificate error: {e.verify_message}"
+        verify_message = e.verify_message
+        if "unable to get local issuer certificate" in verify_message:
+            # this error needs to be more descriptive, as it doesn't tell the user what is wrong with the certificate
+            verify_message = "unable to get local issuer certificate, possibly due to missing intermediate certificates or untrusted root CA in the certificate chain"
+        result["warning"] = f"Certificate error: {verify_message}"
+        result["additional_info"] = ssl_certificate_description
+    except SSLCertificateError as e:
+        result["warning"] = str(e)
+        result["additional_info"] = ssl_certificate_description
     except ConnectionRefusedError:
         if not parked:
             # ECONNREFUSED is OK for parked domains
             result["error"] = "Connection refused"
     except SSLInternalError as e:
         result["error"] = str(e)
-    except SSLCertificateError as e:
-        result["warning"] = str(e)
     except TimeoutError:
         result["error"] = "Connection timed out"
     except Exception as e:
@@ -195,7 +211,12 @@ def validate_ssl(
             parked=parked,
         )
         return SSLMXScanResult(
-            preference=preference, mx=mx, port=result_mx["port"], error=result_mx["error"], warning=result_mx["warning"]
+            preference=preference,
+            mx=mx,
+            port=result_mx["port"],
+            error=result_mx["error"],
+            warning=result_mx["warning"],
+            additional_info=result_mx.get("additional_info"),
         )
 
     results = []

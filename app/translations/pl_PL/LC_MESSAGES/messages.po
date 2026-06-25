@@ -22,7 +22,7 @@ msgstr "Sprawdź domenę"
 #: app/templates/check_domain.html:12 app/templates/check_results.html:74
 #: app/templates/check_results.html:76 app/templates/check_results.html:78
 #: app/templates/check_results.html:199 app/templates/check_results.html:239
-#: app/templates/check_results.html:326
+#: app/templates/check_results.html:338
 msgid "Domain"
 msgstr "Domena"
 
@@ -235,7 +235,7 @@ msgstr ""
 
 #: app/templates/check_results.html:205 app/templates/check_results.html:210
 #: app/templates/check_results.html:245 app/templates/check_results.html:250
-#: app/templates/check_results.html:338
+#: app/templates/check_results.html:350
 msgid "Record"
 msgstr "Rekord"
 
@@ -244,23 +244,24 @@ msgid "Records"
 msgstr "Rekordy"
 
 #: app/templates/check_results.html:219 app/templates/check_results.html:259
-#: app/templates/check_results.html:343
+#: app/templates/check_results.html:313 app/templates/check_results.html:355
 msgid "Warnings"
 msgstr "Ostrzeżenia"
 
 #: app/templates/check_results.html:220 app/templates/check_results.html:224
 #: app/templates/check_results.html:260 app/templates/check_results.html:264
-#: app/templates/check_results.html:272 app/templates/check_results.html:344
-#: app/templates/check_results.html:348 app/templates/check_results.html:356
+#: app/templates/check_results.html:272 app/templates/check_results.html:356
+#: app/templates/check_results.html:360 app/templates/check_results.html:368
 msgid "none"
 msgstr "brak"
 
 #: app/templates/check_results.html:223 app/templates/check_results.html:263
-#: app/templates/check_results.html:347
+#: app/templates/check_results.html:309 app/templates/check_results.html:359
 msgid "Errors"
 msgstr "Błędy"
 
-#: app/templates/check_results.html:267 app/templates/check_results.html:351
+#: app/templates/check_results.html:267 app/templates/check_results.html:317
+#: app/templates/check_results.html:363
 msgid "Additional information"
 msgstr "Dodatkowe informacje"
 
@@ -280,15 +281,15 @@ msgstr "Port"
 msgid "Result"
 msgstr "Wynik"
 
-#: app/templates/check_results.html:308
+#: app/templates/check_results.html:306
 msgid "Configuration valid"
 msgstr "Konfiguracja prawidłowa"
 
-#: app/templates/check_results.html:332
+#: app/templates/check_results.html:344
 msgid "Selector"
 msgstr "Selektor"
 
-#: app/templates/check_results.html:371
+#: app/templates/check_results.html:383
 msgid ""
 "To increase the chance that your configuration is interpreted by all "
 "e-mail servers correctly, we recommend fixing all errors and warnings."
@@ -297,7 +298,7 @@ msgstr ""
 "zinterpretowana przez wszystkie serwery, rekomendujemy poprawę zarówno "
 "błędów, jak i ostrzeżeń."
 
-#: app/templates/check_results.html:379
+#: app/templates/check_results.html:391
 msgid ""
 "After fixing the issues, please rerun the scan - some problems can be "
 "detected only if earlier checks complete successfully."
