@@ -40,7 +40,13 @@ class SSLCertificateError(Exception):
     pass
 
 
-ssl_certificate_description = "SSL/TLS certificate is used for establishing secure connections between servers. It ensures that the communication is encrypted and verifies the identity of the server. Yet they are not necessarily required for email delivery, as some servers may accept connections without a valid certificate. However, having a valid SSL/TLS certificate is considered a best practice for secure email communication."
+ssl_certificate_description = (
+    "An SSL/TLS certificate encrypts communication between servers while verifying the server's identity. "
+    "A website loading successfully in a browser does not guarantee that the mail server certificate is valid,  "
+    "as web and mail services typically use separate certificates that are configured independently. "
+    "Although a valid SSL/TLS certificate is not necessarily required for email delivery, "
+    "it is considered a best practice for ensuring secure email communication."
+)
 
 
 def retrieve_MX_records(domain: str, nameservers: Optional[List[str]] = None) -> List[Tuple[Optional[int], str]]:

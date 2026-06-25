@@ -1495,8 +1495,16 @@ TRANSLATIONS = {
             f"{PLACEHOLDER}: Mechanizm ptr wskazuje na {PLACEHOLDER}, ale ta domena/subdomena nie ma rekordów A/AAAA.",
         ),
         (
-            "SSL/TLS certificate is used for establishing secure connections between servers. It ensures that the communication is encrypted and verifies the identity of the server. Yet they are not necessarily required for email delivery, as some servers may accept connections without a valid certificate. However, having a valid SSL/TLS certificate is considered a best practice for secure email communication.",
-            "Certyfikat SSL/TLS jest używany do nawiązywania bezpiecznych połączeń między serwerami. Zapewnia szyfrowanie komunikacji i weryfikuje tożsamość serwera. Nie jest jednak konieczny do dostarczania wiadomości e-mail, ponieważ niektóre serwery mogą akceptować połączenia bez poprawnego certyfikatu. Niemniej posiadanie prawidłowego certyfikatu SSL/TLS jest uważane za najlepszą praktykę w zakresie bezpiecznej komunikacji e-mailowej.",
+            "An SSL/TLS certificate encrypts communication between servers while verifying the server's identity. "
+            "A website loading successfully in a browser does not guarantee that the mail server certificate is valid,  "
+            "as web and mail services typically use separate certificates that are configured independently. "
+            "Although a valid SSL/TLS certificate is not necessarily required for email delivery, "
+            "it is considered a best practice for ensuring secure email communication.",
+            "Certyfikat SSL/TLS zabezpiecza i szyfruje komunikację między serwerami, jednocześnie weryfikując tożsamość serwera. "
+            "Pomyślne załadowanie strony internetowej w przeglądarce nie gwarantuje, że certyfikat serwera pocztowego jest ważny, "
+            "ponieważ usługi internetowe i pocztowe zazwyczaj korzystają z oddzielnych certyfikatów, które są konfigurowane niezależnie. "
+            "Chociaż prawidłowy certyfikat SSL/TLS nie zawsze jest wymagany do dostarczania wiadomości e-mail, "
+            "uznaje się go za najlepszą praktykę zapewniającą bezpieczną komunikację e-mailową."
         ),
     ],
 }
