@@ -37,7 +37,11 @@ class APITestCase(BaseTestCase):
                         "spf_not_required_because_of_correct_dmarc": False,
                         "domain": "starts-with-whitespace.dmarc.test.mailgoose.cert.pl",
                         "base_domain": "cert.pl",
-                        "warnings": [],
+                        "warnings": [
+                            "DNSSEC is not enabled for the domain. It is not required for correct e-mail sender configuration, "
+                            "but it provides additional protection against DNS spoofing, which could otherwise be used to "
+                            "undermine SPF, DKIM and DMARC. Consider enabling it if your DNS provider supports it."
+                        ],
                         "ssl": {
                             "results": [
                                 {
