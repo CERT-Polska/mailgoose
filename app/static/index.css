@@ -51,6 +51,10 @@ td ul {
     padding-left: 10px;
 }
 
+td ul li + li {
+    margin-top: 10px;
+}
+
 .input-group.with-margin {
     margin: 10px 0;
 }
