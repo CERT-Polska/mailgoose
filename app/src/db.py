@@ -1,10 +1,22 @@
 import datetime
 from enum import Enum
 
-from sqlalchemy import JSON, Boolean, Column, DateTime, Integer, String, create_engine
+from sqlalchemy import (
+    JSON,
+    Boolean,
+    Column,
+    DateTime,
+    Integer,
+    String,
+    create_engine,
+    text,
+)
 from sqlalchemy.orm import declarative_base, sessionmaker  # type: ignore
 
 from common.config import Config
+
+# An arbitrary but fixed key for the advisory lock that serializes schema creation (see the bottom of this file).
+SCHEMA_CREATION_LOCK_ID = 8129472314
 
 Base = declarative_base()
 engine = create_engine(Config.Data.DB_URL)
@@ -80,4 +92,10 @@ class ScanLogEntry(Base):  # type: ignore
         )
 
 
-Base.metadata.create_all(bind=engine)
+# Multiple workers (uvicorn and rq) import this module at startup and would otherwise race on
+# CREATE TABLE, flooding the logs with "duplicate key" errors on the first run. A transaction-level
+# advisory lock serializes schema creation: the first worker creates the tables and the others wait,
+# then find the tables already present and do nothing.
+with engine.begin() as connection:
+    connection.execute(text("SELECT pg_advisory_xact_lock(:lock_id)"), {"lock_id": SCHEMA_CREATION_LOCK_ID})
+    Base.metadata.create_all(bind=connection)
