@@ -303,8 +303,9 @@ def scan_domain(
         domain_result.domain_does_not_exist = True
         return domain_result
 
+    # DNSSEC is a property of the DNS zone, so we check it on the base domain rather than on a subdomain.
     try:
-        if not checkdmarc.dnssec.test_dnssec(from_domain, nameservers=nameservers, timeout=timeout):
+        if not checkdmarc.dnssec.test_dnssec(domain_result.base_domain, nameservers=nameservers, timeout=timeout):
             domain_result.warnings.append(
                 "DNSSEC is not enabled for the domain. It is not required for correct e-mail sender configuration, "
                 "but it provides additional protection against DNS spoofing, which could otherwise be used to "
@@ -313,7 +314,7 @@ def scan_domain(
     except Exception:
         # DNSSEC status is supplementary information - if we are unable to determine it, we skip the
         # warning rather than failing the whole scan.
-        LOGGER.exception("Unable to determine DNSSEC status for %s", from_domain)
+        LOGGER.exception("Unable to determine DNSSEC status for %s", domain_result.base_domain)
 
     try:
         spf_query = checkdmarc.spf.query_spf_record(envelope_domain, nameservers=nameservers, timeout=timeout)
