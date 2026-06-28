@@ -289,7 +289,7 @@
                             }) }}
                             <div class="card-body">
                                 <div class="card border rounded-3 mb-3">
-                                    {{ card_header(gettext("Outgoing mail"), result.domain.ssl) }}
+                                    {{ card_header(gettext("Incoming mail"), result.domain.ssl) }}
                                     <div class="card-body">
                                          <table class="table">
                                              <thead>
@@ -336,7 +336,7 @@
 
                                 {% if result.incoming_tls_status %}
                                     <div class="card border rounded-3 mb-0">
-                                        {{ card_header(gettext("Incoming mail"), {
+                                        {{ card_header(gettext("Outgoing mail"), {
                                             "valid": result.incoming_tls_status != 'not_used',
                                             "could_not_be_tested": result.incoming_tls_status == 'not_testable',
                                         }) }}

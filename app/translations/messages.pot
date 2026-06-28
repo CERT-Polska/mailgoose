@@ -248,7 +248,7 @@ msgid "Additional information"
 msgstr ""
 
 #: app/templates/check_results.html:292
-msgid "Outgoing mail"
+msgid "Incoming mail"
 msgstr ""
 
 #: app/templates/check_results.html:297
@@ -272,7 +272,7 @@ msgid "Configuration valid"
 msgstr ""
 
 #: app/templates/check_results.html:339
-msgid "Incoming mail"
+msgid "Outgoing mail"
 msgstr ""
 
 #: app/templates/check_results.html:345

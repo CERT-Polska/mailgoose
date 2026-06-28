@@ -270,8 +270,8 @@ msgid "Additional information"
 msgstr "Dodatkowe informacje"
 
 #: app/templates/check_results.html:292
-msgid "Outgoing mail"
-msgstr "Poczta wychodząca"
+msgid "Incoming mail"
+msgstr "Poczta przychodząca"
 
 #: app/templates/check_results.html:297
 msgid "Preference"
@@ -294,8 +294,8 @@ msgid "Configuration valid"
 msgstr "Konfiguracja prawidłowa"
 
 #: app/templates/check_results.html:339
-msgid "Incoming mail"
-msgstr "Poczta przychodząca"
+msgid "Outgoing mail"
+msgstr "Poczta wychodząca"
 
 #: app/templates/check_results.html:345
 msgid "Your mail server delivered the test message over TLS."
@@ -311,8 +311,8 @@ msgid ""
 "TLS certificate, so the sender couldn't have used TLS even if they wanted"
 " to."
 msgstr ""
-"Nie można było przetestować obsługi TLS - ta instancja nie jest skonfigurowana z "
-"certyfikatem TLS, więc nadawca nie mógłby użyć TLS."
+"Nie można było przetestować obsługi TLS - ta instancja nie jest "
+"skonfigurowana z certyfikatem TLS, więc nadawca nie mógłby użyć TLS."
 
 #: app/templates/check_results.html:372
 msgid "Selector"
