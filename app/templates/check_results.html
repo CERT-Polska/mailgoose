@@ -289,42 +289,54 @@
                             }) }}
                             <div class="card-body">
                                 <div class="card border rounded-3 mb-3">
-                                    {{ card_header(gettext("Incoming mail"), result.domain.ssl) }}
+                                    {{ card_header(gettext("Outgoing mail"), result.domain.ssl) }}
                                     <div class="card-body">
-                                        <table class="table mb-0">
-                                            <thead>
-                                                <tr>
-                                                    <th class="d-none d-sm-table-cell">{% trans %}Preference{% endtrans %}</th>
-                                                    <th class="d-table-cell d-sm-none">&nbsp;</th>
-                                                    <th class="d-none d-sm-table-cell">{% trans %}Server{% endtrans %}</th>
-                                                    <th class="d-none d-sm-table-cell">{% trans %}Port{% endtrans %}</th>
-                                                    <th>{% trans %}Result{% endtrans %}</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {% for item in result.domain.ssl.results %}
-                                                    <tr>
-                                                        <td class="d-none d-sm-table-cell">{% if item.preference is not none %}{{ item.preference }}{% else %}-{% endif %}</td>
-                                                        <td class="d-table-cell d-sm-none">{{ item.mx }}:{% if item.port %}{{ item.port }}{% else %}-{% endif %}</td>
-                                                        <td class="d-none d-sm-table-cell">{{ item.mx }}</td>
-                                                        <td class="d-none d-sm-table-cell">{% if item.port %}{{ item.port }}{% else %}-{% endif %}</td>
-                                                        {% if item.error %}
-                                                            <td class="text-danger">{{ item.error }}</td>
-                                                        {% elif item.warning %}
-                                                            <td class="text-warning-dark">{{ item.warning }}</td>
-                                                        {% else %}
-                                                            <td class="text-success">{% trans %}Configuration valid{% endtrans %}</td>
-                                                        {% endif %}
-                                                    </tr>
-                                                {% endfor %}
-                                            </tbody>
+                                         <table class="table">
+                                             <thead>
+                                                 <tr>
+                                                     <th class="d-none d-sm-table-cell">{% trans %}Preference{% endtrans %}</th>
+                                                     <th class="d-table-cell d-sm-none">&nbsp;</th>
+                                                     <th class="d-none d-sm-table-cell">{% trans %}Server{% endtrans %}</th>
+                                                     <th class="d-none d-sm-table-cell">{% trans %}Port{% endtrans %}</th>
+                                                     <th>{% trans %}Result{% endtrans %}</th>
+                                                 </tr>
+                                             </thead>
+                                             <tbody>
+                                                 {% for item in result.domain.ssl.results %}
+                                                     <tr>
+                                                         <td class="d-none d-sm-table-cell">{% if item.preference is not none %}{{ item.preference }}{% else %}-{% endif %}</td>
+                                                         <td class="d-table-cell d-sm-none">{{ item.mx }}:{% if item.port %}{{ item.port }}{% else %}-{% endif %}</td>
+                                                         <td class="d-none d-sm-table-cell">{{ item.mx }}</td>
+                                                         <td class="d-none d-sm-table-cell">{% if item.port %}{{ item.port }}{% else %}-{% endif %}</td>
+                                                         <td>
+
+                                                         {% if not item.error and not item.warning %}
+                                                             <p class="text-success mb-0">{% trans %}Configuration valid{% endtrans %}</p>
+                                                         {% else %}
+                                                             {% if item.error %}
+                                                                 <b class="text-danger">{% trans %}Errors{% endtrans %}:</b>
+                                                                 <p class="mb-0">{{ item.error }}</p>
+                                                             {% endif %}
+                                                             {% if item.warning %}
+                                                                 <b class="text-warning-dark">{% trans %}Warnings{% endtrans %}:</b>
+                                                                 <p class="mb-0">{{ item.warning }}</p>
+                                                             {% endif %}
+                                                             {% if item.additional_info %}
+                                                                 <b>{% trans %}Additional information{% endtrans %}:</b>
+                                                                 <p class="mb-0">{{ item.additional_info }}</p>
+                                                             {% endif %}
+                                                         {% endif %}
+                                                         </td>
+                                                     </tr>
+                                                 {% endfor %}
+                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
 
                                 {% if result.incoming_tls_status %}
                                     <div class="card border rounded-3 mb-0">
-                                        {{ card_header(gettext("Outgoing mail"), {
+                                        {{ card_header(gettext("Incoming mail"), {
                                             "valid": result.incoming_tls_status != 'not_used',
                                             "could_not_be_tested": result.incoming_tls_status == 'not_testable',
                                         }) }}

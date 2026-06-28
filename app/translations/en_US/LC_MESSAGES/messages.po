@@ -19,10 +19,10 @@ msgstr ""
 msgid "Check domain"
 msgstr ""
 
-#: app/templates/check_domain.html:12 app/templates/check_results.html:76
-#: app/templates/check_results.html:78 app/templates/check_results.html:80
-#: app/templates/check_results.html:201 app/templates/check_results.html:241
-#: app/templates/check_results.html:354
+#: app/templates/check_domain.html:12 app/templates/check_results.html:74
+#: app/templates/check_results.html:76 app/templates/check_results.html:78
+#: app/templates/check_results.html:199 app/templates/check_results.html:239
+#: app/templates/check_results.html:338
 msgid "Domain"
 msgstr ""
 
@@ -215,9 +215,9 @@ msgid ""
 "properly verify e-mail message authenticity."
 msgstr ""
 
-#: app/templates/check_results.html:207 app/templates/check_results.html:212
-#: app/templates/check_results.html:247 app/templates/check_results.html:252
-#: app/templates/check_results.html:366
+#: app/templates/check_results.html:205 app/templates/check_results.html:210
+#: app/templates/check_results.html:245 app/templates/check_results.html:250
+#: app/templates/check_results.html:350
 msgid "Record"
 msgstr ""
 
@@ -225,24 +225,25 @@ msgstr ""
 msgid "Records"
 msgstr ""
 
-#: app/templates/check_results.html:221 app/templates/check_results.html:261
-#: app/templates/check_results.html:371
+#: app/templates/check_results.html:219 app/templates/check_results.html:259
+#: app/templates/check_results.html:313 app/templates/check_results.html:355
 msgid "Warnings"
 msgstr ""
 
-#: app/templates/check_results.html:222 app/templates/check_results.html:226
-#: app/templates/check_results.html:262 app/templates/check_results.html:266
-#: app/templates/check_results.html:274 app/templates/check_results.html:372
-#: app/templates/check_results.html:376 app/templates/check_results.html:384
+#: app/templates/check_results.html:220 app/templates/check_results.html:224
+#: app/templates/check_results.html:260 app/templates/check_results.html:264
+#: app/templates/check_results.html:272 app/templates/check_results.html:356
+#: app/templates/check_results.html:360 app/templates/check_results.html:368
 msgid "none"
 msgstr ""
 
-#: app/templates/check_results.html:225 app/templates/check_results.html:265
-#: app/templates/check_results.html:375
+#: app/templates/check_results.html:223 app/templates/check_results.html:263
+#: app/templates/check_results.html:309 app/templates/check_results.html:359
 msgid "Errors"
 msgstr ""
 
-#: app/templates/check_results.html:269 app/templates/check_results.html:379
+#: app/templates/check_results.html:267 app/templates/check_results.html:317
+#: app/templates/check_results.html:363
 msgid "Additional information"
 msgstr ""
 
@@ -266,40 +267,21 @@ msgstr ""
 msgid "Result"
 msgstr ""
 
-#: app/templates/check_results.html:316
+#: app/templates/check_results.html:306
 msgid "Configuration valid"
 msgstr ""
 
-#: app/templates/check_results.html:327
-msgid "Outgoing mail"
-msgstr ""
-
-#: app/templates/check_results.html:333
-msgid "Your mail server delivered the test message over TLS."
-msgstr ""
-
-#: app/templates/check_results.html:335
-msgid "Your mail server delivered the test message without TLS."
-msgstr ""
-
-#: app/templates/check_results.html:337
-msgid ""
-"TLS support couldn't be tested - this instance is not configured with a "
-"TLS certificate, so the sender couldn't have used TLS even if they wanted"
-" to."
-msgstr ""
-
-#: app/templates/check_results.html:360
+#: app/templates/check_results.html:344
 msgid "Selector"
 msgstr ""
 
-#: app/templates/check_results.html:399
+#: app/templates/check_results.html:383
 msgid ""
 "To increase the chance that your configuration is interpreted by all "
 "e-mail servers correctly, we recommend fixing all errors and warnings."
 msgstr ""
 
-#: app/templates/check_results.html:407
+#: app/templates/check_results.html:391
 msgid ""
 "After fixing the issues, please rerun the scan - some problems can be "
 "detected only if earlier checks complete successfully."
