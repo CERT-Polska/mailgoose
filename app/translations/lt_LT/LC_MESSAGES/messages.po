@@ -19,10 +19,10 @@ msgstr "Nukopijuota"
 msgid "Check domain"
 msgstr "Tikrinti domeną"
 
-#: app/templates/check_domain.html:12 app/templates/check_results.html:74
-#: app/templates/check_results.html:76 app/templates/check_results.html:78
-#: app/templates/check_results.html:199 app/templates/check_results.html:239
-#: app/templates/check_results.html:338
+#: app/templates/check_domain.html:12 app/templates/check_results.html:76
+#: app/templates/check_results.html:78 app/templates/check_results.html:80
+#: app/templates/check_results.html:201 app/templates/check_results.html:241
+#: app/templates/check_results.html:366
 msgid "Domain"
 msgstr "Domenas"
 
@@ -100,41 +100,45 @@ msgid "record couldn't be fully verified"
 msgstr "įrašas negali būti pilnai patvirtintas"
 
 #: app/templates/check_results.html:53
+msgid "couldn't be tested"
+msgstr ""
+
+#: app/templates/check_results.html:55
 msgid "configuration warnings"
 msgstr "konfiguracijos klaidos"
 
-#: app/templates/check_results.html:55
+#: app/templates/check_results.html:57
 msgid "correct configuration"
 msgstr "teisinga konfiguracija"
 
-#: app/templates/check_results.html:81
+#: app/templates/check_results.html:83
 msgid "e-mail sender verification mechanisms check results:"
 msgstr "pašto saugos testo rezultatai"
 
-#: app/templates/check_results.html:83
+#: app/templates/check_results.html:85
 msgid "E-mail sender verification mechanisms check results:"
 msgstr "pašto saugos testo rezultatai"
 
-#: app/templates/check_results.html:86
+#: app/templates/check_results.html:88
 msgid "SPF and DMARC"
 msgstr "SPF ir DMARC"
 
-#: app/templates/check_results.html:87
+#: app/templates/check_results.html:89
 msgid "DKIM"
 msgstr "DKIM"
 
-#: app/templates/check_results.html:88
+#: app/templates/check_results.html:90
 msgid "SPF, DMARC and DKIM"
 msgstr "SPF, DMARC ir DKIM"
 
-#: app/templates/check_results.html:95
+#: app/templates/check_results.html:97
 #, python-format
 msgid ""
 "The results you are viewing are older than %(age_threshold_minutes)s "
 "minutes."
 msgstr "Rezultatai kuriuos žiūrite yra senesni nei %(age_threshold_minutes)s min."
 
-#: app/templates/check_results.html:100
+#: app/templates/check_results.html:102
 #, python-format
 msgid ""
 "If you want to view up-to-date results, please <a "
@@ -143,69 +147,69 @@ msgstr ""
 "Jeigu norite pamatyti naujausius rezultatus, prašome <a "
 "href='%(rescan_url)s'>atlikti naują patikrinimą.</a>"
 
-#: app/templates/check_results.html:109
+#: app/templates/check_results.html:111
 msgid "Test date: "
 msgstr "Testo data: "
 
-#: app/templates/check_results.html:110
+#: app/templates/check_results.html:112
 #, python-format
 msgid "(e-mail message from %(date_str)s)"
 msgstr "(el-laiškas žinutė iš %(date_str)s)"
 
-#: app/templates/check_results.html:113
+#: app/templates/check_results.html:115
 msgid "To share check results, copy the following link:"
 msgstr "Jei norite pasidalinti patikrinimo rezultatais, nukopijuokite šią nuorodą:"
 
-#: app/templates/check_results.html:124
+#: app/templates/check_results.html:126
 msgid "Domain does not exist."
 msgstr ""
 
 # "link:"
-#: app/templates/check_results.html:137
+#: app/templates/check_results.html:139
 msgid "Check summary"
 msgstr "Patikrinimo rezultatai"
 
-#: app/templates/check_results.html:141
+#: app/templates/check_results.html:143
 msgctxt "zero"
 msgid "mechanisms"
 msgstr "mechanizmai"
 
-#: app/templates/check_results.html:143
+#: app/templates/check_results.html:145
 msgid "mechanism"
 msgstr "mechanizmas"
 
-#: app/templates/check_results.html:145
+#: app/templates/check_results.html:147
 msgid "mechanisms"
 msgstr "mechanizmai"
 
-#: app/templates/check_results.html:147
+#: app/templates/check_results.html:149
 msgid "out of"
 msgstr "iš"
 
-#: app/templates/check_results.html:150
-msgctxt "zero"
-msgid "configured"
-msgstr "sukonfigūruotas"
-
 #: app/templates/check_results.html:152
-msgctxt "singular"
+msgctxt "zero"
 msgid "configured"
 msgstr "sukonfigūruotas"
 
 #: app/templates/check_results.html:154
+msgctxt "singular"
+msgid "configured"
+msgstr "sukonfigūruotas"
+
+#: app/templates/check_results.html:156
 msgctxt "plural"
 msgid "configured"
 msgstr "sukonfigūruoti"
 
-#: app/templates/check_results.html:156
+#: app/templates/check_results.html:158
 msgid "without issues."
 msgstr "be klaidų."
 
-#: app/templates/check_results.html:173
+#: app/templates/check_results.html:175
 msgid "SPF: the record is optional"
 msgstr "SPF: įrašas neprivalomas"
 
-#: app/templates/check_results.html:177
+#: app/templates/check_results.html:179
 msgid ""
 "Because the DMARC record is configured correctly, the SPF record is not "
 "required. Sending e-mail messages from this domain without using the SPF "
@@ -216,7 +220,7 @@ msgstr ""
 "privalomas. Siunčiami pranešimai iš šio domeno nenaudojant SPF mechanizmą"
 " yra įmanomi - tokiu atveju žinutė turi turėti teisingą DKIM parašą."
 
-#: app/templates/check_results.html:184
+#: app/templates/check_results.html:186
 msgid ""
 "However, we recommend configuring an SPF record if possible (even if the "
 "domain is not used to send e-mails), because older mail servers may not "
@@ -230,63 +234,86 @@ msgstr ""
 " mechanizmų SPF, DKIM ir DMARC - kombinacija leidžia visiems serveriams "
 "tinkamai patikrinti el. pašto žinučių autentiškumą."
 
-#: app/templates/check_results.html:205 app/templates/check_results.html:210
-#: app/templates/check_results.html:245 app/templates/check_results.html:250
-#: app/templates/check_results.html:350
+#: app/templates/check_results.html:207 app/templates/check_results.html:212
+#: app/templates/check_results.html:247 app/templates/check_results.html:252
+#: app/templates/check_results.html:378
 msgid "Record"
 msgstr "Įrašas"
 
-#: app/templates/check_results.html:210 app/templates/check_results.html:250
+#: app/templates/check_results.html:212 app/templates/check_results.html:252
 msgid "Records"
 msgstr "Įrašai"
 
-#: app/templates/check_results.html:219 app/templates/check_results.html:259
-#: app/templates/check_results.html:313 app/templates/check_results.html:355
+#: app/templates/check_results.html:221 app/templates/check_results.html:261
+#: app/templates/check_results.html:321 app/templates/check_results.html:383
 msgid "Warnings"
 msgstr "Įspėjimai"
 
-#: app/templates/check_results.html:220 app/templates/check_results.html:224
-#: app/templates/check_results.html:260 app/templates/check_results.html:264
-#: app/templates/check_results.html:272 app/templates/check_results.html:356
-#: app/templates/check_results.html:360 app/templates/check_results.html:368
+#: app/templates/check_results.html:222 app/templates/check_results.html:226
+#: app/templates/check_results.html:262 app/templates/check_results.html:266
+#: app/templates/check_results.html:274 app/templates/check_results.html:384
+#: app/templates/check_results.html:388 app/templates/check_results.html:396
 msgid "none"
 msgstr "nėra"
 
-#: app/templates/check_results.html:223 app/templates/check_results.html:263
-#: app/templates/check_results.html:309 app/templates/check_results.html:359
+#: app/templates/check_results.html:225 app/templates/check_results.html:265
+#: app/templates/check_results.html:317 app/templates/check_results.html:387
 msgid "Errors"
 msgstr "Klaidos"
 
-#: app/templates/check_results.html:267 app/templates/check_results.html:317
-#: app/templates/check_results.html:363
+#: app/templates/check_results.html:269 app/templates/check_results.html:325
+#: app/templates/check_results.html:391
 msgid "Additional information"
 msgstr ""
 
-#: app/templates/check_results.html:289
+#: app/templates/check_results.html:292
+msgid "Incoming mail"
+msgstr ""
+
+#: app/templates/check_results.html:297
 msgid "Preference"
 msgstr ""
 
-#: app/templates/check_results.html:291
+#: app/templates/check_results.html:299
 msgid "Server"
 msgstr ""
 
-#: app/templates/check_results.html:292
+#: app/templates/check_results.html:300
 msgid "Port"
 msgstr ""
 
-#: app/templates/check_results.html:293
+#: app/templates/check_results.html:301
 msgid "Result"
 msgstr ""
 
-#: app/templates/check_results.html:306
+#: app/templates/check_results.html:314
 msgid "Configuration valid"
 msgstr ""
 
-#: app/templates/check_results.html:344
+#: app/templates/check_results.html:339
+msgid "Outgoing mail"
+msgstr ""
+
+#: app/templates/check_results.html:345
+msgid "Your mail server delivered the test message over TLS."
+msgstr ""
+
+#: app/templates/check_results.html:347
+msgid "Your mail server delivered the test message without TLS."
+msgstr ""
+
+#: app/templates/check_results.html:349
+msgid ""
+"TLS support couldn't be tested - this instance is not configured with a "
+"TLS certificate, so the sender couldn't have used TLS even if they wanted"
+" to."
+msgstr ""
+
+#: app/templates/check_results.html:372
 msgid "Selector"
 msgstr ""
 
-#: app/templates/check_results.html:383
+#: app/templates/check_results.html:411
 msgid ""
 "To increase the chance that your configuration is interpreted by all "
 "e-mail servers correctly, we recommend fixing all errors and warnings."
@@ -295,7 +322,7 @@ msgstr ""
 "interpretuojama visų el. pašto serverių, mes rekomenduojame ištaisyti "
 "visas klaidas ir perspėjimus. "
 
-#: app/templates/check_results.html:391
+#: app/templates/check_results.html:419
 msgid ""
 "After fixing the issues, please rerun the scan - some problems can be "
 "detected only if earlier checks complete successfully."

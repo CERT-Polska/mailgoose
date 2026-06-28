@@ -10,6 +10,7 @@ from typing import Any, Dict, Optional, Sequence, Union
 from aiosmtpd.controller import Controller
 from aiosmtpd.handlers import Message as BaseMessageHandler
 from aiosmtpd.smtp import SMTP, Envelope, Session
+from libmailgoose.scan import IncomingTLSStatus
 from redis import Redis
 
 from common.config import Config
@@ -49,7 +50,14 @@ class RedisHandler(BaseMessageHandler):
         # don't break DKIM body hash.
         content = envelope.original_content or b""
 
+        if SSL_CONTEXT is None:
+            tls_status = IncomingTLSStatus.NOT_TESTABLE
+        elif session.ssl is not None:
+            tls_status = IncomingTLSStatus.USED
+        else:
+            tls_status = IncomingTLSStatus.NOT_USED
         LOGGER.info("SSL: %s", session.ssl)
+
         LOGGER.info(
             "Raw message body bytes (hexlified): %s",
             binascii.hexlify(content),
@@ -86,6 +94,11 @@ class RedisHandler(BaseMessageHandler):
                     key + b"-sender",
                     Config.Data.REDIS_MESSAGE_DATA_EXPIRY_SECONDS,
                     mail_from,
+                )
+                REDIS.setex(
+                    key + b"-tls",
+                    Config.Data.REDIS_MESSAGE_DATA_EXPIRY_SECONDS,
+                    tls_status.value,
                 )
                 LOGGER.info("Saved")
             except Exception:
