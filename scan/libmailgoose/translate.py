@@ -1511,6 +1511,10 @@ TRANSLATIONS = {
             "Chociaż prawidłowy certyfikat SSL/TLS nie zawsze jest wymagany do dostarczania wiadomości e-mail, "
             "uznaje się go za najlepszą praktykę zapewniającą bezpieczną komunikację e-mailową.",
         ),
+        (
+            "Duplicate p tags are not permitted",
+            "Wielokrotne użycie tagu 'p' nie jest dozwolone.",
+        ),
     ],
 }
 
