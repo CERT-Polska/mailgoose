@@ -38,7 +38,7 @@ def has_mx_records(domain: str) -> bool:
 
     try:
         has_mx_records = len(dns.resolver.resolve(domain, "MX")) > 0
-    except dns.resolver.NoAnswer:
+    except dns.exception.DNSException:
         pass
 
     return has_mx_records
