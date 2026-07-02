@@ -36,16 +36,8 @@ LOGGER = build_logger(__name__)
 def has_mx_records(domain: str) -> bool:
     has_mx_records = False
 
-    # Try to find an SMTP for current domain or for the private suffix domain - let's treat a domain
-    # as parked if we don't see a MX record on either of them, as some DMARC checks are performed
-    # on the private suffix domain.
     try:
         has_mx_records = len(dns.resolver.resolve(domain, "MX")) > 0
-    except dns.resolver.NoAnswer:
-        pass
-
-    try:
-        has_mx_records = has_mx_records or len(dns.resolver.resolve(psl.privatesuffix(domain), "MX")) > 0
     except dns.resolver.NoAnswer:
         pass
 
