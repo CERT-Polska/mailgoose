@@ -1601,13 +1601,14 @@ def _translate_domain_result(
         for additional_info in domain_result.dmarc.additional_info
     ]
 
-    for result in new_domain_result.ssl.results:
-        if result.error:
-            result.error = translate(result.error, language, nonexistent_translation_handler)
-        if result.warning:
-            result.warning = translate(result.warning, language, nonexistent_translation_handler)
-        if result.additional_info:
-            result.additional_info = translate(result.additional_info, language, nonexistent_translation_handler)
+    if new_domain_result.ssl:
+        for result in new_domain_result.ssl.results:
+            if result.error:
+                result.error = translate(result.error, language, nonexistent_translation_handler)
+            if result.warning:
+                result.warning = translate(result.warning, language, nonexistent_translation_handler)
+            if result.additional_info:
+                result.additional_info = translate(result.additional_info, language, nonexistent_translation_handler)
 
     new_domain_result.warnings = [
         translate(warning, language, nonexistent_translation_handler) for warning in new_domain_result.warnings
