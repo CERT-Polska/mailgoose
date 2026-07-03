@@ -44,9 +44,7 @@ def has_mx_records(domain: str) -> bool:
     try:
         privatesuffix = psl.privatesuffix(domain)
         if privatesuffix:
-            has_mx_records = (
-                has_mx_records or len(dns.resolver.resolve(privatesuffix, "MX")) > 0
-            )
+            has_mx_records = has_mx_records or len(dns.resolver.resolve(privatesuffix, "MX")) > 0
     except dns.exception.DNSException:
         pass
 
