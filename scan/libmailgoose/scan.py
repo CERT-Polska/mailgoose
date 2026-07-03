@@ -33,6 +33,24 @@ psl = publicsuffixlist.PublicSuffixList()
 LOGGER = build_logger(__name__)
 
 
+def has_mx_records(domain: str) -> bool:
+    has_mx_records = False
+
+    try:
+        has_mx_records = len(dns.resolver.resolve(domain, "MX")) > 0
+    except dns.exception.DNSException:
+        pass
+
+    try:
+        privatesuffix = psl.privatesuffix(domain)
+        if privatesuffix:
+            has_mx_records = has_mx_records or len(dns.resolver.resolve(privatesuffix, "MX")) > 0
+    except dns.exception.DNSException:
+        pass
+
+    return has_mx_records
+
+
 def check_domain_exists(domain: str) -> bool:
     """
     Check if a domain exists by looking up its DNS records.
@@ -84,7 +102,7 @@ class DMARCScanResult:
 class DomainScanResult:
     spf: SPFScanResult
     dmarc: DMARCScanResult
-    ssl: ssl_check.SSLScanResult
+    ssl: Optional[ssl_check.SSLScanResult]
     domain: str
     base_domain: str
     warnings: List[str]
@@ -235,15 +253,19 @@ def scan_domain(
     from_domain: str,
     dkim_domain: Optional[str],
     message_sender_ip: Optional[bytes] = None,
-    parked: bool = False,
+    parked: Optional[bool] = None,
     nameservers: Optional[List[str]] = None,
     include_dmarc_tag_descriptions: bool = False,
     timeout: float = 10.0,
     ignore_void_dns_lookups: bool = False,
     fallback_to_hostname_as_mx_in_ssl_check: bool = True,
 ) -> DomainScanResult:
+
     envelope_domain = validate_and_sanitize_domain(envelope_domain)
     from_domain = validate_and_sanitize_domain(from_domain)
+
+    if parked is None:
+        parked = not has_mx_records(envelope_domain or from_domain)
 
     if dkim_domain:
         dkim_domain = validate_and_sanitize_domain(dkim_domain)
@@ -293,12 +315,16 @@ def scan_domain(
             warnings=[],
             additional_info=[],
         ),
-        ssl=ssl_check.validate_ssl(
-            from_domain,
-            nameservers=nameservers,
-            timeout=timeout,
-            parked=parked,
-            fallback_to_hostname=fallback_to_hostname_as_mx_in_ssl_check,
+        ssl=(
+            ssl_check.validate_ssl(
+                from_domain,
+                nameservers=nameservers,
+                timeout=timeout,
+                parked=parked,
+                fallback_to_hostname=fallback_to_hostname_as_mx_in_ssl_check,
+            )
+            if not parked
+            else None
         ),
         domain=domain,
         base_domain=checkdmarc.get_base_domain(domain),
@@ -763,6 +789,9 @@ def scan(
             dkim_domain=dkim_domain,
             message_sender_ip=message_sender_ip,
             nameservers=nameservers,
+            parked=(
+                False if message else None
+            ),  # if we have a message, the domain can't be parked. If we don't, let's check it (None == no information).
         ),
         dkim=(
             scan_dkim(
