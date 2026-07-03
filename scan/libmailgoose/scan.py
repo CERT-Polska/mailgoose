@@ -42,10 +42,12 @@ def has_mx_records(domain: str) -> bool:
         pass
 
     try:
-        has_mx_records = (
-            has_mx_records or len(dns.resolver.resolve(psl.privatesuffix(domain), "MX")) > 0
-        )
-    except dns.resolver.NoAnswer:
+        privatesuffix = psl.privatesuffix(domain)
+        if privatesuffix:
+            has_mx_records = (
+                has_mx_records or len(dns.resolver.resolve(privatesuffix, "MX")) > 0
+            )
+    except dns.exception.DNSException:
         pass
 
     return has_mx_records
@@ -261,11 +263,11 @@ def scan_domain(
     fallback_to_hostname_as_mx_in_ssl_check: bool = True,
 ) -> DomainScanResult:
 
-    if parked is None:
-        parked = not has_mx_records(from_domain)
-
     envelope_domain = validate_and_sanitize_domain(envelope_domain)
     from_domain = validate_and_sanitize_domain(from_domain)
+
+    if parked is None:
+        parked = not has_mx_records(envelope_domain or from_domain)
 
     if dkim_domain:
         dkim_domain = validate_and_sanitize_domain(dkim_domain)
