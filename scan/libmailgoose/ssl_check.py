@@ -17,9 +17,17 @@ def is_private_ip(ip_str: str) -> bool:
     try:
         addr = ipaddress.ip_address(ip_str)
         exempt_cidrs = [ipaddress.ip_network(cidr) for cidr in Config.Network.EXEMPT_CIDRS]
-        return addr.is_private or addr.is_loopback or addr.is_link_local or addr.is_reserved or addr.is_multicast or any(addr in cidr for cidr in exempt_cidrs)
+        return (
+            addr.is_private
+            or addr.is_loopback
+            or addr.is_link_local
+            or addr.is_reserved
+            or addr.is_multicast
+            or any(addr in cidr for cidr in exempt_cidrs)
+        )
     except ValueError:
         return True
+
 
 class SSLEnum(enum.Enum):
     IMPLICIT = "Implicit TLS"
@@ -147,13 +155,15 @@ def test_ssl_tls(
         else:
             # STARTTLS — connect plain, then upgrade
             with smtplib.SMTP(hostname, port, timeout=timeout, local_hostname="mailgoose") as smtp:
+                if smtp.sock is None:
+                    raise ConnectionRefusedError
                 smtp_ip = smtp.sock.getpeername()[0]
                 if is_private_ip(smtp_ip):
                     raise ConnectionRefusedError
 
                 if smtp_ip != ip:
                     raise ConnectionRefusedError
-                
+
                 result["connected"] = True
                 smtp.ehlo()
                 ehlo_response = smtp.ehlo_resp.decode() if smtp.ehlo_resp else None  # type: ignore
