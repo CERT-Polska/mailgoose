@@ -10,20 +10,17 @@ from typing import Any, Dict, List, Optional, Tuple
 
 import dns.resolver
 
-from common.config import Config
 
-
-def is_private_ip(ip_str: str) -> bool:
+def is_private_ip(ip_str: str, exempt_cidrs: list[ipaddress.IPv4Network] = []) -> bool:
     try:
         addr = ipaddress.ip_address(ip_str)
-        exempt_cidrs = [ipaddress.ip_network(cidr) for cidr in Config.Network.EXEMPT_CIDRS]
         return (
             addr.is_private
             or addr.is_loopback
             or addr.is_link_local
             or addr.is_reserved
             or addr.is_multicast
-            or any(addr in cidr for cidr in exempt_cidrs)
+            or any(addr in cidr for cidr in exempt_cidrs if addr.version == cidr.version)
         )
     except ValueError:
         return True
@@ -111,7 +108,7 @@ def validate_tls_info(tls_sock: ssl.SSLSocket) -> None:
 
 
 def test_ssl_tls(
-    hostname: str, ip: str, port: int, ssl_type: SSLEnum, nameservers: Optional[List[str]], timeout: float, parked: bool
+    hostname: str, ip: str, port: int, ssl_type: SSLEnum, nameservers: Optional[List[str]], timeout: float, parked: bool, exempt_cidrs: list[ipaddress.IPv4Network]
 ) -> Dict[str, Any]:
     # important - some servers rejects EHLO if reverse hostname is invalid (eg. poczta.onet.pl)
     result: Dict[str, Any] = {
@@ -125,7 +122,7 @@ def test_ssl_tls(
     context.verify_mode = ssl.CERT_REQUIRED
 
     try:
-        if is_private_ip(ip):
+        if is_private_ip(ip, exempt_cidrs):
             raise ConnectionRefusedError
 
         if ssl_type == SSLEnum.IMPLICIT:
@@ -158,7 +155,7 @@ def test_ssl_tls(
                 if smtp.sock is None:
                     raise ConnectionRefusedError
                 smtp_ip = smtp.sock.getpeername()[0]
-                if is_private_ip(smtp_ip):
+                if is_private_ip(smtp_ip, exempt_cidrs):
                     raise ConnectionRefusedError
 
                 if smtp_ip != ip:
@@ -210,7 +207,7 @@ def test_ssl_tls(
 
 
 def validate_ssl(
-    host: str, nameservers: Optional[List[str]], timeout: float, parked: bool, fallback_to_hostname: bool
+    host: str, nameservers: Optional[List[str]], timeout: float, parked: bool, fallback_to_hostname: bool, exempt_cidrs: list[ipaddress.IPv4Network] = []
 ) -> SSLScanResult:
     ports = {
         25: SSLEnum.STARTTLS,
@@ -240,6 +237,7 @@ def validate_ssl(
             nameservers=nameservers,
             timeout=timeout,
             parked=parked,
+            exempt_cidrs=exempt_cidrs
         )
         return SSLMXScanResult(
             preference=preference,
@@ -271,7 +269,7 @@ def validate_ssl(
                     )
                     continue
 
-            if is_private_ip(ip):
+            if is_private_ip(ip, exempt_cidrs):
                 results.append(
                     SSLMXScanResult(
                         preference=preference,

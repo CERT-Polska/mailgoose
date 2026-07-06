@@ -1,6 +1,7 @@
 import datetime
 import enum
 import io
+import ipaddress
 import string
 import subprocess
 from dataclasses import dataclass, field
@@ -259,6 +260,7 @@ def scan_domain(
     timeout: float = 10.0,
     ignore_void_dns_lookups: bool = False,
     fallback_to_hostname_as_mx_in_ssl_check: bool = True,
+    exempt_cidrs: List[ipaddress.IPv4Network] = []
 ) -> DomainScanResult:
 
     envelope_domain = validate_and_sanitize_domain(envelope_domain)
@@ -322,6 +324,7 @@ def scan_domain(
                 timeout=timeout,
                 parked=parked,
                 fallback_to_hostname=fallback_to_hostname_as_mx_in_ssl_check,
+                exempt_cidrs=exempt_cidrs
             )
             if not parked
             else None
@@ -775,6 +778,7 @@ def scan(
     incoming_tls_status: Optional[IncomingTLSStatus] = None,
     nameservers: Optional[List[str]] = None,
     dkim_implementation_mismatch_callback: Optional[Callable[[bytes, bool, bool], None]] = None,
+    exempt_cidrs: List[ipaddress.IPv4Network] = [],
 ) -> ScanResult:
     if message:
         stream = io.StringIO(message.decode("utf-8", errors="ignore"))
@@ -792,6 +796,7 @@ def scan(
             parked=(
                 False if message else None
             ),  # if we have a message, the domain can't be parked. If we don't, let's check it (None == no information).
+            exempt_cidrs=exempt_cidrs,
         ),
         dkim=(
             scan_dkim(
