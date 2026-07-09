@@ -103,7 +103,6 @@ class DomainScanResult:
     spf: SPFScanResult
     dmarc: DMARCScanResult
     ssl: Optional[ssl_check.SSLScanResult]
-    domain: str
     base_domain: str
     warnings: List[str]
     domain_does_not_exist: bool
@@ -326,8 +325,7 @@ def scan_domain(
             if not parked
             else None
         ),
-        domain=domain,
-        base_domain=checkdmarc.get_base_domain(domain),
+        base_domain=checkdmarc.get_base_domain(from_domain),
         domain_does_not_exist=False,
         warnings=warnings,
     )
@@ -351,7 +349,7 @@ def scan_domain(
             try:
                 parsed_spf = checkdmarc.spf.parse_spf_record(
                     domain_result.spf.record,
-                    domain_result.domain,
+                    envelope_domain,
                     parked=parked,
                     nameservers=nameservers,
                     timeout=timeout,
@@ -446,7 +444,7 @@ def scan_domain(
                 "records may cause problems with some DMARC implementations.",
             )
             dmarc_query = checkdmarc.dmarc.query_dmarc_record(
-                domain,
+                from_domain,
                 nameservers=nameservers,
                 timeout=timeout,
                 ignore_unrelated_records=True,
