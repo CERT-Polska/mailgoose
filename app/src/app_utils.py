@@ -115,7 +115,7 @@ def scan_and_log(
                 incoming_tls_status=incoming_tls_status,
                 nameservers=nameservers,
                 dkim_implementation_mismatch_callback=dkim_implementation_mismatch_callback,
-                exempt_cidrs=[ipaddress.ip_network(cidr) for cidr in Config.Network.EXEMPT_INTERNAL_CIDRS],
+                exempt_cidrs=[ipaddress.ip_network(cidr) for cidr in Config.Network.EXEMPT_INTERNAL_CIDRS],  # type: ignore
             ),
             language=language,
             nonexistent_translation_handler=_nonexistent_translation_handler,
