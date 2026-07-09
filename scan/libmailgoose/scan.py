@@ -326,7 +326,7 @@ def scan_domain(
             if not parked
             else None
         ),
-        domain=domain,
+        domain=from_domain,
         base_domain=checkdmarc.get_base_domain(domain),
         domain_does_not_exist=False,
         warnings=warnings,
@@ -446,7 +446,7 @@ def scan_domain(
                 "records may cause problems with some DMARC implementations.",
             )
             dmarc_query = checkdmarc.dmarc.query_dmarc_record(
-                domain,
+                from_domain,
                 nameservers=nameservers,
                 timeout=timeout,
                 ignore_unrelated_records=True,
