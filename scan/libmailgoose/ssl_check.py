@@ -172,6 +172,9 @@ def test_ssl_tls(
         result["error"] = str(e)
     except TimeoutError:
         result["error"] = "Connection timed out"
+    except smtplib.SMTPConnectError:
+        # we ignore these as they are usually caused by the server not supporting SMTP or blocking scanner's IP address
+        pass
     except Exception as e:
         result["error"] = str(e)
 
