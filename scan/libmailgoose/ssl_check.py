@@ -108,7 +108,14 @@ def validate_tls_info(tls_sock: ssl.SSLSocket) -> None:
 
 
 def test_ssl_tls(
-    hostname: str, ip: str, port: int, ssl_type: SSLEnum, nameservers: Optional[List[str]], timeout: float, parked: bool, exempt_cidrs: list[ipaddress.IPv4Network]
+    hostname: str,
+    ip: str,
+    port: int,
+    ssl_type: SSLEnum,
+    nameservers: Optional[List[str]],
+    timeout: float,
+    parked: bool,
+    exempt_cidrs: list[ipaddress.IPv4Network],
 ) -> Dict[str, Any]:
     # important - some servers rejects EHLO if reverse hostname is invalid (eg. poczta.onet.pl)
     result: Dict[str, Any] = {
@@ -207,7 +214,12 @@ def test_ssl_tls(
 
 
 def validate_ssl(
-    host: str, nameservers: Optional[List[str]], timeout: float, parked: bool, fallback_to_hostname: bool, exempt_cidrs: list[ipaddress.IPv4Network] = []
+    host: str,
+    nameservers: Optional[List[str]],
+    timeout: float,
+    parked: bool,
+    fallback_to_hostname: bool,
+    exempt_cidrs: list[ipaddress.IPv4Network] = [],
 ) -> SSLScanResult:
     ports = {
         25: SSLEnum.STARTTLS,
@@ -230,14 +242,7 @@ def validate_ssl(
 
     def scan_mx(preference: Optional[int], port: int, ssl_type: SSLEnum, mx: str, ip: str) -> SSLMXScanResult:
         result_mx = test_ssl_tls(
-            mx,
-            ip,
-            port,
-            ssl_type,
-            nameservers=nameservers,
-            timeout=timeout,
-            parked=parked,
-            exempt_cidrs=exempt_cidrs
+            mx, ip, port, ssl_type, nameservers=nameservers, timeout=timeout, parked=parked, exempt_cidrs=exempt_cidrs
         )
         return SSLMXScanResult(
             preference=preference,
