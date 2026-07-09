@@ -103,7 +103,6 @@ class DomainScanResult:
     spf: SPFScanResult
     dmarc: DMARCScanResult
     ssl: Optional[ssl_check.SSLScanResult]
-    domain: str
     base_domain: str
     warnings: List[str]
     domain_does_not_exist: bool
