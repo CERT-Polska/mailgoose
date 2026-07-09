@@ -1515,6 +1515,14 @@ TRANSLATIONS = {
             "Duplicate p tags are not permitted",
             "Wielokrotne użycie tagu 'p' nie jest dozwolone.",
         ),
+        (
+            "Duplicate adkim tags are not permitted",
+            "Wielokrotne użycie tagu 'adkim' nie jest dozwolone.",
+        ),
+        (
+            f"{PLACEHOLDER}: Too much load; please try again later",
+            f"{PLACEHOLDER}: Zbyt duże obciążenie; spróbuj ponownie później",
+        ),
     ],
 }
 
