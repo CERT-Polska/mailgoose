@@ -349,7 +349,7 @@ def scan_domain(
             try:
                 parsed_spf = checkdmarc.spf.parse_spf_record(
                     domain_result.spf.record,
-                    from_domain,
+                    envelope_domain,
                     parked=parked,
                     nameservers=nameservers,
                     timeout=timeout,
