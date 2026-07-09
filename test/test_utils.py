@@ -1,8 +1,4 @@
-from time import sleep
-from typing import Any, Dict
 from unittest import TestCase
-
-from config import APP_URL
 
 from libmailgoose.ssl_check import is_private_ip
 
