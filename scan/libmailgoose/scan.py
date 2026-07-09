@@ -326,8 +326,7 @@ def scan_domain(
             if not parked
             else None
         ),
-        domain=from_domain,
-        base_domain=checkdmarc.get_base_domain(domain),
+        base_domain=checkdmarc.get_base_domain(from_domain),
         domain_does_not_exist=False,
         warnings=warnings,
     )
@@ -351,7 +350,7 @@ def scan_domain(
             try:
                 parsed_spf = checkdmarc.spf.parse_spf_record(
                     domain_result.spf.record,
-                    domain_result.domain,
+                    from_domain,
                     parked=parked,
                     nameservers=nameservers,
                     timeout=timeout,
