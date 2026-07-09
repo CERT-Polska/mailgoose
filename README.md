@@ -58,6 +58,14 @@ pip install -r requirements.txt
 make html
 ```
 
+## Releasing
+Before creating new release for `mailgoose`, you should update files with new version number:
+
+- `scan/setup.py#L12` - `version=""`
+- `docs/conf.py#L36` - `release = ""`
+
+Then create new release with given version.
+
 ## Contributing
 Contributions are welcome! We will appreciate both ideas for improvements (added as
 [GitHub issues](https://github.com/CERT-Polska/mailgoose/issues)) as well as pull requests
