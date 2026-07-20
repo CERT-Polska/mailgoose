@@ -1524,7 +1524,7 @@ TRANSLATIONS = {
             f"{PLACEHOLDER}: Zbyt duże obciążenie; spróbuj ponownie później",
         ),
         (
-            f"Unable to translate A deprecated Sender ID record was found. Sender ID using spf2.0/pra or spf2.0/mfrom was deprecated and should be removed: {PLACEHOLDER}",
+            f"A deprecated Sender ID record was found. Sender ID using spf2.0/pra or spf2.0/mfrom was deprecated and should be removed: {PLACEHOLDER}",
             f"Wykryto przestarzały rekord Sender ID. Wsparcie dla Sender ID w formacie spf2.0/pra lub spf2.0/mfrom zostało wycofane i należy je usunąć: {PLACEHOLDER}",
         ),
     ],
