@@ -1380,7 +1380,7 @@ TRANSLATIONS = {
         ),
         (
             "[SSL: SSLV3_ALERT_HANDSHAKE_FAILURE] sslv3 alert handshake failure (_ssl.c:992)",
-            "błąd nawiązywania połączenia sslv3 (SSLV3_ALERT_HANDSHAKE_FAILURE)",
+            "Błąd nawiązywania połączenia sslv3 (SSLV3_ALERT_HANDSHAKE_FAILURE)",
         ),
         (
             f"Certificate hostname mismatch: {PLACEHOLDER} doesn't match certificate names: {PLACEHOLDER}",
@@ -1526,6 +1526,14 @@ TRANSLATIONS = {
         (
             f"A deprecated Sender ID record was found. Sender ID using spf2.0/pra or spf2.0/mfrom was deprecated and should be removed: {PLACEHOLDER}",
             f"Wykryto przestarzały rekord Sender ID. Wsparcie dla Sender ID w formacie spf2.0/pra lub spf2.0/mfrom zostało wycofane i należy je usunąć: {PLACEHOLDER}",
+        ),
+        (
+            "[SSL: TLSV1_ALERT_DECODE_ERROR] tlsv1 alert decode error (_ssl.c:992)",
+            "Błąd SSL: nie można zweryfikować podpisu lub poprawnie odszyfrować danych (TLSV1_ALERT_DECODE_ERROR)",
+        ),
+        (
+            "TLS/SSL connection has been closed (EOF) (_ssl.c:992)",
+            "Połączenie TLS/SSL zostało niespodziewanie zamknięte",
         ),
     ],
 }
