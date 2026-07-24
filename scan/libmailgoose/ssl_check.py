@@ -1,6 +1,7 @@
 import dataclasses
 import datetime
 import enum
+import ipaddress
 import smtplib
 import socket
 import ssl
@@ -8,6 +9,21 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Any, Dict, List, Optional, Tuple
 
 import dns.resolver
+
+
+def is_private_ip(ip_str: str, exempt_cidrs: list[ipaddress.IPv4Network] = []) -> bool:
+    try:
+        addr = ipaddress.ip_address(ip_str)
+        return (
+            addr.is_private
+            or addr.is_loopback
+            or addr.is_link_local
+            or addr.is_reserved
+            or addr.is_multicast
+            or any(addr in cidr for cidr in exempt_cidrs if addr.version == cidr.version)
+        )
+    except ValueError:
+        return True
 
 
 class SSLEnum(enum.Enum):
@@ -92,7 +108,14 @@ def validate_tls_info(tls_sock: ssl.SSLSocket) -> None:
 
 
 def test_ssl_tls(
-    hostname: str, ip: str, port: int, ssl_type: SSLEnum, nameservers: Optional[List[str]], timeout: float, parked: bool
+    hostname: str,
+    ip: str,
+    port: int,
+    ssl_type: SSLEnum,
+    nameservers: Optional[List[str]],
+    timeout: float,
+    parked: bool,
+    exempt_cidrs: list[ipaddress.IPv4Network],
 ) -> Dict[str, Any]:
     # important - some servers rejects EHLO if reverse hostname is invalid (eg. poczta.onet.pl)
     result: Dict[str, Any] = {
@@ -106,6 +129,9 @@ def test_ssl_tls(
     context.verify_mode = ssl.CERT_REQUIRED
 
     try:
+        if is_private_ip(ip, exempt_cidrs):
+            raise ConnectionRefusedError
+
         if ssl_type == SSLEnum.IMPLICIT:
             # Implicit TLS — wrap socket immediately
             with socket.create_connection((ip, port), timeout=timeout) as sock:
@@ -113,7 +139,7 @@ def test_ssl_tls(
                     result["connected"] = True
                     result["tls"] = True
                     validate_tls_info(tls_sock)
-                    tls_sock.send(b"EHLO %s\r\n" % "127.0.0.1".encode())
+                    tls_sock.send(b"EHLO %s\r\n" % "mailgoose".encode())
                     welcome_banner = tls_sock.recv(1024).decode()
                     if "220" not in welcome_banner:
                         raise SSLInternalError("No welcome banner received on implicit TLS connection")
@@ -132,7 +158,16 @@ def test_ssl_tls(
                         )
         else:
             # STARTTLS — connect plain, then upgrade
-            with smtplib.SMTP(hostname, port, timeout=timeout) as smtp:
+            with smtplib.SMTP(hostname, port, timeout=timeout, local_hostname="mailgoose") as smtp:
+                if smtp.sock is None:
+                    raise ConnectionRefusedError
+                smtp_ip = smtp.sock.getpeername()[0]
+                if is_private_ip(smtp_ip, exempt_cidrs):
+                    raise ConnectionRefusedError
+
+                if smtp_ip != ip:
+                    raise ConnectionRefusedError
+
                 result["connected"] = True
                 smtp.ehlo()
                 ehlo_response = smtp.ehlo_resp.decode() if smtp.ehlo_resp else None  # type: ignore
@@ -182,7 +217,12 @@ def test_ssl_tls(
 
 
 def validate_ssl(
-    host: str, nameservers: Optional[List[str]], timeout: float, parked: bool, fallback_to_hostname: bool
+    host: str,
+    nameservers: Optional[List[str]],
+    timeout: float,
+    parked: bool,
+    fallback_to_hostname: bool,
+    exempt_cidrs: list[ipaddress.IPv4Network] = [],
 ) -> SSLScanResult:
     ports = {
         25: SSLEnum.STARTTLS,
@@ -205,13 +245,7 @@ def validate_ssl(
 
     def scan_mx(preference: Optional[int], port: int, ssl_type: SSLEnum, mx: str, ip: str) -> SSLMXScanResult:
         result_mx = test_ssl_tls(
-            mx,
-            ip,
-            port,
-            ssl_type,
-            nameservers=nameservers,
-            timeout=timeout,
-            parked=parked,
+            mx, ip, port, ssl_type, nameservers=nameservers, timeout=timeout, parked=parked, exempt_cidrs=exempt_cidrs
         )
         return SSLMXScanResult(
             preference=preference,
@@ -242,6 +276,17 @@ def validate_ssl(
                         SSLMXScanResult(preference=preference, mx=mx, port=None, error="DNS resolution error")
                     )
                     continue
+
+            if is_private_ip(ip, exempt_cidrs):
+                results.append(
+                    SSLMXScanResult(
+                        preference=preference,
+                        mx=mx,
+                        port=None,
+                        error="Connection refused",
+                    )
+                )
+                continue
 
             for port, ssl_type in ports.items():
                 future = executor.submit(scan_mx, preference, port, ssl_type, mx, ip)

@@ -67,6 +67,10 @@ class Config:
             "2. to restart the containers if a new one is generated,\n"
             "3. that generated certificates may be symbolic links - their destination must also be mounted.\n\n",
         ] = decouple.config("SSL_CERTIFICATE_PATH", default=None)
+        EXEMPT_INTERNAL_CIDRS: Annotated[
+            List[str],
+            "A comma-separated list of CIDRs that will be exempted from the checks.",
+        ] = get_config("EXEMPT_INTERNAL_CIDRS", default="", cast=decouple.Csv(str))
 
     class UI:
         LANGUAGE: Annotated[
