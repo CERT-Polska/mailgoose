@@ -1337,6 +1337,55 @@ TRANSLATIONS = {
             "An unknown error occured during DKIM signature validation.",
             "Wystąpił nieznany błąd podczas walidacji podpisu DKIM.",
         ),
+        # mail client (IMAP) TLS messages
+        (
+            "The IMAP server closed the connection unexpectedly",
+            "Serwer IMAP nieoczekiwanie zamknął połączenie",
+        ),
+        (
+            f"Unexpected greeting received from the IMAP server: {PLACEHOLDER}",
+            f"Otrzymano nieoczekiwane powitanie od serwera IMAP: {PLACEHOLDER}",
+        ),
+        (
+            "The IMAP server refused the CAPABILITY command",
+            "Serwer IMAP odrzucił komendę CAPABILITY",
+        ),
+        (
+            "The IMAP server refused the STARTTLS command",
+            "Serwer IMAP odrzucił komendę STARTTLS",
+        ),
+        (
+            "The IMAP server sent data between the STARTTLS command and the TLS handshake - such data "
+            "must be discarded, as it may have been injected by an attacker",
+            "Serwer IMAP przesłał dane pomiędzy komendą STARTTLS a nawiązaniem połączenia TLS - takie dane "
+            "muszą zostać odrzucone, ponieważ mogły zostać wstrzyknięte przez atakującego",
+        ),
+        (
+            f"STARTTLS not supported on {PLACEHOLDER} IMAP server",
+            f"STARTTLS nie jest obsługiwany przez serwer IMAP {PLACEHOLDER}",
+        ),
+        (
+            f"The {PLACEHOLDER} server advertises the STARTTLS capability on a port that already uses "
+            "implicit TLS - on an already encrypted connection this capability shouldn't be advertised.",
+            f"Serwer {PLACEHOLDER} ogłasza obsługę STARTTLS na porcie, na którym połączenie jest już "
+            "szyfrowane - na szyfrowanym połączeniu ta funkcja nie powinna być ogłaszana.",
+        ),
+        (
+            f"The {PLACEHOLDER} server doesn't advertise the LOGINDISABLED capability, therefore mail "
+            "clients may send the user's password over an unencrypted connection.",
+            f"Serwer {PLACEHOLDER} nie ogłasza obsługi LOGINDISABLED, więc programy pocztowe mogą przesłać "
+            "hasło użytkownika przez nieszyfrowane połączenie.",
+        ),
+        (
+            "Until the connection is encrypted, an IMAP server should advertise the LOGINDISABLED capability "
+            "and refuse to accept the user's password. Otherwise, a mail client that doesn't require encryption "
+            "may send the password over a connection that can be read or modified by anybody who is able to "
+            "intercept the traffic.",
+            "Dopóki połączenie nie jest szyfrowane, serwer IMAP powinien ogłaszać obsługę LOGINDISABLED i "
+            "odmawiać przyjęcia hasła użytkownika. W przeciwnym razie program pocztowy, który nie wymaga "
+            "szyfrowania, może przesłać hasło przez połączenie, które może zostać odczytane lub zmodyfikowane "
+            "przez każdego, kto jest w stanie przechwycić ruch sieciowy.",
+        ),
         # ssl messages
         (
             "Connection timed out",
@@ -1629,6 +1678,21 @@ def _translate_domain_result(
                 result.warning = translate(result.warning, language, nonexistent_translation_handler)
             if result.additional_info:
                 result.additional_info = translate(result.additional_info, language, nonexistent_translation_handler)
+
+    if new_domain_result.mail_client_tls:
+        for mail_client_result in new_domain_result.mail_client_tls.results:
+            if mail_client_result.error:
+                mail_client_result.error = translate(
+                    mail_client_result.error, language, nonexistent_translation_handler
+                )
+            if mail_client_result.warning:
+                mail_client_result.warning = translate(
+                    mail_client_result.warning, language, nonexistent_translation_handler
+                )
+            if mail_client_result.additional_info:
+                mail_client_result.additional_info = translate(
+                    mail_client_result.additional_info, language, nonexistent_translation_handler
+                )
 
     new_domain_result.warnings = [
         translate(warning, language, nonexistent_translation_handler) for warning in new_domain_result.warnings
