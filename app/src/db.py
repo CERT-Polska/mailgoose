@@ -85,7 +85,7 @@ class ScanLogEntry(Base):  # type: ignore
 
     def __repr__(self) -> str:
         return ("<ScanLogEntry(domain='%s', source='%s', client_ip='%s', " "client_user_agent='%s')>") % (
-            self.domain,
+            self.from_domain,
             self.source,
             self.client_ip,
             self.client_user_agent,

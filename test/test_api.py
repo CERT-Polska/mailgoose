@@ -36,7 +36,6 @@ class APITestCase(BaseTestCase):
                             "record_not_found": False,
                         },
                         "spf_not_required_because_of_correct_dmarc": False,
-                        "domain": "starts-with-whitespace.dmarc.test.mailgoose.cert.pl",
                         "base_domain": "cert.pl",
                         "warnings": [],
                         "ssl": {

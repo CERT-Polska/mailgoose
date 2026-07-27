@@ -207,6 +207,9 @@ def test_ssl_tls(
         result["error"] = str(e)
     except TimeoutError:
         result["error"] = "Connection timed out"
+    except smtplib.SMTPConnectError:
+        # we ignore these as they are usually caused by the server not supporting SMTP or blocking scanner's IP address
+        pass
     except Exception as e:
         result["error"] = str(e)
 
@@ -220,7 +223,7 @@ def validate_ssl(
     parked: bool,
     fallback_to_hostname: bool,
     exempt_cidrs: list[ipaddress.IPv4Network] = [],
-) -> SSLScanResult:
+) -> Optional[SSLScanResult]:
     ports = {
         25: SSLEnum.STARTTLS,
         465: SSLEnum.IMPLICIT,
@@ -228,6 +231,11 @@ def validate_ssl(
     }
 
     mx_records: List[Tuple[Optional[int], str]] = retrieve_MX_records(host, nameservers=nameservers)
+
+    # RFC 7505 null MX set for preference 0, exchange ".", should not check SSL as there are no MX to check
+    if len(mx_records) == 1 and mx_records[0][0] == 0 and mx_records[0][1] in [".", ""]:
+        return None
+
     if not mx_records and fallback_to_hostname:
         mx_records = [(None, host)]
 
