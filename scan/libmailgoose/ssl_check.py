@@ -183,7 +183,7 @@ def test_ssl_tls(
 
 def validate_ssl(
     host: str, nameservers: Optional[List[str]], timeout: float, parked: bool, fallback_to_hostname: bool
-) -> SSLScanResult:
+) -> Optional[SSLScanResult]:
     ports = {
         25: SSLEnum.STARTTLS,
         465: SSLEnum.IMPLICIT,
@@ -191,6 +191,11 @@ def validate_ssl(
     }
 
     mx_records: List[Tuple[Optional[int], str]] = retrieve_MX_records(host, nameservers=nameservers)
+
+    # RFC 7505 null MX set for preference 0, exchange ".", should return valid SSL as there are MX to check
+    if len(mx_records) == 1 and mx_records[0][0] == 0 and mx_records[0][1] in [".", ""]:
+        return None
+
     if not mx_records and fallback_to_hostname:
         mx_records = [(None, host)]
 
