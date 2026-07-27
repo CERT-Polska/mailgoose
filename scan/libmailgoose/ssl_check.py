@@ -192,7 +192,7 @@ def validate_ssl(
 
     mx_records: List[Tuple[Optional[int], str]] = retrieve_MX_records(host, nameservers=nameservers)
 
-    # RFC 7505 null MX set for preference 0, exchange ".", should return valid SSL as there are MX to check
+    # RFC 7505 null MX set for preference 0, exchange ".", should not check SSL as there are no MX to check
     if len(mx_records) == 1 and mx_records[0][0] == 0 and mx_records[0][1] in [".", ""]:
         return None
 
