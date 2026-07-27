@@ -137,7 +137,9 @@ class ScanResult:
     def num_checked_mechanisms(self) -> int:
         result = 0
         if self.domain:
-            result += 3
+            result += 2
+            if self.domain.ssl:
+                result += 1
         if self.dkim:
             result += 1
         return result
@@ -146,6 +148,8 @@ class ScanResult:
     def num_correct_mechanisms(self) -> int:
         result = 0
         for mechanism in self.mechanisms:
+            if mechanism is None:
+                continue
             if mechanism.valid and not (hasattr(mechanism, "warnings") and mechanism.warnings):
                 result += 1
         return result
@@ -153,7 +157,7 @@ class ScanResult:
     @property
     def has_not_valid_mechanisms(self) -> int:
         for mechanism in self.mechanisms:
-            if not mechanism.valid:
+            if mechanism is not None and not mechanism.valid:
                 return True
         return False
 
@@ -162,8 +166,11 @@ class ScanResult:
         mechanisms: List[Any] = []
         if self.domain:
             mechanisms.append(self.domain.spf)
-            mechanisms.append(self.domain.ssl)
             mechanisms.append(self.domain.dmarc)
+
+            # might be none in some cases
+            if self.domain.ssl is not None:
+                mechanisms.append(self.domain.ssl)
 
         if self.dkim:
             mechanisms.append(self.dkim)
