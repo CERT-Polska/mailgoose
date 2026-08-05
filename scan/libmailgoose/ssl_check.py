@@ -165,9 +165,6 @@ def test_ssl_tls(
                 if is_private_ip(smtp_ip, exempt_cidrs):
                     raise ConnectionRefusedError
 
-                if smtp_ip != ip:
-                    raise ConnectionRefusedError
-
                 result["connected"] = True
                 smtp.ehlo()
                 ehlo_response = smtp.ehlo_resp.decode() if smtp.ehlo_resp else None  # type: ignore
