@@ -5,6 +5,7 @@ import ipaddress
 import smtplib
 import socket
 import ssl
+import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Any, Dict, List, Optional, Tuple
 
@@ -140,11 +141,22 @@ def test_ssl_tls(
                     result["tls"] = True
                     validate_tls_info(tls_sock)
                     tls_sock.send(b"EHLO %s\r\n" % "mailgoose".encode())
-                    welcome_banner = tls_sock.recv(1024).decode()
-                    if "220" not in welcome_banner:
+                    # The greeting banner and the EHLO reply are often delivered in a single
+                    # TCP segment, so a single recv() may capture only the "220" banner while
+                    # the "250" EHLO reply is already buffered on the socket. Issuing a second
+                    # blocking recv() would then hang until the timeout and falsely report a
+                    # failed EHLO. Read in a loop until we have the "250" reply (or timeout).
+                    response = b""
+                    deadline = time.monotonic() + timeout
+                    while b"250" not in response and time.monotonic() < deadline:
+                        chunk = tls_sock.recv(1024)
+                        if not chunk:
+                            break
+                        response += chunk
+                    response_text = response.decode(errors="replace")
+                    if "220" not in response_text:
                         raise SSLInternalError("No welcome banner received on implicit TLS connection")
-                    ehlo_response = tls_sock.recv(1024).decode()
-                    if "250" not in ehlo_response:
+                    if "250" not in response_text:
                         raise SSLInternalError("No EHLO response received on implicit TLS connection")
 
                     tls_sock.send(b"STARTTLS\r\n")
