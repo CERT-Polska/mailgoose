@@ -411,9 +411,9 @@ def scan_domain(
             domain_result.spf.record_not_found = True
     except checkdmarc.spf.MultipleSPFRTXTRecords:
         domain_result.spf.errors = [
-                "Multiple SPF records found. We recommend leaving only one, as multiple SPF records "
-                "can cause problems with some SPF implementations.",
-                ]
+            "Multiple SPF records found. We recommend leaving only one, as multiple SPF records "
+            "can cause problems with some SPF implementations.",
+        ]
     except checkdmarc.spf.SPFTooManyVoidDNSLookups:
         if not ignore_void_dns_lookups:
             domain_result.spf.errors = [
