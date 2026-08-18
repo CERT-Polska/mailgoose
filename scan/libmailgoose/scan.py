@@ -409,6 +409,11 @@ def scan_domain(
                 "to decrease the possibility of successful e-mail message spoofing.",
             ]
             domain_result.spf.record_not_found = True
+    except checkdmarc.spf.MultipleSPFRTXTRecords:
+        domain_result.spf.errors = [
+                "Multiple SPF records found. We recommend leaving only one, as multiple SPF records "
+                "can cause problems with some SPF implementations.",
+                ]
     except checkdmarc.spf.SPFTooManyVoidDNSLookups:
         if not ignore_void_dns_lookups:
             domain_result.spf.errors = [
@@ -587,7 +592,7 @@ def scan_domain(
             "may not receive DMARC reports."
         ]
     except checkdmarc.dmarc.DMARCError as e:
-        domain_result.dmarc.errors = [e.message]
+        domain_result.dmarc.errors = [e.args[0]]
 
     # If policy is none, it will be saved as a separate error. If policy is quarantine or reject, this is
     # optional as the messages that don't pass dmarc are blocked or quarantined.
