@@ -345,7 +345,9 @@ def scan_domain(
         return domain_result
 
     try:
-        spf_query = checkdmarc.spf.query_spf_record(envelope_domain, nameservers=nameservers, timeout=timeout)
+        spf_query = checkdmarc.spf.query_spf_record(
+            envelope_domain, nameservers=nameservers, timeout=timeout, quoted_txt_segments=True
+        )
 
         domain_result.spf.record = spf_query["record"]
         if domain_result.spf.record and "%" in domain_result.spf.record:
