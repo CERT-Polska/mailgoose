@@ -5,6 +5,10 @@ Features
 - checking **SPF**, **DMARC** and **DKIM** configuration by sending a test e-mail,
 - SSL support for incoming e-mails (please refer to ``SSL_CERTIFICATE_PATH`` and
   ``SSL_PRIVATE_KEY_PATH`` settings documentation in :doc:`user-guide/configuration` to learn how to set it up),
+- checking the **TLS configuration of the servers mail clients connect to** - the servers are
+  discovered using the ``_imap._tcp`` and ``_imaps._tcp`` SRV records described in `RFC 6186
+  <https://www.rfc-editor.org/rfc/rfc6186>`_, so the check is skipped for domains that don't
+  publish them,
 - easy translation to a different language,
 - easy layout customization,
 - REST API.

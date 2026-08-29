@@ -78,6 +78,21 @@ def retrieve_MX_records(domain: str, nameservers: Optional[List[str]] = None) ->
         return []
 
 
+def resolve_to_ip(hostname: str, nameservers: Optional[List[str]] = None) -> Optional[str]:
+    resolver = dns.resolver.Resolver()
+    if nameservers:
+        resolver.nameservers = nameservers
+
+    try:
+        answers = resolver.resolve(hostname, "A")
+        return str(answers[0].to_text())
+    except Exception:
+        try:
+            return socket.gethostbyname(hostname)  # fallback
+        except socket.gaierror:
+            return None
+
+
 def check_cert_name(cn: str, hostname: str) -> bool:
     if cn.startswith("*."):
         return hostname.endswith(cn[1:])
@@ -263,21 +278,10 @@ def validate_ssl(
     with ThreadPoolExecutor(max_workers=len(mx_records) * len(ports)) as executor:
         futures = []
         for preference, mx in mx_records:
-            ip = None
-            resolver = dns.resolver.Resolver()
-            if nameservers:
-                resolver.nameservers = nameservers
-            try:
-                answers = resolver.resolve(mx, "A")
-                ip = answers[0].to_text()
-            except Exception:
-                try:
-                    ip = socket.gethostbyname(mx)  # fallback
-                except socket.gaierror:
-                    results.append(
-                        SSLMXScanResult(preference=preference, mx=mx, port=None, error="DNS resolution error")
-                    )
-                    continue
+            ip = resolve_to_ip(mx, nameservers=nameservers)
+            if not ip:
+                results.append(SSLMXScanResult(preference=preference, mx=mx, port=None, error="DNS resolution error"))
+                continue
 
             if is_private_ip(ip, exempt_cidrs):
                 results.append(
