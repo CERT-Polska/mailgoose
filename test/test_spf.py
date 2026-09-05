@@ -42,6 +42,6 @@ class SPFTestCase(BaseTestCase):
 
     def test_problematic_include(self) -> None:
         result = self.check_domain("includes-other-domain.spf." + TEST_DOMAIN)
-        assert re.search(WARNING_REGEX, result)
+        assert re.search(INCORRECT_CONFIG_REGEX, result)
         assert not re.search(CORRECT_CONFIG_REGEX, result)
-        assert ("<tt>includes-yet-another-domain.spf.test.mailgoose.cert.pl:</tt> The domain does not exist.") in result
+        assert ("include chain has a reference to the <tt>includes-yet-another-domain.spf" ".test.mailgoose.cert.pl</tt> domain that doesn&#39;t have an SPF record.") in result
