@@ -1001,6 +1001,16 @@ TRANSLATIONS = {
             "Proszę podać poprawną nazwę domeny.",
         ),
         (
+            f"The SPF record's include chain has a reference to the {PLACEHOLDER} domain that doesn't have an SPF record. "
+            "When using directives such as 'include' or 'redirect' remember that the destination domain must have a correct SPF record.",
+            f"W łańcuchu dyrektyw rekordu SPF wykryto odwołanie do domeny {PLACEHOLDER}, która nie ma rekordu SPF. "
+            "Pamiętaj, że w przypadku dyrektyw takich jak 'include' lub 'redirect' domena docelowa musi mieć poprawny rekord SPF.",
+        ),
+        (
+            "fo=0:1 is invalid (the 0 and 1 values are mutually exclusive per RFC 9989 § 4.7); the default value fo=0 was used instead.",
+            "Wartość tagu `fo` jest niepoprawna (wartości 0 i 1 są wzajemnie wykluczające się zgodnie z RFC 9989 § 4.7); zamiast niej użyto wartości domyślnej `fo=0`.",
+        ),
+        (
             f"{PLACEHOLDER} The domain does not exist.",
             f"{PLACEHOLDER} Domena nie istnieje.",
         ),
@@ -1069,6 +1079,11 @@ TRANSLATIONS = {
         (
             f"The domain {PLACEHOLDER} does not exist",
             f"Domena {PLACEHOLDER} nie istnieje.",
+        ),
+        (
+            f"{PLACEHOLDER} is not a valid DMARC report URI - please make sure that the URI begins with a scheme such as mailto:",
+            f"{PLACEHOLDER} nie jest poprawnym odbiorcą raportów DMARC - jeśli raporty DMARC mają być przesyłane na adres e-mail, "
+            "należy poprzedzić go przedrostkiem 'mailto:'.",
         ),
         (
             f"{PLACEHOLDER} is not a valid DMARC report URI - please make sure that the URI begins with a schema such as mailto:",
