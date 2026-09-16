@@ -2,6 +2,7 @@ import dataclasses
 import datetime
 import enum
 import ipaddress
+import os
 import smtplib
 import socket
 import ssl
@@ -12,6 +13,9 @@ import dns.resolver
 
 
 def is_private_ip(ip_str: str, exempt_cidrs: list[ipaddress.IPv4Network] = []) -> bool:
+    if "MAILGOOSE_SKIP_PRIVATE_IP_ADDRESS_CHECK" in os.environ:
+        return False
+
     try:
         addr = ipaddress.ip_address(ip_str)
         return (
