@@ -997,6 +997,14 @@ TRANSLATIONS = {
             "(https://publicsuffix.org/) - prosimy o weryfikację jej poprawności.",
         ),
         (
+            "Duplicate sp tags are not permitted",
+            "Zdublowane tagi sp nie są dozwolone.",
+        ),
+        (
+            "The p tag does not immediately follow the v tag. RFC 9989 permits any ordering, but some older DMARC implementations may require p to be the second tag.",
+            "Tag p (polityka DMARC) nie następuje bezpośrednio po tagu v (wersji DMARC). RFC 9989 dopuszcza dowolną kolejność tagów, ale niektóre starsze implementacje DMARC mogą wymagać, aby tag p był drugim tagiem.",
+        ),
+        (
             "Please provide a correct domain name.",
             "Proszę podać poprawną nazwę domeny.",
         ),
