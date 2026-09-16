@@ -1007,6 +1007,10 @@ TRANSLATIONS = {
             "Pamiętaj, że w przypadku dyrektyw takich jak 'include' lub 'redirect' domena docelowa musi mieć poprawny rekord SPF.",
         ),
         (
+            f"A deprecated Sender ID record was found. Sender ID using spf2.0/pra or spf2.0/mfrom was deprecated and should be removed: {PLACEHOLDER}",
+            f"Wykryto przestarzały rekord Sender ID. Wsparcie dla Sender ID w formacie spf2.0/pra lub spf2.0/mfrom zostało wycofane i należy je usunąć: {PLACEHOLDER}",
+        ),
+        (
             "fo=0:1 is invalid (the 0 and 1 values are mutually exclusive per RFC 9989 § 4.7); the default value fo=0 was used instead.",
             "Wartość tagu `fo` jest niepoprawna (wartości 0 i 1 są wzajemnie wykluczające się zgodnie z RFC 9989 § 4.7); zamiast niej użyto wartości domyślnej `fo=0`.",
         ),
