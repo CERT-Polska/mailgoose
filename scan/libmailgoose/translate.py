@@ -997,6 +997,14 @@ TRANSLATIONS = {
             "(https://publicsuffix.org/) - prosimy o weryfikację jej poprawności.",
         ),
         (
+            "Duplicate sp tags are not permitted",
+            "Zdublowane tagi sp nie są dozwolone.",
+        ),
+        (
+            "The p tag does not immediately follow the v tag. RFC 9989 permits any ordering, but some older DMARC implementations may require p to be the second tag.",
+            "Tag p (polityka DMARC) nie następuje bezpośrednio po tagu v (wersji DMARC). RFC 9989 dopuszcza dowolną kolejność tagów, ale niektóre starsze implementacje DMARC mogą wymagać, aby tag p był drugim tagiem.",
+        ),
+        (
             "Please provide a correct domain name.",
             "Proszę podać poprawną nazwę domeny.",
         ),
@@ -1005,6 +1013,10 @@ TRANSLATIONS = {
             "When using directives such as 'include' or 'redirect' remember that the destination domain must have a correct SPF record.",
             f"W łańcuchu dyrektyw rekordu SPF wykryto odwołanie do domeny {PLACEHOLDER}, która nie ma rekordu SPF. "
             "Pamiętaj, że w przypadku dyrektyw takich jak 'include' lub 'redirect' domena docelowa musi mieć poprawny rekord SPF.",
+        ),
+        (
+            f"A deprecated Sender ID record was found. Sender ID using spf2.0/pra or spf2.0/mfrom was deprecated and should be removed: {PLACEHOLDER}",
+            f"Wykryto przestarzały rekord Sender ID. Wsparcie dla Sender ID w formacie spf2.0/pra lub spf2.0/mfrom zostało wycofane i należy je usunąć: {PLACEHOLDER}",
         ),
         (
             "fo=0:1 is invalid (the 0 and 1 values are mutually exclusive per RFC 9989 § 4.7); the default value fo=0 was used instead.",
