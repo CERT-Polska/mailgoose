@@ -1010,7 +1010,7 @@ TRANSLATIONS = {
         ),
         (
             f"{PLACEHOLDER}: Qualifiers are not allowed on modifiers (RFC 7208 § 12): {PLACEHOLDER}",
-                f"{PLACEHOLDER}: Kwalifikatory (+, -, ? i ~) nie są dozwolone w dyrektywach (RFC 7208 § 12): {PLACEHOLDER}",
+            f"{PLACEHOLDER}: Kwalifikatory (+, -, ? i ~) nie są dozwolone w dyrektywach (RFC 7208 § 12): {PLACEHOLDER}",
         ),
         (
             f"fo=0:1:d:s is invalid (the 0 and 1 values are mutually exclusive per RFC 9989 § 4.7); the default value fo=0 was used instead.",
