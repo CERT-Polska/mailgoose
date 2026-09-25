@@ -1001,6 +1001,26 @@ TRANSLATIONS = {
             "Zdublowane tagi sp nie są dozwolone.",
         ),
         (
+            f"Error when processing {PLACEHOLDER}: The ptr mechanism should not be used (RFC 7208 § 5.5))",
+            f"Błąd przy przetwarzaniu {PLACEHOLDER}: Dyrektywa 'ptr' nie powinna być używana (RFC 7208 § 5.5)).",
+        ),
+        (
+            f"A DMARC record at the root of {PLACEHOLDER} has no effect.",
+            f"Rekord DMARC w domenie '{PLACEHOLDER}' (zamiast w subdomenie '_dmarc') nie zostanie uwzględniony.",
+        ),
+        (
+            f"{PLACEHOLDER}: Qualifiers are not allowed on modifiers (RFC 7208 § 12): {PLACEHOLDER}",
+            f"{PLACEHOLDER}: Kwalifikatory (+, -, ? i ~) nie są dozwolone w dyrektywach (RFC 7208 § 12): {PLACEHOLDER}",
+        ),
+        (
+            "fo=0:1:d:s is invalid (the 0 and 1 values are mutually exclusive per RFC 9989 § 4.7); the default value fo=0 was used instead.",
+            "fo=0:1:d:s jest niepoprawne (wartości 0 i 1 są wzajemnie wykluczające się zgodnie z RFC 9989 § 4.7); zamiast niej użyto wartości domyślnej fo=0.",
+        ),
+        (
+            f"The MX host {PLACEHOLDER} does not have any A/AAAA records.",
+            f"Host MX {PLACEHOLDER} nie ma rekordów A/AAAA.",
+        ),
+        (
             "The p tag does not immediately follow the v tag. RFC 9989 permits any ordering, but some older DMARC implementations may require p to be the second tag.",
             "Tag p (polityka DMARC) nie następuje bezpośrednio po tagu v (wersji DMARC). RFC 9989 dopuszcza dowolną kolejność tagów, ale niektóre starsze implementacje DMARC mogą wymagać, aby tag p był drugim tagiem.",
         ),
