@@ -1013,8 +1013,8 @@ TRANSLATIONS = {
             f"{PLACEHOLDER}: Kwalifikatory (+, -, ? i ~) nie są dozwolone w dyrektywach (RFC 7208 § 12): {PLACEHOLDER}",
         ),
         (
-            f"fo=0:1:d:s is invalid (the 0 and 1 values are mutually exclusive per RFC 9989 § 4.7); the default value fo=0 was used instead.",
-            f"fo=0:1:d:s jest niepoprawne (wartości 0 i 1 są wzajemnie wykluczające się zgodnie z RFC 9989 § 4.7); zamiast niej użyto wartości domyślnej fo=0.",
+            "fo=0:1:d:s is invalid (the 0 and 1 values are mutually exclusive per RFC 9989 § 4.7); the default value fo=0 was used instead.",
+            "fo=0:1:d:s jest niepoprawne (wartości 0 i 1 są wzajemnie wykluczające się zgodnie z RFC 9989 § 4.7); zamiast niej użyto wartości domyślnej fo=0.",
         ),
         (
             f"The MX host {PLACEHOLDER} does not have any A/AAAA records.",
