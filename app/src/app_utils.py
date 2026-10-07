@@ -45,15 +45,26 @@ def get_from_and_dkim_domain(message: bytes) -> Tuple[Optional[str], Optional[st
     else:
         from_domain = None
 
-    dkim_domain = None
-    if "dkim-signature" in message_parsed:
+    dkim_domains: list[str] = []
+    for dkim_sig in message_parsed.get_all("dkim-signature", []):
         try:
-            sig = dkim.util.parse_tag_value(message_parsed["dkim-signature"].encode("ascii"))
+            sig = dkim.util.parse_tag_value(dkim_sig.encode("ascii"))
             dkim_domain_raw = sig.get(b"d", None)
             if dkim_domain_raw:
-                dkim_domain = dkim_domain_raw.decode("ascii")
+                dkim_domains.append(dkim_domain_raw.decode("ascii"))
         except dkim.util.InvalidTagValueList:
             pass
+
+    dkim_domain = None
+    # relaxed retrieval - subdomains are accepted
+    if from_domain and dkim_domains:
+        for dkim_domain_candidate in dkim_domains:
+            if dkim_domain_candidate == from_domain or dkim_domain_candidate.endswith("." + from_domain):
+                dkim_domain = dkim_domain_candidate
+                break
+
+    if dkim_domain is None and dkim_domains:
+        dkim_domain = dkim_domains[0]
 
     return from_domain, dkim_domain
 
