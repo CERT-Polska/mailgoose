@@ -284,8 +284,8 @@
                     {% if result.domain.ssl %}
                         <div class="card p-1 bg-light border rounded-3 mb-3">
                             {{ card_header("SSL/TLS", {
-                                "valid": result.domain.ssl.valid and result.incoming_tls_status != 'not_used',
-                                "warnings": result.domain.ssl.warnings,
+                                "valid": result.domain.ssl.valid and result.incoming_tls_status != 'not_used' and not (result.domain.mail_client_tls and not result.domain.mail_client_tls.valid),
+                                "warnings": result.domain.ssl.warnings or (result.domain.mail_client_tls and result.domain.mail_client_tls.warnings),
                             }) }}
                             <div class="card-body">
                                 <div class="card border rounded-3 mb-3">
@@ -333,6 +333,55 @@
                                         </table>
                                     </div>
                                 </div>
+
+                                {% if result.domain.mail_client_tls %}
+                                    <div class="card border rounded-3 mb-3">
+                                        {{ card_header(gettext("Mail client connections"), result.domain.mail_client_tls) }}
+                                        <div class="card-body">
+                                            <p>{% trans %}The servers below have been found in the SRV records described in RFC 6186, which mail clients use to discover how they should connect to your mailboxes.{% endtrans %}</p>
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="d-none d-sm-table-cell">{% trans %}Service{% endtrans %}</th>
+                                                        <th class="d-table-cell d-sm-none">&nbsp;</th>
+                                                        <th class="d-none d-sm-table-cell">{% trans %}Server{% endtrans %}</th>
+                                                        <th class="d-none d-sm-table-cell">{% trans %}Port{% endtrans %}</th>
+                                                        <th>{% trans %}Result{% endtrans %}</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for item in result.domain.mail_client_tls.results %}
+                                                        <tr>
+                                                            <td class="d-none d-sm-table-cell">{{ item.service }}</td>
+                                                            <td class="d-table-cell d-sm-none">{{ item.host }}:{{ item.port }}</td>
+                                                            <td class="d-none d-sm-table-cell">{{ item.host }}</td>
+                                                            <td class="d-none d-sm-table-cell">{{ item.port }}</td>
+                                                            <td>
+
+                                                            {% if not item.error and not item.warning %}
+                                                                <p class="text-success mb-0">{% trans %}Configuration valid{% endtrans %}</p>
+                                                            {% else %}
+                                                                {% if item.error %}
+                                                                    <b class="text-danger">{% trans %}Errors{% endtrans %}:</b>
+                                                                    <p class="mb-0">{{ item.error }}</p>
+                                                                {% endif %}
+                                                                {% if item.warning %}
+                                                                    <b class="text-warning-dark">{% trans %}Warnings{% endtrans %}:</b>
+                                                                    <p class="mb-0">{{ item.warning }}</p>
+                                                                {% endif %}
+                                                                {% if item.additional_info %}
+                                                                    <b>{% trans %}Additional information{% endtrans %}:</b>
+                                                                    <p class="mb-0">{{ item.additional_info }}</p>
+                                                                {% endif %}
+                                                            {% endif %}
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                {% endif %}
 
                                 {% if result.incoming_tls_status %}
                                     <div class="card border rounded-3 mb-0">
@@ -403,7 +452,7 @@
                         </div>
                     {% endif %}
 
-                    {% if result.domain.spf.warnings or result.domain.spf.errors or result.domain.dmarc.warnings or result.domain.dmarc.errors or result.dkim.warnings or result.dkim.errors or not result.domain.ssl.valid %}
+                    {% if result.domain.spf.warnings or result.domain.spf.errors or result.domain.dmarc.warnings or result.domain.dmarc.errors or result.dkim.warnings or result.dkim.errors or not result.domain.ssl.valid or (result.domain.mail_client_tls and not result.domain.mail_client_tls.valid) %}
                         <div class="card border rounded-3 mb-3">
                             <div class="card-body">
                                 {% if result.domain.spf.warnings or result.domain.dmarc.warnings or result.dkim.warnings %}

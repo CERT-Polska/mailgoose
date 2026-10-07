@@ -22,7 +22,7 @@ msgstr "Tikrinti domeną"
 #: app/templates/check_domain.html:12 app/templates/check_results.html:76
 #: app/templates/check_results.html:78 app/templates/check_results.html:80
 #: app/templates/check_results.html:201 app/templates/check_results.html:241
-#: app/templates/check_results.html:366
+#: app/templates/check_results.html:415
 msgid "Domain"
 msgstr "Domenas"
 
@@ -236,7 +236,7 @@ msgstr ""
 
 #: app/templates/check_results.html:207 app/templates/check_results.html:212
 #: app/templates/check_results.html:247 app/templates/check_results.html:252
-#: app/templates/check_results.html:378
+#: app/templates/check_results.html:427
 msgid "Record"
 msgstr "Įrašas"
 
@@ -245,24 +245,26 @@ msgid "Records"
 msgstr "Įrašai"
 
 #: app/templates/check_results.html:221 app/templates/check_results.html:261
-#: app/templates/check_results.html:321 app/templates/check_results.html:383
+#: app/templates/check_results.html:321 app/templates/check_results.html:369
+#: app/templates/check_results.html:432
 msgid "Warnings"
 msgstr "Įspėjimai"
 
 #: app/templates/check_results.html:222 app/templates/check_results.html:226
 #: app/templates/check_results.html:262 app/templates/check_results.html:266
-#: app/templates/check_results.html:274 app/templates/check_results.html:384
-#: app/templates/check_results.html:388 app/templates/check_results.html:396
+#: app/templates/check_results.html:274 app/templates/check_results.html:433
+#: app/templates/check_results.html:437 app/templates/check_results.html:445
 msgid "none"
 msgstr "nėra"
 
 #: app/templates/check_results.html:225 app/templates/check_results.html:265
-#: app/templates/check_results.html:317 app/templates/check_results.html:387
+#: app/templates/check_results.html:317 app/templates/check_results.html:365
+#: app/templates/check_results.html:436
 msgid "Errors"
 msgstr "Klaidos"
 
 #: app/templates/check_results.html:269 app/templates/check_results.html:325
-#: app/templates/check_results.html:391
+#: app/templates/check_results.html:373 app/templates/check_results.html:440
 msgid "Additional information"
 msgstr ""
 
@@ -274,46 +276,61 @@ msgstr ""
 msgid "Preference"
 msgstr ""
 
-#: app/templates/check_results.html:299
+#: app/templates/check_results.html:299 app/templates/check_results.html:347
 msgid "Server"
 msgstr ""
 
-#: app/templates/check_results.html:300
+#: app/templates/check_results.html:300 app/templates/check_results.html:348
 msgid "Port"
 msgstr ""
 
-#: app/templates/check_results.html:301
+#: app/templates/check_results.html:301 app/templates/check_results.html:349
 msgid "Result"
 msgstr ""
 
-#: app/templates/check_results.html:314
+#: app/templates/check_results.html:314 app/templates/check_results.html:362
 msgid "Configuration valid"
 msgstr ""
 
 #: app/templates/check_results.html:339
-msgid "Outgoing mail"
+msgid "Mail client connections"
+msgstr ""
+
+#: app/templates/check_results.html:341
+msgid ""
+"The servers below have been found in the SRV records described in RFC "
+"6186, which mail clients use to discover how they should connect to your "
+"mailboxes."
 msgstr ""
 
 #: app/templates/check_results.html:345
+msgid "Service"
+msgstr ""
+
+#: app/templates/check_results.html:388
+msgid "Outgoing mail"
+msgstr ""
+
+#: app/templates/check_results.html:394
 msgid "Your mail server delivered the test message over TLS."
 msgstr ""
 
-#: app/templates/check_results.html:347
+#: app/templates/check_results.html:396
 msgid "Your mail server delivered the test message without TLS."
 msgstr ""
 
-#: app/templates/check_results.html:349
+#: app/templates/check_results.html:398
 msgid ""
 "TLS support couldn't be tested - this instance is not configured with a "
 "TLS certificate, so the sender couldn't have used TLS even if they wanted"
 " to."
 msgstr ""
 
-#: app/templates/check_results.html:372
+#: app/templates/check_results.html:421
 msgid "Selector"
 msgstr ""
 
-#: app/templates/check_results.html:411
+#: app/templates/check_results.html:460
 msgid ""
 "To increase the chance that your configuration is interpreted by all "
 "e-mail servers correctly, we recommend fixing all errors and warnings."
@@ -322,7 +339,7 @@ msgstr ""
 "interpretuojama visų el. pašto serverių, mes rekomenduojame ištaisyti "
 "visas klaidas ir perspėjimus. "
 
-#: app/templates/check_results.html:419
+#: app/templates/check_results.html:468
 msgid ""
 "After fixing the issues, please rerun the scan - some problems can be "
 "detected only if earlier checks complete successfully."

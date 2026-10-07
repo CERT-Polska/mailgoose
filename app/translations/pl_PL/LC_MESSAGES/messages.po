@@ -22,7 +22,7 @@ msgstr "Sprawdź domenę"
 #: app/templates/check_domain.html:12 app/templates/check_results.html:76
 #: app/templates/check_results.html:78 app/templates/check_results.html:80
 #: app/templates/check_results.html:201 app/templates/check_results.html:241
-#: app/templates/check_results.html:366
+#: app/templates/check_results.html:415
 msgid "Domain"
 msgstr "Domena"
 
@@ -239,7 +239,7 @@ msgstr ""
 
 #: app/templates/check_results.html:207 app/templates/check_results.html:212
 #: app/templates/check_results.html:247 app/templates/check_results.html:252
-#: app/templates/check_results.html:378
+#: app/templates/check_results.html:427
 msgid "Record"
 msgstr "Rekord"
 
@@ -248,24 +248,26 @@ msgid "Records"
 msgstr "Rekordy"
 
 #: app/templates/check_results.html:221 app/templates/check_results.html:261
-#: app/templates/check_results.html:321 app/templates/check_results.html:383
+#: app/templates/check_results.html:321 app/templates/check_results.html:369
+#: app/templates/check_results.html:432
 msgid "Warnings"
 msgstr "Ostrzeżenia"
 
 #: app/templates/check_results.html:222 app/templates/check_results.html:226
 #: app/templates/check_results.html:262 app/templates/check_results.html:266
-#: app/templates/check_results.html:274 app/templates/check_results.html:384
-#: app/templates/check_results.html:388 app/templates/check_results.html:396
+#: app/templates/check_results.html:274 app/templates/check_results.html:433
+#: app/templates/check_results.html:437 app/templates/check_results.html:445
 msgid "none"
 msgstr "brak"
 
 #: app/templates/check_results.html:225 app/templates/check_results.html:265
-#: app/templates/check_results.html:317 app/templates/check_results.html:387
+#: app/templates/check_results.html:317 app/templates/check_results.html:365
+#: app/templates/check_results.html:436
 msgid "Errors"
 msgstr "Błędy"
 
 #: app/templates/check_results.html:269 app/templates/check_results.html:325
-#: app/templates/check_results.html:391
+#: app/templates/check_results.html:373 app/templates/check_results.html:440
 msgid "Additional information"
 msgstr "Dodatkowe informacje"
 
@@ -277,35 +279,53 @@ msgstr "Poczta przychodząca"
 msgid "Preference"
 msgstr "Priorytet"
 
-#: app/templates/check_results.html:299
+#: app/templates/check_results.html:299 app/templates/check_results.html:347
 msgid "Server"
 msgstr "Serwer"
 
-#: app/templates/check_results.html:300
+#: app/templates/check_results.html:300 app/templates/check_results.html:348
 msgid "Port"
 msgstr "Port"
 
-#: app/templates/check_results.html:301
+#: app/templates/check_results.html:301 app/templates/check_results.html:349
 msgid "Result"
 msgstr "Wynik"
 
-#: app/templates/check_results.html:314
+#: app/templates/check_results.html:314 app/templates/check_results.html:362
 msgid "Configuration valid"
 msgstr "Konfiguracja prawidłowa"
 
 #: app/templates/check_results.html:339
+msgid "Mail client connections"
+msgstr "Połączenia programów pocztowych"
+
+#: app/templates/check_results.html:341
+msgid ""
+"The servers below have been found in the SRV records described in RFC "
+"6186, which mail clients use to discover how they should connect to your "
+"mailboxes."
+msgstr ""
+"Poniższe serwery zostały znalezione w rekordach SRV opisanych w RFC 6186,"
+" których programy pocztowe używają, aby ustalić, w jaki sposób powinny "
+"łączyć się z Twoimi skrzynkami pocztowymi."
+
+#: app/templates/check_results.html:345
+msgid "Service"
+msgstr "Usługa"
+
+#: app/templates/check_results.html:388
 msgid "Outgoing mail"
 msgstr "Poczta wychodząca"
 
-#: app/templates/check_results.html:345
+#: app/templates/check_results.html:394
 msgid "Your mail server delivered the test message over TLS."
 msgstr "Twój serwer pocztowy dostarczył testową wiadomość e-mail przy użyciu TLS."
 
-#: app/templates/check_results.html:347
+#: app/templates/check_results.html:396
 msgid "Your mail server delivered the test message without TLS."
 msgstr "Twój serwer pocztowy dostarczył testową wiadomość e-mail bez użycia TLS."
 
-#: app/templates/check_results.html:349
+#: app/templates/check_results.html:398
 msgid ""
 "TLS support couldn't be tested - this instance is not configured with a "
 "TLS certificate, so the sender couldn't have used TLS even if they wanted"
@@ -314,11 +334,11 @@ msgstr ""
 "Nie można było przetestować obsługi TLS - ta instancja nie jest "
 "skonfigurowana z certyfikatem TLS, więc nadawca nie mógłby użyć TLS."
 
-#: app/templates/check_results.html:372
+#: app/templates/check_results.html:421
 msgid "Selector"
 msgstr "Selektor"
 
-#: app/templates/check_results.html:411
+#: app/templates/check_results.html:460
 msgid ""
 "To increase the chance that your configuration is interpreted by all "
 "e-mail servers correctly, we recommend fixing all errors and warnings."
@@ -327,7 +347,7 @@ msgstr ""
 "zinterpretowana przez wszystkie serwery, rekomendujemy poprawę zarówno "
 "błędów, jak i ostrzeżeń."
 
-#: app/templates/check_results.html:419
+#: app/templates/check_results.html:468
 msgid ""
 "After fixing the issues, please rerun the scan - some problems can be "
 "detected only if earlier checks complete successfully."
