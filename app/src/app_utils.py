@@ -47,6 +47,7 @@ def get_from_and_dkim_domain(message: bytes) -> Tuple[Optional[str], Optional[st
 
     # There are configurations that send multiple DKIM-Signature headers
     # so we must retrieve the one that matches the from domain
+    # (this is a heuristic)
     dkim_domains: list[str] = []
     for dkim_sig in message_parsed.get_all("dkim-signature", []):
         try:
