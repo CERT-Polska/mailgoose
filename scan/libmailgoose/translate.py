@@ -1601,7 +1601,7 @@ TRANSLATIONS = {
         ),
         (
             f"{PLACEHOLDER} is not a valid IPv4 value.\nLooks like IPv6.",
-            f"'{PLACEHOLDER}' nie jest prawidłową wartością IPv4, a najprawdopodobniej jest IPv6.",
+            f"'{PLACEHOLDER}' nie jest prawidłowym adresem IPv4, formatem przypomina adres IPv6.",
         ),
         (
             f"{PLACEHOLDER} has both a TXT record and a CNAME record pointing to {PLACEHOLDER}. A name with a CNAME record must have no other records (RFC 1034 section 3.6.2), so which DMARC record a receiver uses depends on its resolver: the TXT record at {PLACEHOLDER}, the DMARC record at {PLACEHOLDER}, or, if both records are returned, the same as for several DMARC records at one name, where a receiver discards them all (RFC 9989 section 4.10 step 2).",
