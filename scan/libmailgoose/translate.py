@@ -1587,6 +1587,30 @@ TRANSLATIONS = {
             "TLS/SSL connection has been closed (EOF) (_ssl.c:992)",
             "Połączenie TLS/SSL zostało niespodziewanie zamknięte",
         ),
+        (
+            "The record contains multiple all mechanisms; only the first one is used (RFC 7208 § 4.6.2).",
+            "Rekord SPF zawiera wiele dyrektyw all, ale używany jest tylko pierwsza z nich (RFC 7208 § 4.6.2).",
+        ),
+        (
+            f"{PLACEHOLDER}: {PLACEHOLDER} is not a valid SPF mechanism or modifier",
+            f"{PLACEHOLDER}: '{PLACEHOLDER}' nie jest prawidłową dyrektywą lub modyfikatorem SPF",
+        ),
+        (
+            f"{PLACEHOLDER} is not a valid IPv4 value.",
+            f"'{PLACEHOLDER}' nie jest prawidłową wartością IPv4.",
+        ),
+        (
+            f"{PLACEHOLDER} is not a valid IPv4 value.\nLooks like IPv6.",
+            f"'{PLACEHOLDER}' nie jest prawidłową wartością IPv4, a najprawdopodobniej jest IPv6.",
+        ),
+        (
+            f"{PLACEHOLDER} has both a TXT record and a CNAME record pointing to {PLACEHOLDER}. A name with a CNAME record must have no other records (RFC 1034 section 3.6.2), so which DMARC record a receiver uses depends on its resolver: the TXT record at {PLACEHOLDER}, the DMARC record at {PLACEHOLDER}, or, if both records are returned, the same as for several DMARC records at one name, where a receiver discards them all (RFC 9989 section 4.10 step 2).",
+            f"{PLACEHOLDER} ma zarówno rekord TXT, jak i rekord CNAME wskazujący na {PLACEHOLDER}. Nazwa z rekordem CNAME nie może mieć innych rekordów (RFC 1034 sekcja 3.6.2), więc który rekord DMARC odbiorca użyje, zależy od jego resolvera: rekord TXT w {PLACEHOLDER}, rekord DMARC w {PLACEHOLDER}, lub, jeśli oba rekordy zostaną zwrócone, tak samo jak w przypadku kilku rekordów DMARC dla jednej nazwy, odbiorca odrzuca je wszystkie (RFC 9989 sekcja 4.10 krok 2).",
+        ),
+        (
+            f"The SPF record for {PLACEHOLDER} is {PLACEHOLDER} bytes, over 512. That is more than a DNS answer can reliably carry over UDP, so some verifiers may ignore or fail it (RFC 7208 section 3.4).",
+            f"Rekord SPF dla {PLACEHOLDER} ma {PLACEHOLDER} bajtów, co przekracza wartość 512. To więcej niż odpowiedź DNS może niezawodnie przenieść przez protokół UDP, więc niektórzy odbiorcy mogą go zignorować lub uznać za niepoprawny (RFC 7208 sekcja 3.4).",
+        ),
     ],
 }
 
