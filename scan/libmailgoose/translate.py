@@ -1589,7 +1589,7 @@ TRANSLATIONS = {
         ),
         (
             "The record contains multiple all mechanisms; only the first one is used (RFC 7208 § 4.6.2).",
-            "Rekord SPF zawiera wiele dyrektyw all, ale używany jest tylko pierwsza z nich (RFC 7208 § 4.6.2).",
+            "Rekord SPF zawiera wiele dyrektyw 'all', ale używana jest tylko pierwsza z nich (RFC 7208 § 4.6.2).",
         ),
         (
             f"{PLACEHOLDER}: {PLACEHOLDER} is not a valid SPF mechanism or modifier",
