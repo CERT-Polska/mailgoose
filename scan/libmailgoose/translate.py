@@ -1605,7 +1605,7 @@ TRANSLATIONS = {
         ),
         (
             f"{PLACEHOLDER} has both a TXT record and a CNAME record pointing to {PLACEHOLDER}. A name with a CNAME record must have no other records (RFC 1034 section 3.6.2), so which DMARC record a receiver uses depends on its resolver: the TXT record at {PLACEHOLDER}, the DMARC record at {PLACEHOLDER}, or, if both records are returned, the same as for several DMARC records at one name, where a receiver discards them all (RFC 9989 section 4.10 step 2).",
-            f"{PLACEHOLDER} ma zarówno rekord TXT, jak i rekord CNAME wskazujący na {PLACEHOLDER}. Nazwa z rekordem CNAME nie może mieć innych rekordów (RFC 1034 sekcja 3.6.2), więc który rekord DMARC odbiorca użyje, zależy od jego resolvera: rekord TXT w {PLACEHOLDER}, rekord DMARC w {PLACEHOLDER}, lub, jeśli oba rekordy zostaną zwrócone, tak samo jak w przypadku kilku rekordów DMARC dla jednej nazwy, odbiorca odrzuca je wszystkie (RFC 9989 sekcja 4.10 krok 2).",
+            f"{PLACEHOLDER} ma zarówno rekord TXT, jak i rekord CNAME wskazujący na {PLACEHOLDER}. Nazwa z rekordem CNAME nie może mieć innych rekordów (RFC 1034 sekcja 3.6.2), tym samym różne serwery mogą niedetermistycznie wybrać: rekord TXT w {PLACEHOLDER}, rekord DMARC w {PLACEHOLDER}, lub, jeśli oba rekordy zostaną zwrócone, tak samo jak w przypadku kilku rekordów DMARC dla jednej nazwy, odbiorca odrzuca je wszystkie (RFC 9989 sekcja 4.10 krok 2).",
         ),
         (
             f"The SPF record for {PLACEHOLDER} is {PLACEHOLDER} bytes, over 512. That is more than a DNS answer can reliably carry over UDP, so some verifiers may ignore or fail it (RFC 7208 section 3.4).",
