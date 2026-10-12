@@ -22,7 +22,7 @@ import spf
 import validators
 from checkdmarc.utils import query_dns
 
-from . import lax_record_query, ssl_check
+from . import lax_record_query, mail_client_tls_check, ssl_check
 from .logging import build_logger
 
 checkdmarc.utils.DNS_CACHE.max_age = 1
@@ -108,6 +108,8 @@ class DomainScanResult:
     warnings: List[str]
     domain_does_not_exist: bool
     spf_not_required_because_of_correct_dmarc: bool = False
+    # None means that the domain doesn't publish the SRV records the check relies on.
+    mail_client_tls: Optional[mail_client_tls_check.MailClientTLSScanResult] = None
 
 
 @dataclass
@@ -331,6 +333,15 @@ def scan_domain(
                 parked=parked,
                 fallback_to_hostname=fallback_to_hostname_as_mx_in_ssl_check,
                 exempt_cidrs=exempt_cidrs,
+            )
+            if not parked
+            else None
+        ),
+        mail_client_tls=(
+            mail_client_tls_check.validate_mail_client_tls(
+                from_domain,
+                nameservers=nameservers,
+                timeout=timeout,
             )
             if not parked
             else None
