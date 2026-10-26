@@ -1611,6 +1611,10 @@ TRANSLATIONS = {
             f"The SPF record for {PLACEHOLDER} is {PLACEHOLDER} bytes, over 512. That is more than a DNS answer can reliably carry over UDP, so some verifiers may ignore or fail it (RFC 7208 section 3.4).",
             f"Rekord SPF dla {PLACEHOLDER} ma {PLACEHOLDER} bajtów, co przekracza wartość 512. To więcej niż odpowiedź DNS może niezawodnie przenieść przez protokół UDP, więc niektórzy odbiorcy mogą go zignorować lub uznać za niepoprawny (RFC 7208 sekcja 3.4).",
         ),
+        (
+            f"{PLACEHOLDER} is invalid (each value may appear at most once per RFC 9989 § 4.7); the default value fo=0 was used instead.",
+            f"{PLACEHOLDER} jest nieprawidłowy - zgodnie z RFC 9989 § 4.7 każda wartość może wystąpić co najwyżej raz; zamiast tego użyto wartości domyślnej fo=0.",
+        ),
     ],
 }
 
