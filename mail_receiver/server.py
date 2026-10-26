@@ -142,7 +142,7 @@ SMTP.line_length_limit = 102400
 
 controller_25 = ControllerOptionalTLS(RedisHandler(), hostname="0.0.0.0", port=25, data_size_limit=10 * 1024 * 1024)
 controller_25.start()  # type: ignore
-controller_587 = ControllerOptionalTLS(RedisHandler(), hostname="0.0.0.0", port=587, data_size_limit=10*1024*1024)
+controller_587 = ControllerOptionalTLS(RedisHandler(), hostname="0.0.0.0", port=587, data_size_limit=10 * 1024 * 1024)
 controller_587.start()  # type: ignore
 
 while True:
