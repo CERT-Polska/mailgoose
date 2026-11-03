@@ -2,8 +2,8 @@
 <html lang="{% language %}">
 
 {% macro copy_button(data) %}
-    <a class="btn btn-outline-secondary"
-      onclick="navigator.clipboard.writeText('{{ data }}');this.innerText='{% trans %}Copied{% endtrans %}'">
+    <a class="btn btn-outline-secondary" data-copied-information="{{ data }}"
+      onclick="navigator.clipboard.writeText(this.getAttribute('data-copied-information'));this.innerText='{% trans %}Copied{% endtrans %}'">
         {# Source: MIT-licensed https://icon-sets.iconify.design/bi/clipboard/ #}
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
             <g fill="currentColor">
