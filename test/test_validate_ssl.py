@@ -200,7 +200,7 @@ class SMTPHostnameTestCase(unittest.TestCase):
     @patch("libmailgoose.ssl_check.validate_tls_info")
     @patch("libmailgoose.ssl_check.ssl.create_default_context")
     @patch("libmailgoose.ssl_check.socket.create_connection")
-    def test_implicit_tls_emits_configured_hostname(self, connect, create_context, validate_tls):
+    def test_implicit_tls_emits_configured_hostname(self, connect, create_context, validate_tls):  # type: ignore
         tls_sock = create_context.return_value.wrap_socket.return_value.__enter__.return_value
         tls_sock.recv.side_effect = [b"220 mx.example.com\r\n", b"250 OK\r\n", b"503 Already using TLS\r\n"]
 
@@ -222,7 +222,7 @@ class SMTPHostnameTestCase(unittest.TestCase):
     @patch("libmailgoose.ssl_check.validate_tls_info")
     @patch("libmailgoose.ssl_check.ssl.create_default_context")
     @patch("libmailgoose.ssl_check.smtplib.SMTP")
-    def test_starttls_uses_configured_hostname_before_and_after_tls(self, smtp_class, create_context, validate_tls):
+    def test_starttls_uses_configured_hostname_before_and_after_tls(self, smtp_class, create_context, validate_tls):  # type: ignore
         smtp = smtp_class.return_value.__enter__.return_value
         smtp.sock.getpeername.return_value = ("8.8.8.8", 25)
         smtp.ehlo_resp = b"250 OK"
