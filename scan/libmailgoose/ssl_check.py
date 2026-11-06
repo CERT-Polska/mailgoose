@@ -120,6 +120,7 @@ def test_ssl_tls(
     timeout: float,
     parked: bool,
     exempt_cidrs: list[ipaddress.IPv4Network],
+    local_hostname: Optional[str] = None,
 ) -> Dict[str, Any]:
     # important - some servers rejects EHLO if reverse hostname is invalid (eg. poczta.onet.pl)
     result: Dict[str, Any] = {
@@ -143,7 +144,7 @@ def test_ssl_tls(
                     result["connected"] = True
                     result["tls"] = True
                     validate_tls_info(tls_sock)
-                    tls_sock.send(b"EHLO %s\r\n" % "mailgoose".encode())
+                    tls_sock.send(b"EHLO %s\r\n" % (local_hostname or socket.getfqdn()).encode("ascii"))
                     welcome_banner = tls_sock.recv(1024).decode()
                     if "220" not in welcome_banner:
                         raise SSLInternalError("No welcome banner received on implicit TLS connection")
@@ -162,7 +163,7 @@ def test_ssl_tls(
                         )
         else:
             # STARTTLS — connect plain, then upgrade
-            with smtplib.SMTP(hostname, port, timeout=timeout, local_hostname="mailgoose") as smtp:
+            with smtplib.SMTP(hostname, port, timeout=timeout, local_hostname=local_hostname) as smtp:
                 if smtp.sock is None:
                     raise ConnectionRefusedError
                 smtp_ip = smtp.sock.getpeername()[0]
@@ -224,6 +225,7 @@ def validate_ssl(
     parked: bool,
     fallback_to_hostname: bool,
     exempt_cidrs: list[ipaddress.IPv4Network] = [],
+    local_hostname: Optional[str] = None,
 ) -> Optional[SSLScanResult]:
     ports = {
         25: SSLEnum.STARTTLS,
@@ -251,7 +253,15 @@ def validate_ssl(
 
     def scan_mx(preference: Optional[int], port: int, ssl_type: SSLEnum, mx: str, ip: str) -> SSLMXScanResult:
         result_mx = test_ssl_tls(
-            mx, ip, port, ssl_type, nameservers=nameservers, timeout=timeout, parked=parked, exempt_cidrs=exempt_cidrs
+            mx,
+            ip,
+            port,
+            ssl_type,
+            nameservers=nameservers,
+            timeout=timeout,
+            parked=parked,
+            exempt_cidrs=exempt_cidrs,
+            local_hostname=local_hostname,
         )
         return SSLMXScanResult(
             preference=preference,

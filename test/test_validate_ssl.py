@@ -2,7 +2,7 @@ import ipaddress
 import unittest
 from unittest.mock import MagicMock, patch
 
-from libmailgoose.ssl_check import validate_ssl
+from libmailgoose.ssl_check import SSLEnum, test_ssl_tls, validate_ssl
 
 
 class ValidateSSLExemptCidrsTestCase(unittest.TestCase):
@@ -38,11 +38,14 @@ class ValidateSSLExemptCidrsTestCase(unittest.TestCase):
             parked=False,
             fallback_to_hostname=False,
             exempt_cidrs=[],
+            local_hostname="scanner.example.com",
         )
 
         assert result is not None
         self.assertTrue(result.valid)
-        self.assertTrue(mock_test_ssl_tls.called)
+        self.assertEqual(mock_test_ssl_tls.call_count, 3)
+        for call in mock_test_ssl_tls.call_args_list:
+            self.assertEqual(call.kwargs["local_hostname"], "scanner.example.com")
 
     @patch("libmailgoose.ssl_check.dns.resolver.Resolver")
     @patch("libmailgoose.ssl_check.retrieve_MX_records")
@@ -191,3 +194,53 @@ class ValidateSSLExemptCidrsTestCase(unittest.TestCase):
         self.assertFalse(result.valid)
         self.assertEqual(len(result.results), 2)
         self.assertTrue(all(r.error == "Connection refused" for r in result.results))
+
+
+class SMTPHostnameTestCase(unittest.TestCase):
+    @patch("libmailgoose.ssl_check.validate_tls_info")
+    @patch("libmailgoose.ssl_check.ssl.create_default_context")
+    @patch("libmailgoose.ssl_check.socket.create_connection")
+    def test_implicit_tls_emits_configured_hostname(self, connect, create_context, validate_tls):  # type: ignore
+        tls_sock = create_context.return_value.wrap_socket.return_value.__enter__.return_value
+        tls_sock.recv.side_effect = [b"220 mx.example.com\r\n", b"250 OK\r\n", b"503 Already using TLS\r\n"]
+
+        result = test_ssl_tls(
+            "mx.example.com",
+            "8.8.8.8",
+            465,
+            SSLEnum.IMPLICIT,
+            nameservers=None,
+            timeout=5.0,
+            parked=False,
+            exempt_cidrs=[],
+            local_hostname="scanner.example.com",
+        )
+
+        self.assertIsNone(result["error"])
+        self.assertEqual(tls_sock.send.call_args_list[0].args, (b"EHLO scanner.example.com\r\n",))
+
+    @patch("libmailgoose.ssl_check.validate_tls_info")
+    @patch("libmailgoose.ssl_check.ssl.create_default_context")
+    @patch("libmailgoose.ssl_check.smtplib.SMTP")
+    def test_starttls_uses_configured_hostname_before_and_after_tls(self, smtp_class, create_context, validate_tls):  # type: ignore
+        smtp = smtp_class.return_value.__enter__.return_value
+        smtp.sock.getpeername.return_value = ("8.8.8.8", 25)
+        smtp.ehlo_resp = b"250 OK"
+        smtp.has_extn.return_value = True
+
+        result = test_ssl_tls(
+            "mx.example.com",
+            "8.8.8.8",
+            25,
+            SSLEnum.STARTTLS,
+            nameservers=None,
+            timeout=5.0,
+            parked=False,
+            exempt_cidrs=[],
+            local_hostname="scanner.example.com",
+        )
+
+        self.assertIsNone(result["error"])
+        smtp_class.assert_called_once_with("mx.example.com", 25, timeout=5.0, local_hostname="scanner.example.com")
+        self.assertEqual(smtp.ehlo.call_count, 2)
+        smtp.starttls.assert_called_once_with(context=create_context.return_value)
