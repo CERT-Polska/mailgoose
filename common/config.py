@@ -41,9 +41,9 @@ class Config:
         ] = get_config("REDIS_URL")
 
     class Network:
-        APP_DOMAIN: Annotated[
-            str, "The domain the site is running on, also used as the SMTP EHLO hostname."
-        ] = get_config("APP_DOMAIN")
+        APP_DOMAIN: Annotated[str, "The domain the site is running on, also used as the SMTP EHLO hostname."] = (
+            get_config("APP_DOMAIN")
+        )
         NAMESERVERS: Annotated[
             List[str],
             "A comma-separated list of nameservers that will be used to resolve domains.",
