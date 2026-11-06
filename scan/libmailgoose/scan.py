@@ -267,6 +267,7 @@ def scan_domain(
     ignore_void_dns_lookups: bool = False,
     fallback_to_hostname_as_mx_in_ssl_check: bool = True,
     exempt_cidrs: List[ipaddress.IPv4Network] = [],
+    local_hostname: Optional[str] = None,
 ) -> DomainScanResult:
 
     envelope_domain = validate_and_sanitize_domain(envelope_domain)
@@ -331,6 +332,7 @@ def scan_domain(
                 parked=parked,
                 fallback_to_hostname=fallback_to_hostname_as_mx_in_ssl_check,
                 exempt_cidrs=exempt_cidrs,
+                local_hostname=local_hostname,
             )
             if not parked
             else None
@@ -791,6 +793,7 @@ def scan(
     nameservers: Optional[List[str]] = None,
     dkim_implementation_mismatch_callback: Optional[Callable[[bytes, bool, bool], None]] = None,
     exempt_cidrs: List[ipaddress.IPv4Network] = [],
+    local_hostname: Optional[str] = None,
 ) -> ScanResult:
     if message:
         stream = io.StringIO(message.decode("utf-8", errors="ignore"))
@@ -809,6 +812,7 @@ def scan(
                 False if message else None
             ),  # if we have a message, the domain can't be parked. If we don't, let's check it (None == no information).
             exempt_cidrs=exempt_cidrs,
+            local_hostname=local_hostname,
         ),
         dkim=(
             scan_dkim(

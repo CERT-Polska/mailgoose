@@ -128,6 +128,7 @@ def scan_and_log(
                 message_timestamp=message_timestamp,
                 incoming_tls_status=incoming_tls_status,
                 nameservers=nameservers,
+                local_hostname=Config.Network.APP_DOMAIN,
                 dkim_implementation_mismatch_callback=dkim_implementation_mismatch_callback,
                 exempt_cidrs=[ipaddress.ip_network(cidr) for cidr in Config.Network.EXEMPT_INTERNAL_CIDRS],  # type: ignore
             ),

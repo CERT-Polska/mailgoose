@@ -133,9 +133,14 @@ class ControllerOptionalTLS(Controller):
     def factory(self) -> SMTP:
         data_size_limit = 10 * 1024 * 1024
         if SSL_CONTEXT:
-            return MailgooseSMTP(self.handler, tls_context=SSL_CONTEXT, data_size_limit=data_size_limit)
+            return MailgooseSMTP(
+                self.handler,
+                hostname=Config.Network.APP_DOMAIN,
+                tls_context=SSL_CONTEXT,
+                data_size_limit=data_size_limit,
+            )
         else:
-            return MailgooseSMTP(self.handler, data_size_limit=data_size_limit)
+            return MailgooseSMTP(self.handler, hostname=Config.Network.APP_DOMAIN, data_size_limit=data_size_limit)
 
 
 # We change the line length as some broken servers don't follow RFC
