@@ -239,7 +239,12 @@
                                         {% if from_domain %}
                                             <tr>
                                                 <td class="label">{% trans %}Domain{% endtrans %}</td>
-                                                <td><code>{{ from_domain }}</code></td>
+                                                <td>
+                                                    <code>{{ from_domain }}</code>
+                                                    {% if result.domain.dmarc.location and from_domain and result.domain.dmarc.location|lower != from_domain|lower %}
+                                                        ({% trans %}record defined for:{% endtrans %} <code>{{ result.domain.dmarc.location }}</code>)
+                                                    {% endif %}
+                                                </td>
                                             </tr>
                                         {% endif %}
                                         {% if result.domain.dmarc.record %}
