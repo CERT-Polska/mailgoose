@@ -12,6 +12,10 @@ from typing import Any, Dict, List, Optional, Tuple
 import dns.resolver
 
 
+class PrivateIPError(Exception):
+    pass
+
+
 def is_private_ip(ip_str: str, exempt_cidrs: list[ipaddress.IPv4Network] = []) -> bool:
     if "MAILGOOSE_SKIP_PRIVATE_IP_ADDRESS_CHECK" in os.environ:
         return False
@@ -21,6 +25,7 @@ def is_private_ip(ip_str: str, exempt_cidrs: list[ipaddress.IPv4Network] = []) -
         return (
             addr.is_private
             or addr.is_loopback
+            or addr.is_unspecified
             or addr.is_link_local
             or addr.is_reserved
             or addr.is_multicast
@@ -135,7 +140,7 @@ def test_ssl_tls(
 
     try:
         if is_private_ip(ip, exempt_cidrs):
-            raise ConnectionRefusedError
+            raise PrivateIPError()
 
         if ssl_type == SSLEnum.IMPLICIT:
             # Implicit TLS — wrap socket immediately
@@ -168,7 +173,7 @@ def test_ssl_tls(
                     raise ConnectionRefusedError
                 smtp_ip = smtp.sock.getpeername()[0]
                 if is_private_ip(smtp_ip, exempt_cidrs):
-                    raise ConnectionRefusedError
+                    raise PrivateIPError()
 
                 result["connected"] = True
                 smtp.ehlo()
@@ -205,6 +210,8 @@ def test_ssl_tls(
         if not parked:
             # ECONNREFUSED is OK for parked domains
             result["error"] = "Connection refused"
+    except PrivateIPError:
+        result["error"] = "IP is private, cannot scan"
     except SSLInternalError as e:
         result["error"] = str(e)
     except TimeoutError:
@@ -299,7 +306,7 @@ def validate_ssl(
                         preference=preference,
                         mx=mx,
                         port=None,
-                        error="Connection refused",
+                        error="IP is private, cannot scan",
                     )
                 )
                 continue
