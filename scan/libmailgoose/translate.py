@@ -1615,6 +1615,7 @@ TRANSLATIONS = {
             f"{PLACEHOLDER} is invalid (each value may appear at most once per RFC 9989 § 4.7); the default value fo=0 was used instead.",
             f"{PLACEHOLDER} jest nieprawidłowy - zgodnie z RFC 9989 § 4.7 każda wartość może wystąpić co najwyżej raz; zamiast tego użyto wartości domyślnej fo=0.",
         ),
+        ("IP is private, cannot scan", "Prywatny IP, nie może być przeskanowany"),
     ],
 }
 
