@@ -344,3 +344,11 @@ msgid ""
 "<b>SPF</b> <b>DMARC</b> and <b>SSL</b> mechanisms will be checked. To "
 "check DKIM, you need to send a test e-mail."
 msgstr ""
+
+#: app/templates/check_results.html:70
+msgid ""
+"Your mail server delivered this message to port 587 instead of port 25. "
+"Port 587 is intended for mail submission by e-mail clients. Mail servers "
+"should exchange messages on port 25. We recommend correcting your mail "
+"server configuration."
+msgstr ""

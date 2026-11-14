@@ -42,6 +42,10 @@ class EmailProcessingException(Exception):
 
 
 class RedisHandler(BaseMessageHandler):
+    def __init__(self, port: int) -> None:
+        super().__init__()
+        self.port = port
+
     def handle_DATA(self, server: SMTP, session: Session, envelope: Envelope) -> Any:
         mail_from = envelope.mail_from
         assert mail_from
@@ -100,6 +104,11 @@ class RedisHandler(BaseMessageHandler):
                     Config.Data.REDIS_MESSAGE_DATA_EXPIRY_SECONDS,
                     tls_status.value,
                 )
+                REDIS.setex(
+                    key + b"-port",
+                    Config.Data.REDIS_MESSAGE_DATA_EXPIRY_SECONDS,
+                    self.port,
+                )
                 LOGGER.info("Saved")
             except Exception:
                 LOGGER.exception(
@@ -146,9 +155,9 @@ class ControllerOptionalTLS(Controller):
 # We change the line length as some broken servers don't follow RFC
 SMTP.line_length_limit = 102400
 
-controller_25 = ControllerOptionalTLS(RedisHandler(), hostname="0.0.0.0", port=25)
+controller_25 = ControllerOptionalTLS(RedisHandler(port=25), hostname="0.0.0.0", port=25)
 controller_25.start()  # type: ignore
-controller_587 = ControllerOptionalTLS(RedisHandler(), hostname="0.0.0.0", port=587)
+controller_587 = ControllerOptionalTLS(RedisHandler(port=587), hostname="0.0.0.0", port=587)
 controller_587.start()  # type: ignore
 
 while True:
