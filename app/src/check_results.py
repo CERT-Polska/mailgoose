@@ -34,6 +34,7 @@ def save_check_results(
     rescan_url: str,
     message_recipient_username: Optional[str],
     token: str,
+    incoming_smtp_port: Optional[int] = None,
 ) -> None:
     # We don't use HSET or HMSET, as result is a recursive dict, and values that can be stored
     # using HSET/HMSET are bytes, string, int or float, so we still wouldn't avoid serialization.
@@ -49,6 +50,7 @@ def save_check_results(
                 "error": error,
                 "rescan_url": rescan_url,
                 "message_recipient_username": message_recipient_username,
+                "incoming_smtp_port": incoming_smtp_port,
             },
             indent=4,
             cls=JSONEncoderAdditionalTypes,
