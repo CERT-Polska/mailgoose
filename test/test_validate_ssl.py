@@ -53,7 +53,7 @@ class ValidateSSLExemptCidrsTestCase(unittest.TestCase):
     def test_public_ip_blocked_by_exempt_cidrs(
         self, mock_test_ssl_tls: MagicMock, mock_retrieve_mx: MagicMock, mock_resolver_class: MagicMock
     ) -> None:
-        """A public IP that falls within exempt_cidrs should be blocked (Connection refused)."""
+        """A public IP that falls within exempt_cidrs should be blocked (IP is private, cannot scan)."""
         mock_retrieve_mx.return_value = [(10, "mx.example.com")]
 
         mock_answer = MagicMock()
@@ -78,7 +78,7 @@ class ValidateSSLExemptCidrsTestCase(unittest.TestCase):
         mock_test_ssl_tls.assert_not_called()
         self.assertFalse(result.valid)
         self.assertEqual(len(result.results), 1)
-        self.assertEqual(result.results[0].error, "Connection refused")
+        self.assertEqual(result.results[0].error, "IP is private, cannot scan")
         self.assertEqual(result.results[0].mx, "mx.example.com")
 
     @patch("libmailgoose.ssl_check.dns.resolver.Resolver")
@@ -108,7 +108,7 @@ class ValidateSSLExemptCidrsTestCase(unittest.TestCase):
         assert result is not None
         mock_test_ssl_tls.assert_not_called()
         self.assertFalse(result.valid)
-        self.assertEqual(result.results[0].error, "Connection refused")
+        self.assertEqual(result.results[0].error, "IP is private, cannot scan")
 
     @patch("libmailgoose.ssl_check.dns.resolver.Resolver")
     @patch("libmailgoose.ssl_check.retrieve_MX_records")
@@ -149,7 +149,7 @@ class ValidateSSLExemptCidrsTestCase(unittest.TestCase):
         )
 
         assert result is not None
-        blocked_results = [r for r in result.results if r.error == "Connection refused"]
+        blocked_results = [r for r in result.results if r.error == "IP is private, cannot scan"]
         self.assertEqual(len(blocked_results), 1)
         self.assertEqual(blocked_results[0].mx, "mx2.example.com")
 
@@ -193,7 +193,7 @@ class ValidateSSLExemptCidrsTestCase(unittest.TestCase):
         mock_test_ssl_tls.assert_not_called()
         self.assertFalse(result.valid)
         self.assertEqual(len(result.results), 2)
-        self.assertTrue(all(r.error == "Connection refused" for r in result.results))
+        self.assertTrue(all(r.error == "IP is private, cannot scan" for r in result.results))
 
 
 class SMTPHostnameTestCase(unittest.TestCase):
