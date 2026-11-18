@@ -1,10 +1,46 @@
 import ipaddress
 from unittest import TestCase
+from unittest.mock import patch
 
 from libmailgoose.ssl_check import is_private_ip
 
 
+@patch.dict("os.environ", {}, clear=True)
 class UtilsTestCase(TestCase):
+    def test_non_global_addresses_blocked(self) -> None:
+        for address in (
+            "100.64.0.0",
+            "100.64.0.1",
+            "100.100.100.200",
+            "100.127.255.255",
+            "0.0.0.0",
+            "169.254.169.254",
+            "224.0.0.1",
+            "240.0.0.1",
+            "::1",
+            "fc00::1",
+            "fe80::1",
+            "ff02::1",
+        ):
+            with self.subTest(address=address):
+                self.assertTrue(is_private_ip(address))
+
+    def test_global_addresses_allowed(self) -> None:
+        for address in ("8.8.8.8", "100.63.255.255", "100.128.0.0", "2606:4700:4700::1111"):
+            with self.subTest(address=address):
+                self.assertFalse(is_private_ip(address))
+
+    def test_bypass_requires_explicit_true(self) -> None:
+        for value in ("", "0", "false", "no", "unexpected"):
+            with self.subTest(value=value), patch.dict("os.environ", {"MAILGOOSE_SKIP_PRIVATE_IP_ADDRESS_CHECK": value}):
+                self.assertTrue(is_private_ip("127.0.0.1"))
+                self.assertTrue(is_private_ip("100.64.0.1"))
+
+    def test_explicit_bypass(self) -> None:
+        for value in ("true", " TRUE "):
+            with self.subTest(value=value), patch.dict("os.environ", {"MAILGOOSE_SKIP_PRIVATE_IP_ADDRESS_CHECK": value}):
+                self.assertFalse(is_private_ip("127.0.0.1"))
+
     def test_is_ip_private(self) -> None:
 
         self.assertTrue(is_private_ip("127.0.0.1"))
