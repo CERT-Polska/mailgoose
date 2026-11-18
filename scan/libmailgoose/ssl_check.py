@@ -168,9 +168,7 @@ def test_ssl_tls(
                         )
         else:
             # STARTTLS — connect plain, then upgrade
-            with smtplib.SMTP(
-                ip, port, timeout=timeout, server_hostname=hostname, local_hostname=local_hostname
-            ) as smtp:
+            with smtplib.SMTP(ip, port, timeout=timeout, local_hostname=local_hostname) as smtp:
                 if smtp.sock is None:
                     raise ConnectionRefusedError
                 smtp_ip = smtp.sock.getpeername()[0]
@@ -184,6 +182,7 @@ def test_ssl_tls(
                     raise SSLInternalError("No EHLO response received before STARTTLS")
 
                 if smtp.has_extn("STARTTLS"):
+                    smtp._host = hostname  # type: ignore
                     smtp.starttls(context=context)
 
                     smtp.ehlo()
