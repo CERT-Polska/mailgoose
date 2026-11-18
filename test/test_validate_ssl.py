@@ -256,8 +256,14 @@ class SSRFProtectionTestCase(unittest.TestCase):
             for ssl_type, port in ((SSLEnum.STARTTLS, 25), (SSLEnum.STARTTLS, 587), (SSLEnum.IMPLICIT, 465)):
                 with self.subTest(address=address, port=port):
                     result = test_ssl_tls(
-                        "mx.example.com", address, port, ssl_type,
-                        nameservers=None, timeout=5.0, parked=False, exempt_cidrs=[],
+                        "mx.example.com",
+                        address,
+                        port,
+                        ssl_type,
+                        nameservers=None,
+                        timeout=5.0,
+                        parked=False,
+                        exempt_cidrs=[],
                     )
                     self.assertEqual(result["error"], "IP is private, cannot scan")
         smtp_class.assert_not_called()

@@ -32,13 +32,17 @@ class UtilsTestCase(TestCase):
 
     def test_bypass_requires_explicit_true(self) -> None:
         for value in ("", "0", "false", "no", "unexpected"):
-            with self.subTest(value=value), patch.dict("os.environ", {"MAILGOOSE_SKIP_PRIVATE_IP_ADDRESS_CHECK": value}):
+            with self.subTest(value=value), patch.dict(
+                "os.environ", {"MAILGOOSE_SKIP_PRIVATE_IP_ADDRESS_CHECK": value}
+            ):
                 self.assertTrue(is_private_ip("127.0.0.1"))
                 self.assertTrue(is_private_ip("100.64.0.1"))
 
     def test_explicit_bypass(self) -> None:
         for value in ("true", " TRUE "):
-            with self.subTest(value=value), patch.dict("os.environ", {"MAILGOOSE_SKIP_PRIVATE_IP_ADDRESS_CHECK": value}):
+            with self.subTest(value=value), patch.dict(
+                "os.environ", {"MAILGOOSE_SKIP_PRIVATE_IP_ADDRESS_CHECK": value}
+            ):
                 self.assertFalse(is_private_ip("127.0.0.1"))
 
     def test_is_ip_private(self) -> None:

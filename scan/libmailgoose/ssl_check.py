@@ -168,7 +168,9 @@ def test_ssl_tls(
                         )
         else:
             # STARTTLS — connect plain, then upgrade
-            with smtplib.SMTP(ip, port, timeout=timeout, local_hostname=local_hostname) as smtp:
+            with smtplib.SMTP(
+                ip, port, timeout=timeout, server_hostname=hostname, local_hostname=local_hostname
+            ) as smtp:
                 if smtp.sock is None:
                     raise ConnectionRefusedError
                 smtp_ip = smtp.sock.getpeername()[0]
