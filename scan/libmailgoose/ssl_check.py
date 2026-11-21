@@ -17,13 +17,13 @@ class PrivateIPError(Exception):
 
 
 def is_private_ip(ip_str: str, exempt_cidrs: list[ipaddress.IPv4Network] = []) -> bool:
-    if "MAILGOOSE_SKIP_PRIVATE_IP_ADDRESS_CHECK" in os.environ:
+    if os.environ.get("MAILGOOSE_SKIP_PRIVATE_IP_ADDRESS_CHECK", "").strip().lower() == "true":
         return False
 
     try:
         addr = ipaddress.ip_address(ip_str)
         return (
-            addr.is_private
+            not addr.is_global
             or addr.is_loopback
             or addr.is_unspecified
             or addr.is_link_local
@@ -168,7 +168,7 @@ def test_ssl_tls(
                         )
         else:
             # STARTTLS — connect plain, then upgrade
-            with smtplib.SMTP(hostname, port, timeout=timeout, local_hostname=local_hostname) as smtp:
+            with smtplib.SMTP(ip, port, timeout=timeout, local_hostname=local_hostname) as smtp:
                 if smtp.sock is None:
                     raise ConnectionRefusedError
                 smtp_ip = smtp.sock.getpeername()[0]
@@ -182,6 +182,7 @@ def test_ssl_tls(
                     raise SSLInternalError("No EHLO response received before STARTTLS")
 
                 if smtp.has_extn("STARTTLS"):
+                    smtp._host = hostname  # type: ignore
                     smtp.starttls(context=context)
 
                     smtp.ehlo()

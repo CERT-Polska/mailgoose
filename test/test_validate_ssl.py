@@ -217,6 +217,7 @@ class SMTPHostnameTestCase(unittest.TestCase):
         )
 
         self.assertIsNone(result["error"])
+        connect.assert_called_once_with(("8.8.8.8", 465), timeout=5.0)
         self.assertEqual(tls_sock.send.call_args_list[0].args, (b"EHLO scanner.example.com\r\n",))
 
     @patch("libmailgoose.ssl_check.validate_tls_info")
@@ -241,6 +242,48 @@ class SMTPHostnameTestCase(unittest.TestCase):
         )
 
         self.assertIsNone(result["error"])
-        smtp_class.assert_called_once_with("mx.example.com", 25, timeout=5.0, local_hostname="scanner.example.com")
+        smtp_class.assert_called_once_with("8.8.8.8", 25, timeout=5.0, local_hostname="scanner.example.com")
         self.assertEqual(smtp.ehlo.call_count, 2)
         smtp.starttls.assert_called_once_with(context=create_context.return_value)
+
+
+@patch.dict("os.environ", {}, clear=True)
+class SSRFProtectionTestCase(unittest.TestCase):
+    @patch("libmailgoose.ssl_check.socket.create_connection")
+    @patch("libmailgoose.ssl_check.smtplib.SMTP")
+    def test_blocked_addresses_never_connect(self, smtp_class, connect):  # type: ignore
+        for address in ("127.0.0.1", "169.254.169.254", "100.64.0.1", "100.100.100.200"):
+            for ssl_type, port in ((SSLEnum.STARTTLS, 25), (SSLEnum.STARTTLS, 587), (SSLEnum.IMPLICIT, 465)):
+                with self.subTest(address=address, port=port):
+                    result = test_ssl_tls(
+                        "mx.example.com",
+                        address,
+                        port,
+                        ssl_type,
+                        nameservers=None,
+                        timeout=5.0,
+                        parked=False,
+                        exempt_cidrs=[],
+                    )
+                    self.assertEqual(result["error"], "IP is private, cannot scan")
+        smtp_class.assert_not_called()
+        connect.assert_not_called()
+
+    @patch("libmailgoose.ssl_check.test_ssl_tls")
+    @patch("libmailgoose.ssl_check.socket.gethostbyname", return_value="100.100.100.200")
+    @patch("libmailgoose.ssl_check.dns.resolver.Resolver")
+    @patch("libmailgoose.ssl_check.retrieve_MX_records", return_value=[(10, "mx.example.com")])
+    def test_shared_address_blocked_in_dns_and_fallback(self, retrieve_mx, resolver_class, fallback, scan):  # type: ignore
+        answer = MagicMock()
+        answer.to_text.return_value = "100.100.100.200"
+        resolver = resolver_class.return_value
+        for use_fallback in (False, True):
+            with self.subTest(use_fallback=use_fallback):
+                resolver.resolve.side_effect = Exception("DNS failure") if use_fallback else None
+                resolver.resolve.return_value = [answer]
+                result = validate_ssl("example.com", None, 5.0, False, False)
+                assert result is not None
+                self.assertFalse(result.valid)
+                self.assertEqual(result.results[0].error, "IP is private, cannot scan")
+        scan.assert_not_called()
+        fallback.assert_called_once_with("mx.example.com")
